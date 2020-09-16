@@ -1,0 +1,1124 @@
+<template>
+    <div>
+        <!--        面包屑导航条-->
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>轴承检修</el-breadcrumb-item>
+            <el-breadcrumb-item>轴承压装</el-breadcrumb-item>
+        </el-breadcrumb>
+        <el-card>
+            <el-row :gutter="5">
+                <el-form :model="search" :rules="searchrules" ref="searchForm" >
+                    <el-col :span="4">
+                        <el-form-item prop="wheelId">
+                            <el-input v-model="search.wheelId" placeholder="请输入单号" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="axleNumber">
+                            <el-input v-model="search.axleNumber" placeholder="请输入轴号" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="vehicleNumber">
+                            <el-input v-model="search.vehicleNumber" placeholder="请输入收入车号" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="takeInDate">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择收入日期"
+                                    v-model="search.takeInDate"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTime">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择完工日期"
+                                    v-model="search.infoTakeFinishTime"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-button type="primary" @click="searchWheelInfo('searchForm')" size="small">查询</el-button>
+                        <el-button  @click="searchSavedInfo" size="small">已保存</el-button>
+                        <!--                        <el-button  @click="creatNewWheelInfo" size="small">新建</el-button>-->
+                    </el-col>
+                </el-form>
+            </el-row>
+            <el-row :gutter="10">
+                <el-col :span="6">
+                    <ul class="list" ref="infolist">
+                        <li class="list-item" style="font-weight: bold">
+                            <span>序</span>
+                            <span>轴号</span>
+                            <span>轴型</span>
+                            <span>车型车号</span>
+                            <span>轴位</span>
+                            <span>收入日期</span>
+                        </li>
+                        <li :class="['list-item',item.isbearingLoadFinish !='4'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
+                            :key="item.wheelId" @click="showitem(item,index,$event)">
+                            <span>{{ index+1 }}</span>
+                            <span>{{item.axleNumber}}</span>
+                            <span>{{item.axleType}}</span>
+                            <span>{{item.vehicleType}} {{item.vehicleNumber}}</span>
+                            <span>{{item.axlePosition}}</span>
+                            <span>{{item.takeInDate}}</span>
+                        </li>
+                    </ul>
+                </el-col>
+                <el-col :span="18">
+                    <el-row class="status">
+                        <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
+                        <span>轴型: {{wheelInfo.axleType}}</span>
+                        <span>轴号: {{wheelInfo.axleNumber}}</span>
+                        <span>车型: {{wheelInfo.vehicleType}}</span>
+                        <span>车号: {{wheelInfo.vehicleNumber}}</span>
+                        <span>轴位: {{wheelInfo.axlePosition}} 位</span>
+                    </el-row>
+                    <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+
+
+                        <el-row style="margin-bottom: 10px"><el-col :span="6"><span>轴颈直径</span></el-col></el-row>
+                        <div class="container">
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>左A:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftA1" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftA1" placeholder="0度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftA2" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftA2" placeholder="120度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftA3" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftA3" placeholder="240度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftAvgA" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftAvgA" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">平均:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckRoundnessLeftA" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckRoundnessLeftA" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>左B:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftB1" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftB1" placeholder="0度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftB2" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftB2" placeholder="120度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftB3" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftB3" placeholder="240度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftAvgB" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftAvgB" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">平均:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckRoundnessLeftB" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckRoundnessLeftB" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+
+                            </el-row>
+
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>右A:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightA1" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightA1" placeholder="0度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightA2" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightA2" placeholder="120度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightA3" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightA3" placeholder="240度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightAvgA" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightAvgA" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">平均:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckRoundnessRightA" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckRoundnessRightA" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>右B:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightB1" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightB1" placeholder="0度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightB2" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightB2" placeholder="120度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightB3" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightB3" placeholder="240度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightAvgB" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightAvgB" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">平均:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckRoundnessRightB" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckRoundnessRightB" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="3" class="innertext"><span>左轴颈平均值:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterLeftAvg" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterLeftAvg" placeholder="" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="3" class="innertext"><span>右轴颈平均值:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="axleNeckDiameterRightAvg" label-width='0'>
+                                        <el-input v-model="ruleForm.axleNeckDiameterRightAvg" placeholder="" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+
+                        <el-row style="margin-bottom: 10px"><el-col :span="6"><span>防尘座直径</span></el-col></el-row>
+                        <div class="container">
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>左:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootDiameterLeft1" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootDiameterLeft1" placeholder="0度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootDiameterLeft2" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootDiameterLeft2" placeholder="90度位置" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item  prop="bearingmadeInLeft" label-width='0'>
+                                        <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">直径平均值:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootRoundnessLeft" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootRoundnessLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="1" class="innertext"><span>右:</span></el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootDiameterRight1" label-width='0' >
+                                        <el-input v-model="ruleForm.neckFootDiameterRight1" placeholder="0度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootDiameterRight2" label-width='0' >
+                                        <el-input v-model="ruleForm.neckFootDiameterRight2" placeholder="90度位置" :disabled="enableRight">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item  prop="bearingmadeInLeft" label-width='0'>
+                                        <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">直径平均值:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item  prop="neckFootRoundnessRight" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootRoundnessRight" placeholder="" :disabled="enableRight">
+                                            <template slot="prepend">圆度:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+
+                        <el-row style="margin-bottom: 10px"><el-col :span="6"><span>轴承参数</span></el-col></el-row>
+                        <div class="container">
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-form-item label="轴承型号" prop="axleTypeLeft" >
+                                        <el-select v-model="ruleForm.axleTypeLeft" :disabled="enableLeft">
+                                            <el-option label="SKF197726" value="SKF197726"></el-option>
+                                            <el-option label="353130B" value="353130B"></el-option>
+                                            <el-option label="352226X2-2RZ" value="352226X2-2RZ"></el-option>
+                                            <el-option label="353132A" value="353132A"></el-option>
+                                            <el-option label="353132B" value="353132B"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="axleTypeRight" label-width="0">
+                                        <el-select v-model="ruleForm.axleTypeRight" :disabled="enableRight">
+                                            <el-option label="SKF197726" value="SKF197726"></el-option>
+                                            <el-option label="353130B" value="353130B"></el-option>
+                                            <el-option label="352226X2-2RZ" value="352226X2-2RZ"></el-option>
+                                            <el-option label="353132A" value="353132A"></el-option>
+                                            <el-option label="353132B" value="353132B"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="轴承内径" prop="bearingInnerDiameterLeft">
+                                        <el-input v-model="ruleForm.bearingInnerDiameterLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="bearingInnerDiameterRight" label-width="0">
+                                        <el-input v-model="ruleForm.bearingInnerDiameterRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-form-item label="密封座内径" prop="sealDiameterLeft">
+                                        <el-input v-model="ruleForm.sealDiameterLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="sealDiameterRight" label-width="0">
+                                        <el-input v-model="ruleForm.sealDiameterRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="后档内径" prop="backerInnerDiameterLeft">
+                                        <el-input v-model="ruleForm.backerInnerDiameterLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="backerInnerDiameterRight" label-width="0">
+                                        <el-input v-model="ruleForm.backerInnerDiameterRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+
+                        <el-row style="margin-bottom: 10px"><el-col :span="6"><span>过盈量</span></el-col></el-row>
+                        <div class="container">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轴承与轴颈" prop="fitBearing2NeckLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.fitBearing2NeckLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="fitBearing2NeckRight" label-width="0">
+                                        <el-input v-model="ruleForm.fitBearing2NeckRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7">
+                                    <el-form-item label="密封座与轴颈" prop="fitSeal2NeckLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.fitSeal2NeckLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="fitSeal2NeckRight" label-width="0">
+                                        <el-input v-model="ruleForm.fitSeal2NeckRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="后档与防尘座" prop="fitSeal2BackerLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.fitSeal2BackerLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="fitSeal2BackerRight" label-width="0">
+                                        <el-input v-model="ruleForm.fitSeal2BackerRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+                        <el-row style="margin-bottom: 10px"><el-col :span="6"><span>压装参数</span></el-col></el-row>
+                        <div class="container">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="最大压装力" prop="maxPressureLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.maxPressureLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="maxPressureRight" label-width="0">
+                                        <el-input v-model="ruleForm.maxPressureRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7">
+                                    <el-form-item label="终止贴合压力" prop="finalPressureLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.finalPressureLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="finalPressureRight" label-width="0">
+                                        <el-input v-model="ruleForm.finalPressureRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轴向游隙" prop="axleGapLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.axleGapLeft" placeholder="左" :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="axleGapRight" label-width="0">
+                                        <el-input v-model="ruleForm.axleGapRight" placeholder="右" :disabled="enableRight"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </div>
+
+
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
+                            <el-button @click="resetForm" size="small">重置</el-button>
+                            <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
+                            <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
+                            <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
+                            <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+            </el-row>
+        </el-card>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "information",
+        data(){
+            //校验轴号
+            var checkaxleNumber = (rule,value,callback)=>{
+                var myreg= /^[0-9]{3,6}$/;
+                if (!myreg.test(value)) {
+                    return callback(new Error("输入合法的数值"));
+                }
+                callback();
+            };
+            //校验单位代号
+            var checkPlant = (rule,value,callback)=>{
+                var myreg= /^[0-9]{3}$/;
+                if (!myreg.test(value)) {
+                    return callback(new Error("输入合法的数值"));
+                }
+                callback();
+            };
+            //校验轴向游隙
+            var checkaxleGap = (rule,value,callback)=>{
+                var myreg= /^[0-2]\.[0-9]{2,3}$/;
+                if (!myreg.test(value)) {
+                    return callback(new Error("输入合法的数值"));
+                }
+                callback();
+            };
+            return {
+                isModify:false,
+                dialogVisible:false,
+                addbtnstatus:true,
+                savebtnstatus:true,
+                modbtnstatus:false,
+                cancelbtnstatus:false,
+                enableLeft:false,
+                enableRight:true,
+                itemUnderMod:{},
+                savedInfo:[],
+                wheelList:[],
+                unFinishMeasureList:[],
+
+                wheelInfo:{},
+                savedInfoHeads:[],
+
+                ruleForm: {
+                    id	:'',
+                    wheelId	:'',
+                    axleNeckDiameterLeftA1	:'',
+                    axleNeckDiameterLeftA2	:'',
+                    axleNeckDiameterLeftA3	:'',
+                    axleNeckDiameterLeftB1	:'',
+                    axleNeckDiameterLeftB2	:'',
+                    axleNeckDiameterLeftB3	:'',
+                    axleNeckDiameterRightA1	:'',
+                    axleNeckDiameterRightA2	:'',
+                    axleNeckDiameterRightA3	:'',
+                    axleNeckDiameterRightB1	:'',
+                    axleNeckDiameterRightB2	:'',
+                    axleNeckDiameterRightB3	:'',
+                    axleNeckRoundnessLeftA	:'',
+                    axleNeckRoundnessLeftB	:'',
+                    axleNeckRoundnessRightA	:'',
+                    axleNeckRoundnessRightB	:'',
+                    axleNeckDiameterLeftAvgA:'',
+                    axleNeckDiameterLeftAvgB:'',
+                    axleNeckDiameterRightAvgA:'',
+                    axleNeckDiameterRightAvgB:'',
+                    axleNeckDiameterLeftAvg:'',
+                    axleNeckDiameterRightAvg:'',
+                    neckFootDiameterLeft1	:'',
+                    neckFootDiameterLeft2	:'',
+                    neckFootDiameterRight1	:'',
+                    neckFootDiameterRight2	:'',
+                    neckFootRoundnessLeft	:'',
+                    neckFootRoundnessRight	:'',
+                    axleTypeLeft	:'',
+                    axleTypeRight	:'',
+                    bearingInnerDiameterLeft	:'',
+                    bearingInnerDiameterRight	:'',
+                    sealDiameterLeft	:'',
+                    sealDiameterRight	:'',
+                    backerInnerDiameterLeft	:'',
+                    backerInnerDiameterRight	:'',
+                    backerRoundnessLeft	:'',
+                    backerRoundnessRight	:'',
+                    fitBearing2NeckLeft	:'',
+                    fitSeal2NeckLeft	:'',
+                    fitSeal2BackerLeft	:'',
+                    fitBearing2NeckRight	:'',
+                    fitSeal2NeckRight	:'',
+                    fitSeal2BackerRight	:'',
+                    maxPressureLeft	:'',
+                    maxPressureRight	:'',
+                    finalPressureLeft	:'',
+                    finalPressureRight	:'',
+                    axleGapLeft	:'',
+                    axleGapRight	:'',
+                    bearingAssemble1stLeft	:'',
+                    bearingLevelLeft	:'',
+                    bearingmadeInLeft	:'',
+                    wheelAssemble1st	:'',
+                    axleNumber	:'',
+                    bearingAssembleLeft	:'',
+                    axleMadeDate	:'',
+                    axleMaterial	:'',
+                    axleMadeIn	:'',
+                    bearingAssembleInLeft	:'',
+                    repairLevelLeft	:'',
+                    bearingAssemble1stRight	:'',
+                    bearingLevelRight	:'',
+                    bearingmadeInRight	:'',
+                    wheelAssemblelast	:'',
+                    wheelAssembleIn	:'',
+                    bearingAssembleRight	:'',
+                    bearingAssembleInRight	:'',
+                    repairLevelRight	:'',
+                    sealMarkLeft	:'',
+                    sealMarkRight	:'',
+                    envTemperatureLeft	:'',
+                    envTemperatureRight	:'',
+                    temperatureRiseLeft	:'',
+                    temperatureRiseRight	:'',
+                    highestTempLeft	:'',
+                    highestTempRight	:'',
+                    matcherLeft	:'',
+                    worker	:'',
+                    caperLeft	:'',
+                    matcherRight	:'',
+                    loaderRight	:'',
+                    caperRight	:'',
+                    foreMan	:'',
+                    qualityInspector	:'',
+                    Inspector	:'',
+                    isFinish	:'',
+                    finishTime	:'',
+                    other:'',
+                    repairSaved:''
+                },
+                search:{
+                    wheelId:'',
+                    takeInDate: null,
+                    axleNumber:'',
+                    vehicleNumber: '',
+                    infoTakeFinishTime:null
+                },
+                rules: {
+                    bearingTypeLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingTypeRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingAssemble1stLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingLevelLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingmadeInLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    wheelAssemble1st: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    axleNumber: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkaxleNumber,trigger: 'blur' }
+                    ],
+                    bearingAssembleLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    axleMadeDate: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    axleMaterial: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    axleMadeIn: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    bearingAssembleInLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    repairLevelLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingAssemble1stRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingLevelRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingmadeInRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    wheelAssemblelast: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    wheelAssembleIn: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    bearingAssembleRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    bearingAssembleInRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkPlant,trigger: 'blur' }
+                    ],
+                    repairLevelRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    closeStateLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    closeStateRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    axleGapLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkaxleGap,trigger: 'blur' }
+                    ],
+                    axleGapRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                        { validator:checkaxleGap,trigger: 'blur' }
+                    ],
+                    appearanceLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    appearanceRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    uncapReasonLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    uncapReasonRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unloadReasonLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unloadReasonRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unloadDateLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unloadDateRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    repairProgressLeft: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    repairProgressRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unworker: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ],
+                    unloaderRight: [
+                        { required: true, message: '请输入', trigger: 'blur' },
+                    ]
+                },
+                searchrules:{
+                    wheelId:[],
+                    axleNumber:[{ min:3, max:5, message: '长度在 3 到 5 个字符', trigger: 'blur' }],
+                    vehicleNumber: [{ min: 7, max: 7, message: '长度 7 个字符', trigger: 'blur' }],
+                }
+            };
+        },
+        computed: {
+
+        },
+        methods: {
+            //刷新表单
+            flushRuleForm(){
+                this.resetForm();
+                this.addbtnstatus = true;
+                this.savebtnstatus = true;
+                this.modbtnstatus = false;
+                this.cancelbtnstatus = false;
+                this.isModify = false;
+                this.ruleForm = {};
+                this.wheelInfo = {};
+                this.enableLeft = true;
+                this.enableRight = true;
+            },
+            //创建新表
+            creatNewWheelInfo(){
+                this.$refs['infolist'].childNodes.forEach(function (child,index) {
+                    child.classList.remove("choosen");
+                });
+                this.flushRuleForm();
+            },
+            //添加新wheel
+            submitForm(formName) {
+                this.$refs[formName].validate(async (valid) => {
+                    if (valid) {
+                        this.ruleForm.worker = sessionStorage.getItem("name");
+                        this.ruleForm.loaderRight = sessionStorage.getItem("name");
+                        this.ruleForm.isFinish = '1';
+                        this.ruleForm.finishTime = this.dateFormate(new Date(),'');
+                        //保存修程
+                        this.ruleForm.repairSaved = this.wheelInfo.isbearingLoadFinish;
+                        var result = await axios.post(
+                            "http://localhost:8081/spt2/bearingLoad/addBearingLoad",
+                            this.ruleForm);
+                        if (result.data.code != 100){
+                            alert("添加失败");
+                            return ;
+                        }
+                        alert("添加成功");
+                        //更新wheelinfo的isMeasureFinish状态
+                        //this.flushWheelInfo(this.ruleForm.wheelId);
+
+                        //检查保存列表如有相同的从保存列表删除
+                        var id = this.ruleForm.wheelId;
+                        this.deleteFromSaveInfo(id);
+                        //获取未完成列表
+                        this.searchUnFinish();
+                        //清空列表
+                        this.flushRuleForm();
+                    } else {
+                        alert('信息不完整！');
+                        return false;
+                    }
+                });
+            },
+            //从保存列表删除
+            deleteFromSaveInfo(id){
+                for (var i=0;i<this.savedInfo.length;i++){
+                    if (this.savedInfo[i].wheelId==id){
+                        for (var j=0;j<this.savedInfoHeads.length;j++){
+                            if (this.savedInfoHeads[j].wheelId == id){
+                                this.savedInfoHeads.splice(j,1);
+                            }
+                        }
+                        this.savedInfo.splice(i,1);
+                        this.saveToSession(this.savedInfo,this.saveIndex,this.savedInfoHeads);
+                    }
+                }
+            },
+            //更新wheelinfo的isMeasureFinish状态
+            // async flushWheelInfo(wheelId){
+            //     var result = await axios.get(
+            //         "http://localhost:8081/spt2/wheelTakein/flushWheelInfo?id="+wheelId);
+            //     if (result.data.code != 100){
+            //         alert("添加失败");
+            //         return ;
+            //     }
+            // },
+            //重置表单内容
+            resetForm() {
+                this.$refs['ruleForm'].resetFields();
+            },
+            //保存未完成RuleForm
+            saveForm(formName){
+                var id = this.ruleForm.wheelId;
+                if (id==''||id==null||id==undefined) {
+                    alert("请选择保存项");
+                    return ;
+                }
+                //如果已存在替换
+                for (var i=0;i<this.savedInfo.length;i++){
+                    if (this.savedInfo[i].wheelId==id){
+                        this.savedInfo[i] = JSON.parse(JSON.stringify(this.ruleForm));
+                        this.saveToSession(this.savedInfo,this.saveIndex,this.savedInfoHeads);
+                        this.creatNewWheelInfo();
+                        alert("已保存");
+                        return;
+                    }
+                }
+                //保存新
+                //this.ruleForm.wheelExaminers = sessionStorage.getItem("name");
+                //this.ruleForm.isFinish = '0';
+                var saved = JSON.parse(JSON.stringify(this.ruleForm));
+                this.savedInfo.push(saved);
+                this.savedInfoHeads.push(this.wheelInfo);
+                this.saveToSession(this.savedInfo,this.saveIndex,this.savedInfoHeads);
+                this.creatNewWheelInfo();
+                alert("已保存");
+            },
+            saveToSession(data,index,heads){
+                var wheelInfo = {
+                    data:data,
+                    heads:heads
+                }
+                sessionStorage.setItem("savedBearingLoad",JSON.stringify(wheelInfo));
+            },
+            //从seesion中获取保存的未完成表单
+            getSavedWheelInfoFromSession(){
+                var measureInfo = JSON.parse(sessionStorage.getItem("savedBearingLoad"));
+                if (measureInfo!=null){
+                    this.savedInfo = measureInfo.data;
+                    this.savedInfoHeads = measureInfo.heads;
+                }
+            },
+            //查找保存的未完成表单
+            searchSavedInfo(){
+                this.getSavedWheelInfoFromSession();
+                this.wheelList = this.savedInfoHeads;
+                this.flushRuleForm();
+            },
+            //从数据库查找未完成的WheelInfo
+            async searchUnFinish(){
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/bearingLoad/unFinishBearingLoad",
+                    this.ruleForm);
+                if (result.data.code != 100){
+                    alert("查询失败");
+                    return ;
+                }
+                this.unFinishMeasureList = result.data.object;
+                this.wheelList = this.unFinishMeasureList;
+                this.flushRuleForm();
+            },
+            //修改wheel
+            async modifyForm(formName){
+                this.ruleForm.worker = sessionStorage.getItem("name");
+                this.ruleForm.loaderRight = sessionStorage.getItem("name");
+                this.ruleForm.finishTime = this.dateFormate(new Date(),'');
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/bearingLoad/modifyBearingLoad",
+                    this.ruleForm);
+                if (result.data.code != 100){
+                    alert("修改失败");
+                    return ;
+                }
+                //重置表单
+                this.isModify = false;
+                this.flushRuleForm();
+                alert("修改成功");
+            },
+            //取消修改
+            cancelmodForm(formName){
+                this.isModify = false;
+                //重置表单
+                this.flushRuleForm();
+                alert("取消修改");
+            },
+            //多条件查找wheel
+            searchWheelInfo(searchForm){
+                //保证至少一个查找条件
+                if(this.search.wheelId==''&&this.search.takeInDate==null&&this.search.axleNumber==''&&
+                    this.search.vehicleNumber==''&&this.search.infoTakeFinishTime==null){
+                    this.searchUnFinish();
+                    return;
+                }
+                this.$refs[searchForm].validate(async (valid) => {
+                    if (valid) {
+                        var result = await axios.post(
+                            "http://localhost:8081/spt2/bearingLoad/searchWheelInfoBycondition",
+                            this.search);
+                        if (result.data.code != 100){
+                            alert("添加失败");
+                            return ;
+                        }
+                        this.wheelList = result.data.object;
+                        this.flushRuleForm();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            //显示wheel信息
+            async showitem(item,index,e){
+                //如果已提交屏蔽 创建 按钮，提供修改和取消按钮
+                this.flushRuleForm();
+                //显示基本信息
+                this.wheelInfo = item;
+                //高亮显示
+                //清除choosen类
+                e.currentTarget.parentElement.childNodes.forEach(function (child,index) {
+                    child.classList.remove("choosen");
+                });
+                //添加choosen类
+                e.currentTarget.classList.add("choosen");
+                //检查保存里是否有数据
+                var id = item.wheelId;
+                for (var i=0;i<this.savedInfo.length;i++){
+                    if (this.savedInfo[i].wheelId == id){
+                        this.ruleForm = JSON.parse(JSON.stringify(this.savedInfo[i]));
+                        //选择性禁用表单
+                        this.enableForm(this.ruleForm.repairSaved);
+                        return;
+                    }
+                }
+                //是否完成
+                if (item.isbearingLoadFinish == '4'){
+                    this.addbtnstatus = false;
+                    this.savebtnstatus = false;
+                    this.modbtnstatus = true;
+                    this.cancelbtnstatus = true;
+                    this.isModify = true;
+                    //已完成从数据库内查找，提交到显示表单
+                    var result = await axios.get(
+                        "http://localhost:8081/spt2/bearingLoad/findBearingLoadById?id="+item.wheelId);
+                    if (result.data.code != 100){
+                        alert("添加失败");
+                        return ;
+                    }
+                    this.ruleForm = result.data.object;
+                }
+                //未完成给个空值和表单id
+                if (item.isbearingLoadFinish == '1'||item.isbearingLoadFinish == '2'||item.isbearingLoadFinish == '3'){
+                    this.ruleForm = {};
+                    this.ruleForm.wheelId = item.wheelId;
+                    this.ruleForm.repairSaved = item.isbearingLoadFinish;
+                  }
+                //选择性禁用表单
+               this.enableForm(this.ruleForm.repairSaved);
+            },
+            enableForm(index){
+                this.enableLeft = true;
+                this.enableRight = true;
+                if (index=='1') this.enableLeft = false;
+                if (index=='2') this.enableRight = false;
+                if (index=='3') {
+                    this.enableLeft = false;
+                    this.enableRight = false;
+                }
+            },
+            async deleteForm(formName){
+                var res = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).catch(err=>{
+                    return err;
+                });
+                if (res == "confirm") {
+                    //从数据库删除
+                    var id = this.ruleForm.wheelId;
+                    if (id==''||id==null||id==undefined) {
+                        alert("请选择删除项");
+                        return;
+                    }
+                    console.log(id);
+                    var result = await axios.get('http://localhost:8081/spt2/bearingLoad/deleteBearingLoad?id=' + id +"&index=" + this.ruleForm.repairSaved);
+                    if (result.data.code != 100) {
+                        alert("删除失败");
+                        return;
+                    }
+                    //从保存列表删除
+                    this.deleteFromSaveInfo(id);
+                    //刷新列表,获取未完成表单
+                    this.searchUnFinish();
+                    alert("已删除");
+                } else {
+                    // alert("取消删除");
+                }
+            },
+            //日期格式化
+            dateFormate(data,patt){
+                var y = data.getFullYear();
+                var M = (data.getMonth()+1).toString().padStart(2,"0");
+                var d = (data.getDate()).toString().padStart(2,"0");
+
+                var h = (data.getHours()).toString().padStart(2,"0");
+                var m = (data.getMinutes()).toString().padStart(2,"0");
+                var s = (data.getSeconds()).toString().padStart(2,"0");
+
+                if(patt && patt.toLowerCase()=="yyyy-mm-dd"){
+                    return `${y}-${M}-${d}`;
+                }else{
+                    return `${y}-${M}-${d}  ${h}:${m}:${s}`;
+                }
+            }
+        },
+        filters:{
+            dateFormate: function(datastr,patt){
+                var data = new Date(datastr);
+                var y = data.getFullYear();
+                var M = (data.getMonth()+1).toString().padStart(2,"0");
+                var d = (data.getDate()).toString().padStart(2,"0");
+
+                var h = (data.getHours()).toString().padStart(2,"0");
+                var m = (data.getMinutes()).toString().padStart(2,"0");
+                var s = (data.getSeconds()).toString().padStart(2,"0");
+
+                if(patt && patt.toLowerCase()=="yyyy-mm-dd"){
+                    return `${y}-${M}-${d}`;
+                }else{
+                    return `${y}-${M}-${d}  ${h}:${m}:${s}`;
+                }
+            }
+        },
+        created() {
+            //获取未完成列表
+            this.getSavedWheelInfoFromSession();
+        },
+        mounted() {
+            //获取未完成列表
+            this.searchUnFinish();
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .list{
+        list-style: none;
+        height: 1020px;
+        padding: 0;
+        font-size: 14px;
+        overflow: auto;
+        background-color: #e7e1cd;
+        .list-item{
+            width: 100%;
+            height: 40px;
+            background-color: #cfa;
+            border-bottom: 1px solid black;
+            user-select: none;
+            cursor: pointer;
+            margin-top: 2px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+    }
+    .status{
+        font-size: 14px;
+        margin: 0 0 20px 10px;
+        span{
+            margin-left: 20px;
+            font-size: 16px;
+        }
+    }
+    .list-item:hover{
+        background-color: #0096b3;
+    }
+    .choosen{
+        background-color: #B3C0D1 !important;
+    }
+    .notfinish{
+        color: red;
+    }
+    .listContainer{
+        text-align: center;
+        line-height: 40px;
+    }
+    .innertext{
+        display: flex;
+        justify-content: center;
+        span{
+            line-height: 40px;
+        }
+    }
+    .container{
+        padding-top: 20px;
+        border: 1px solid black;
+        margin-bottom: 20px;
+    }
+</style>
