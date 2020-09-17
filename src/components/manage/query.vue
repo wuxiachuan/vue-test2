@@ -47,11 +47,22 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                        <el-form-item prop="infoTakeFinishTime">
+                        <el-form-item prop="infoTakeFinishTimeFrom">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择竣工日期"
-                                    v-model="search.infoTakeFinishTime"
+                                    placeholder="请选择完工日期"
+                                    v-model="search.infoTakeFinishTimeFrom"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTimeTo">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择完工日期"
+                                    v-model="search.infoTakeFinishTimeTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -63,11 +74,22 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                        <el-form-item prop="takeInDate">
+                        <el-form-item prop="takeInDateFrom">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择收入日期"
-                                    v-model="search.takeInDate"
+                                    placeholder="请选择收入起始日期"
+                                    v-model="search.takeInDateFrom"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="takeInDateTo">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择收入终止日期"
+                                    v-model="search.takeInDateTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -79,11 +101,22 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                        <el-form-item prop="dispatchDate">
+                        <el-form-item prop="dispatchDateFrom">
                             <el-date-picker
                                     type="date"
                                     placeholder="请选择支出日期"
-                                    v-model="search.dispatchDate"
+                                    v-model="search.dispatchDateFrom"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="dispatchDateTo">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择支出日期"
+                                    v-model="search.dispatchDateTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -346,12 +379,18 @@
                 total:100,
                 problemList:[],
                  search:{
-                    wheelId:'',
-                    takeInDate: null,
-                    axleNumber:'',
-                    vehicleNumber: '',
-                    infoTakeFinishTime:null,
+                     wheelId:'',
+                     takeInDate: null,
+                     takeInDateFrom: null,
+                     takeInDateTo: null,
+                     axleNumber:'',
+                     vehicleNumber: '',
+                     infoTakeFinishTime:null,
+                     infoTakeFinishTimeFrom:null,
+                     infoTakeFinishTimeTo:null,
                     dispatchDate:null,
+                     dispatchDateFrom:null,
+                     dispatchDateTo:null,
                     takeInReason:'',
                     dipatchVehicleNumber:'',
                     status:'',

@@ -25,22 +25,44 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                        <el-form-item prop="takeInDate">
+                        <el-form-item prop="takeInDateFrom">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择收入日期"
-                                    v-model="search.takeInDate"
+                                    placeholder="请选择收入起始日期"
+                                    v-model="search.takeInDateFrom"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
-                        <el-form-item prop="infoTakeFinishTime">
+                        <el-form-item prop="takeInDateTo">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择收入终止日期"
+                                    v-model="search.takeInDateTo"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTimeFrom">
                             <el-date-picker
                                     type="date"
                                     placeholder="请选择完工日期"
-                                    v-model="search.infoTakeFinishTime"
+                                    v-model="search.infoTakeFinishTimeFrom"
+                                    format="yyyy 年 MM 月 dd 日"
+                                    value-format="yyyy-MM-dd"
+                                    style="width: 100%;"></el-date-picker>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTimeTo">
+                            <el-date-picker
+                                    type="date"
+                                    placeholder="请选择完工日期"
+                                    v-model="search.infoTakeFinishTimeTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
                                     style="width: 100%;"></el-date-picker>
@@ -54,7 +76,7 @@
                 </el-form>
             </el-row>
             <el-row :gutter="10">
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-card class="wheelInfo-Container">
                         <div class="wheelInfoHead">
                             <span class="wheelInfoList1">序</span>
@@ -77,7 +99,7 @@
                         </ul>
                     </el-card>
                 </el-col>
-                <el-col :span="18">
+                <el-col :span="17">
                     <el-card>
                         <el-row class="status">
                             <span>当前状态：</span> <span v-text="isModify ?'修改':'新建'"></span>
@@ -101,18 +123,6 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                            <!--                        <el-row>-->
-                            <!--                            <el-col :span="12">-->
-                            <!--                                <el-form-item label="入检单位" prop="other">-->
-                            <!--                                    <el-input v-model="ruleForm.other"></el-input>-->
-                            <!--                                </el-form-item>-->
-                            <!--                            </el-col>-->
-                            <!--                            <el-col :span="12">-->
-                            <!--                                <el-form-item label="收检日期" prop="other">-->
-                            <!--                                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.other" style="width: 100%;"></el-date-picker>-->
-                            <!--                                </el-form-item>-->
-                            <!--                            </el-col>-->
-                            <!--                        </el-row>-->
                             <el-row>
                                 <el-col :span="6">
                                     <el-form-item label="收入原因" prop="takeInReason">
@@ -132,11 +142,6 @@
                                         <el-input v-model="ruleForm.vehicleNumber"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <!--                            <el-col :span="6">-->
-                                <!--                                <el-form-item label="送轮单位" prop="other">-->
-                                <!--                                    <el-input v-model="ruleForm.other"></el-input>-->
-                                <!--                                </el-form-item>-->
-                                <!--                            </el-col>-->
                             </el-row>
 
                             <el-row>
@@ -343,9 +348,13 @@
                 search:{
                     wheelId:'',
                     takeInDate: null,
+                    takeInDateFrom: null,
+                    takeInDateTo: null,
                     axleNumber:'',
                     vehicleNumber: '',
-                    infoTakeFinishTime:null
+                    infoTakeFinishTime:null,
+                    infoTakeFinishTimeFrom:null,
+                    infoTakeFinishTimeTo:null
                 },
                 wheelList:[
                     {
@@ -520,11 +529,11 @@
             //多条件查找wheel
             searchWheelInfo(searchForm){
                //保证至少一个查找条件
-               if(this.search.wheelId==''&&this.search.takeInDate==null&&this.search.axleNumber==''&&
-                   this.search.vehicleNumber==''&&this.search.infoTakeFinishTime==null){
-                   alert("请输入查找内容");
-                   return;
-               }
+               // if(this.search.wheelId==''&&this.search.takeInDate==null&&this.search.axleNumber==''&&
+               //     this.search.vehicleNumber==''&&this.search.infoTakeFinishTime==null){
+               //     alert("请输入查找内容");
+               //     return;
+               // }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
                         var result = await axios.post(
