@@ -121,6 +121,7 @@
                 total:100,
                 //查询页码参数
                 queryInfo:{
+                    isonline:'',
                     query:'',
                     currentPage:1,
                     pagesize:5
@@ -138,10 +139,7 @@
            async getusers(){
               var result = await axios.post(
                   "http://localhost:8081/spt2/userManage/getusers",
-                  {
-                      page:this.queryInfo.currentPage,
-                      size:this.queryInfo.pagesize}
-                      );
+                  this.queryInfo);
                if (result.data.code == 100){
                    this.userlist = result.data.object.list;
                    this.total = result.data.object.total;

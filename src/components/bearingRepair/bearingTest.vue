@@ -55,85 +55,89 @@
             </el-row>
             <el-row :gutter="10">
                 <el-col :span="6">
-                    <ul class="list" ref="infolist">
-                        <li class="list-item" style="font-weight: bold">
-                            <span>序</span>
-                            <span>轴号</span>
-                            <span>轴型</span>
-                            <span>车型车号</span>
-                            <span>轴位</span>
-                            <span>收入日期</span>
-                        </li>
-                        <li :class="['list-item',item.isbearingrollTestFinish =='0'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
-                            :key="item.wheelId" @click="showitem(item,index,$event)">
-                            <span>{{ index+1 }}</span>
-                            <span>{{item.axleNumber}}</span>
-                            <span>{{item.axleType}}</span>
-                            <span>{{item.vehicleType}} {{item.vehicleNumber}}</span>
-                            <span>{{item.axlePosition}}</span>
-                            <span>{{item.takeInDate}}</span>
-                        </li>
-                    </ul>
+                    <el-card class="wheelInfo-Container">
+                        <div class="wheelInfoHead">
+                            <span class="wheelInfoList1">序</span>
+                            <span class="wheelInfoList2">轴号</span>
+                            <span class="wheelInfoList3">轴型</span>
+                            <span class="wheelInfoList4">车型车号</span>
+                            <span class="wheelInfoList5">轴位</span>
+                            <span class="wheelInfoList6">收入日期</span>
+                        </div>
+                        <ul class="wheelInfo-list" ref="infolist">
+                            <li :class="['wheelInfo-list-item',item.isbearingrollTestFinish=='0'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
+                                :key="item.wheelId" @click="showitem(item,index,$event)">
+                                <span class="wheelInfoList1">{{ index+1 }}</span>
+                                <span class="wheelInfoList2">{{item.axleNumber}}</span>
+                                <span class="wheelInfoList3">{{item.axleType}}</span>
+                                <span class="wheelInfoList4">{{item.vehicleType}} {{item.vehicleNumber}}</span>
+                                <span class="wheelInfoList5">{{item.axlePosition}}</span>
+                                <span class="wheelInfoList6">{{item.takeInDate}}</span>
+                            </li>
+                        </ul>
+                    </el-card>
                 </el-col>
                 <el-col :span="18">
-                    <el-row class="status">
-                        <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
-                        <span>轴型: {{wheelInfo.axleType}}</span>
-                        <span>轴号: {{wheelInfo.axleNumber}}</span>
-                        <span>车型: {{wheelInfo.vehicleType}}</span>
-                        <span>车号: {{wheelInfo.vehicleNumber}}</span>
-                        <span>轴位: {{wheelInfo.axlePosition}} 位</span>
-                    </el-row>
-                    <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="环境温度" prop="envTemperatureLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.envTemperatureLeft" placeholder=""  :disabled="enableLeft"></el-input>
-                                </el-form-item>
-                            </el-col>
+                    <el-card>
+                        <el-row class="status">
+                            <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
+                            <span>轴型: {{wheelInfo.axleType}}</span>
+                            <span>轴号: {{wheelInfo.axleNumber}}</span>
+                            <span>车型: {{wheelInfo.vehicleType}}</span>
+                            <span>车号: {{wheelInfo.vehicleNumber}}</span>
+                            <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                         </el-row>
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="最高温度" prop="highestTempLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.highestTempLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="highestTempRight" label-width="20">
-                                    <el-input v-model="ruleForm.highestTempRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="最大温升" prop="temperatureRiseLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.temperatureRiseLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="temperatureRiseRight" label-width="20">
-                                    <el-input v-model="ruleForm.temperatureRiseRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="环境温度" prop="envTemperatureLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.envTemperatureLeft" placeholder=""  :disabled="enableLeft"></el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="最高温度" prop="highestTempLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.highestTempLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="highestTempRight" label-width="20">
+                                        <el-input v-model="ruleForm.highestTempRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="最大温升" prop="temperatureRiseLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.temperatureRiseLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="temperatureRiseRight" label-width="20">
+                                        <el-input v-model="ruleForm.temperatureRiseRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-form-item>
-                            <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
-                            <el-button @click="resetForm" size="small">重置</el-button>
-                            <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
-                            <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
-                            <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
-                            <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
-                        </el-form-item>
-                    </el-form>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
+                                <el-button @click="resetForm" size="small">重置</el-button>
+                                <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
+                                <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
+                                <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
+                                <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-card>
                 </el-col>
             </el-row>
         </el-card>
@@ -640,26 +644,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .list{
-        list-style: none;
-        height: 1100px;
-        padding: 0;
-        font-size: 14px;
-        overflow: auto;
-        background-color: #e7e1cd;
-        .list-item{
-            width: 100%;
-            height: 40px;
-            background-color: #cfa;
-            border-bottom: 1px solid black;
-            user-select: none;
-            cursor: pointer;
-            margin-top: 2px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-    }
     .status{
         font-size: 14px;
         margin: 0 0 20px 10px;
@@ -668,15 +652,7 @@
             font-size: 16px;
         }
     }
-    .list-item:hover{
-        background-color: #0096b3;
-    }
-    .choosen{
-        background-color: #B3C0D1 !important;
-    }
-    .notfinish{
-        color: red;
-    }
+
     .listContainer{
         text-align: center;
         line-height: 40px;

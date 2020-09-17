@@ -55,164 +55,167 @@
             </el-row>
             <el-row :gutter="10">
                 <el-col :span="6">
-                    <ul class="list" ref="infolist">
-                        <li class="list-item" style="font-weight: bold">
-                            <span>序</span>
-                            <span>轴号</span>
-                            <span>轴型</span>
-                            <span>车型车号</span>
-                            <span>轴位</span>
-                            <span>收入日期</span>
-                        </li>
-                        <li :class="['list-item',item.iswheelDispatchFinish =='0'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
-                            :key="item.wheelId" @click="showitem(item,index,$event)">
-                            <span>{{ index+1 }}</span>
-                            <span>{{item.axleNumber}}</span>
-                            <span>{{item.axleType}}</span>
-                            <span>{{item.vehicleType}} {{item.vehicleNumber}}</span>
-                            <span>{{item.axlePosition}}</span>
-                            <span>{{item.takeInDate}}</span>
-                        </li>
-                    </ul>
+                    <el-card class="wheelInfo-Container">
+                        <div class="wheelInfoHead">
+                            <span class="wheelInfoList1">序</span>
+                            <span class="wheelInfoList2">轴号</span>
+                            <span class="wheelInfoList3">轴型</span>
+                            <span class="wheelInfoList4">车型车号</span>
+                            <span class="wheelInfoList5">轴位</span>
+                            <span class="wheelInfoList6">收入日期</span>
+                        </div>
+                        <ul class="wheelInfo-list" ref="infolist">
+                            <li :class="['wheelInfo-list-item',item.isreMeasureFinish=='0'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
+                                :key="item.wheelId" @click="showitem(item,index,$event)">
+                                <span class="wheelInfoList1">{{ index+1 }}</span>
+                                <span class="wheelInfoList2">{{item.axleNumber}}</span>
+                                <span class="wheelInfoList3">{{item.axleType}}</span>
+                                <span class="wheelInfoList4">{{item.vehicleType}} {{item.vehicleNumber}}</span>
+                                <span class="wheelInfoList5">{{item.axlePosition}}</span>
+                                <span class="wheelInfoList6">{{item.takeInDate}}</span>
+                            </li>
+                        </ul>
+                    </el-card>
                 </el-col>
                 <el-col :span="18">
-                    <el-row class="status">
-                        <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
-                        <span>轴型: {{wheelInfo.axleType}}</span>
-                        <span>轴号: {{wheelInfo.axleNumber}}</span>
-                        <span>车型: {{wheelInfo.vehicleType}}</span>
-                        <span>车号: {{wheelInfo.vehicleNumber}}</span>
-                        <span>轴位: {{wheelInfo.axlePosition}} 位</span>
-                    </el-row>
-                    <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="车轮直径" prop="wheelDiameterLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.wheelDiameterLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="wheelDiameterRight" label-width="20">
-                                    <el-input v-model="ruleForm.wheelDiameterRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="7">
-                                <el-form-item label="踏面磨耗" prop="treadWearLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.treadWearLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="treadWearRight" label-width="20">
-                                    <el-input v-model="ruleForm.treadWearRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
+                    <el-card>
+                        <el-row class="status">
+                            <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
+                            <span>轴型: {{wheelInfo.axleType}}</span>
+                            <span>轴号: {{wheelInfo.axleNumber}}</span>
+                            <span>车型: {{wheelInfo.vehicleType}}</span>
+                            <span>车号: {{wheelInfo.vehicleNumber}}</span>
+                            <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                         </el-row>
+                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="车轮直径" prop="wheelDiameterLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.wheelDiameterLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="wheelDiameterRight" label-width="20">
+                                        <el-input v-model="ruleForm.wheelDiameterRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7">
+                                    <el-form-item label="踏面磨耗" prop="treadWearLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.treadWearLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="treadWearRight" label-width="20">
+                                        <el-input v-model="ruleForm.treadWearRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="轮辋宽" prop="rimWideLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.rimWideLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="rimWideRight" label-width="20">
-                                    <el-input v-model="ruleForm.rimWideRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="7">
-                                <el-form-item label="轮缘厚" prop="flangeThickLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.flangeThickLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="flangeThickRight" label-width="20">
-                                    <el-input v-model="ruleForm.flangeThickRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轮辋宽" prop="rimWideLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.rimWideLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="rimWideRight" label-width="20">
+                                        <el-input v-model="ruleForm.rimWideRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="7">
+                                    <el-form-item label="轮缘厚" prop="flangeThickLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.flangeThickLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="flangeThickRight" label-width="20">
+                                        <el-input v-model="ruleForm.flangeThickRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="轮辋厚" prop="rimThickLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.rimThickLeft" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">左</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="rimThickRight" label-width="20">
-                                    <el-input v-model="ruleForm.rimThickRight" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">右</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="轮对内距" prop="internalDistance1" label-width="120px">
-                                    <el-input v-model="ruleForm.internalDistance1" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">1:</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="internalDistance2" label-width="20">
-                                    <el-input v-model="ruleForm.internalDistance2" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">2:</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="4">
-                                <el-form-item prop="internalDistance3" label-width="20">
-                                    <el-input v-model="ruleForm.internalDistance3" placeholder="" :disabled="enableLeft">
-                                        <template slot="prepend">3:</template>
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轮辋厚" prop="rimThickLeft" label-width="120px">
+                                        <el-input v-model="ruleForm.rimThickLeft" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">左</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="rimThickRight" label-width="20">
+                                        <el-input v-model="ruleForm.rimThickRight" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">右</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轮对内距" prop="internalDistance1" label-width="120px">
+                                        <el-input v-model="ruleForm.internalDistance1" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">1:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="internalDistance2" label-width="20">
+                                        <el-input v-model="ruleForm.internalDistance2" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">2:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-form-item prop="internalDistance3" label-width="20">
+                                        <el-input v-model="ruleForm.internalDistance3" placeholder="" :disabled="enableLeft">
+                                            <template slot="prepend">3:</template>
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="5">
-                                <el-form-item label="轴型/号/材质" prop="axleType" label-width="120px">
+                            <el-row>
+                                <el-col :span="5">
+                                    <el-form-item label="轴型/号/材质" prop="axleType" label-width="120px">
                                         <el-select v-model="ruleForm.axleType" placeholder="请选择轴型">
                                             <el-option label="RE2B" value="RE2B"></el-option>
                                             <el-option label="RD2" value="RD2"></el-option>
                                         </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="3">
-                                <el-form-item prop="axleNumber" label-width="20">
-                                    <el-input v-model="ruleForm.axleNumber" placeholder="" :disabled="enableLeft">
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="3">
-                                <el-form-item prop="axleMaterial" label-width="20">
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="3">
+                                    <el-form-item prop="axleNumber" label-width="20">
+                                        <el-input v-model="ruleForm.axleNumber" placeholder="" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="3">
+                                    <el-form-item prop="axleMaterial" label-width="20">
                                         <el-select v-model="ruleForm.axleMaterial" placeholder="车轴钢种代号">
                                             <el-option label="W" value="LZ50"></el-option>
                                             <el-option label="S" value="LZ40"></el-option>
                                             <el-option label="H" value="LZ45CrV"></el-option>
                                         </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="6">
-                                <el-form-item label="制造日期" prop="axleMadeDate" label-width="80px">
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="制造日期" prop="axleMadeDate" label-width="80px">
                                         <el-date-picker
                                                 type="date"
                                                 placeholder="请选择日期"
@@ -220,25 +223,25 @@
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-form-item label="制造单位" prop="axleMadeIn" label-width="80px">
-                                    <el-input v-model="ruleForm.axleMadeIn" placeholder="" :disabled="enableLeft">
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-form-item label="制造单位" prop="axleMadeIn" label-width="80px">
+                                        <el-input v-model="ruleForm.axleMadeIn" placeholder="" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="6">
-                                <el-form-item label="车轮型号" prop="wheelType" label-width="120px">
-                                    <el-input v-model="ruleForm.wheelType" placeholder="" :disabled="enableLeft">
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="6">
-                                <el-form-item label="首装日期" prop="wheelAssemblefirst" label-width="80px">
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-form-item label="车轮型号" prop="wheelType" label-width="120px">
+                                        <el-input v-model="ruleForm.wheelType" placeholder="" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="首装日期" prop="wheelAssemblefirst" label-width="80px">
                                         <el-date-picker
                                                 type="date"
                                                 placeholder="请选择日期"
@@ -246,10 +249,10 @@
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="6">
-                                <el-form-item label="末装日期" prop="wheelAssemblelast" label-width="80px">
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-form-item label="末装日期" prop="wheelAssemblelast" label-width="80px">
                                         <el-date-picker
                                                 type="date"
                                                 placeholder="请选择日期"
@@ -257,30 +260,30 @@
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-form-item label="末装单位" prop="wheelAssemblelastIn" label-width="80px">
-                                    <el-input v-model="ruleForm.wheelAssemblelastIn" placeholder="" :disabled="enableLeft">
-                                    </el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-form-item label="末装单位" prop="wheelAssemblelastIn" label-width="80px">
+                                        <el-input v-model="ruleForm.wheelAssemblelastIn" placeholder="" :disabled="enableLeft">
+                                        </el-input>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
 
 
 
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="轴承等级(左)" prop="bearingTypeLeft" label-width="120px">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轴承等级(左)" prop="bearingTypeLeft" label-width="120px">
                                         <el-select v-model="ruleForm.bearingTypeLeft" placeholder="轴承等级">
                                             <el-option label="新造" value="0"></el-option>
                                             <el-option label="大修" value="1"></el-option>
                                         </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="组装日期(左)" prop="bearingAssembleDateLeft" label-width="120px">
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="组装日期(左)" prop="bearingAssembleDateLeft" label-width="120px">
                                         <el-date-picker
                                                 type="date"
                                                 placeholder="请选择日期"
@@ -288,21 +291,21 @@
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
-                        <el-row>
-                            <el-col :span="7">
-                                <el-form-item label="轴承等级(右)" prop="bearingTypeRight" label-width="120px">
+                            <el-row>
+                                <el-col :span="7">
+                                    <el-form-item label="轴承等级(右)" prop="bearingTypeRight" label-width="120px">
                                         <el-select v-model="ruleForm.bearingTypeLeft" placeholder="轴承等级">
                                             <el-option label="新造" value="0"></el-option>
                                             <el-option label="大修" value="1"></el-option>
                                         </el-select>
-                                </el-form-item>
-                            </el-col>
-                            <el-col :span="8">
-                                <el-form-item label="组装日期(右)" prop="bearingAssembleDateRight" label-width="120px">
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="8">
+                                    <el-form-item label="组装日期(右)" prop="bearingAssembleDateRight" label-width="120px">
                                         <el-date-picker
                                                 type="date"
                                                 placeholder="请选择日期"
@@ -310,20 +313,21 @@
                                                 format="yyyy 年 MM 月 dd 日"
                                                 value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
 
 
-                        <el-form-item>
-                            <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
-                            <el-button @click="resetForm" size="small">重置</el-button>
-                            <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
-                            <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
-                            <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
-                            <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
-                        </el-form-item>
-                    </el-form>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
+                                <el-button @click="resetForm" size="small">重置</el-button>
+                                <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
+                                <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
+                                <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
+                                <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-card>
                 </el-col>
             </el-row>
         </el-card>
@@ -657,7 +661,7 @@
                     }
                 }
                 //是否完成
-                if (item.iswheelDispatchFinish == '1'){
+                if (item.isreMeasureFinish == '1'){
                     this.addbtnstatus = false;
                     this.savebtnstatus = false;
                     this.modbtnstatus = true;
@@ -673,7 +677,7 @@
                     this.ruleForm = result.data.object;
                 }
                 //未完成给个空值和表单id
-                if (item.iswheelDispatchFinish == '0'){
+                if (item.isreMeasureFinish == '0'){
                     this.ruleForm = {};
                     this.ruleForm.wheelId = item.wheelId;
                 }
@@ -756,26 +760,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .list{
-        list-style: none;
-        height: 500px;
-        padding: 0;
-        font-size: 14px;
-        overflow: auto;
-        background-color: #e7e1cd;
-        .list-item{
-            width: 100%;
-            height: 40px;
-            background-color: #cfa;
-            border-bottom: 1px solid black;
-            user-select: none;
-            cursor: pointer;
-            margin-top: 2px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-    }
     .status{
         font-size: 14px;
         margin: 0 0 20px 10px;
@@ -783,15 +767,6 @@
             margin-left: 20px;
             font-size: 16px;
         }
-    }
-    .list-item:hover{
-        background-color: #0096b3;
-    }
-    .choosen{
-        background-color: #B3C0D1 !important;
-    }
-    .notfinish{
-        color: red;
     }
     .listContainer{
         text-align: center;

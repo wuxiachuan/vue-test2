@@ -93,7 +93,11 @@ export default {
       this.flushProblems();
   },
   methods:{
-    logout(){
+    async logout(){
+      var result =await axios.get("http://localhost:8081/spt2/userManage/logout");
+      if (result.data.code == 100){
+        this.menulist = result.data.object;
+      }
       sessionStorage.clear();
       this.$router.push("/login");
     },
