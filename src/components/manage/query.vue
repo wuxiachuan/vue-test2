@@ -104,7 +104,7 @@
                         <el-form-item prop="dispatchDateFrom">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择支出日期"
+                                    placeholder="请选择支出起始日期"
                                     v-model="search.dispatchDateFrom"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
@@ -115,7 +115,7 @@
                         <el-form-item prop="dispatchDateTo">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择支出日期"
+                                    placeholder="请选择支出终止日期"
                                     v-model="search.dispatchDateTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
@@ -162,7 +162,7 @@
                             </template>
                         </el-table-column>
                         <el-table-column prop="" label="修竣日期" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车型" ></el-table-column>
+                        <el-table-column prop="wheelInfo.dispatchVehicleType" label="支出车型" ></el-table-column>
                         <el-table-column prop="wheelInfo.dipatchVehicleNumber" label="支出车号" ></el-table-column>
                         <el-table-column prop="wheelInfo.dipatchAxlePosition" label="支出轴位" ></el-table-column>
                         <el-table-column prop="wheelInfo.dispatchDate" label="支出日期" ></el-table-column>

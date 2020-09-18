@@ -41,6 +41,15 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="4">
+                        <el-form-item prop="isprocessFinish">
+                            <el-select v-model="search.isprocessFinish" placeholder="请输入完工状态" clearable>
+                                <el-option label="已完工" value="1"></el-option>
+                                <el-option label="未完工" value="0"></el-option>
+                                <el-option label="全部" value=""></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
                         <el-form-item prop="takeInDateFrom">
                             <el-date-picker
                                     type="date"
@@ -88,11 +97,11 @@
                                 <span v-if="scope.row.wheelInfo.isprocessFinish =='0'" >未完工</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="" label="修竣日期" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车型" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车号" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出轴位" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出日期" ></el-table-column>
+<!--                        <el-table-column prop="" label="修竣日期" ></el-table-column>-->
+<!--                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车型" ></el-table-column>-->
+<!--                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车号" ></el-table-column>-->
+<!--                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出轴位" ></el-table-column>-->
+<!--                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出日期" ></el-table-column>-->
                         <el-table-column label="详细信息" fixed="right" width="270">
                             <template slot-scope="scope">
                                 <el-button
@@ -106,6 +115,7 @@
                                 <el-button
                                         icon="el-icon-edit"
                                         size="mini"
+                                        :disabled="scope.row.wheelInfo.isprocessFinish =='1'"
                                         @click="handle2FinishInspection(scope.$index, scope.row)">通过</el-button>
                             </template>
                         </el-table-column>
@@ -524,7 +534,7 @@
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
                         var result = await axios.post(
-                            "http://localhost:8081/spt2/manage/query",
+                            "http://localhost:8081/spt2/manage/getInfo2check",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -701,6 +711,8 @@
                     alert("修改失败");
                     return ;
                 }
+                this.finishInspectionDialogVisible = false;
+                this.searchWheelInfo('searchForm');
                 alert("已通过！");
             },
             //日期格式化

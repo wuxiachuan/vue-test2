@@ -332,7 +332,8 @@
             },
             async searchVehicle(form){
                 var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/getvehicleNum");
+                    "http://localhost:8081/spt2/wheelDispatch/getvehicleNum",
+                    this.search);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;
