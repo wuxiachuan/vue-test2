@@ -178,18 +178,18 @@
                                 </el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="7">
-                                    <el-form-item label="轮对内距1" prop="internalDistance1">
+                                <el-col :span="9">
+                                    <el-form-item label="轮对内距" prop="internalDistance1" >
                                         <el-input v-model="ruleForm.internalDistance1"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="7">
-                                    <el-form-item label="轮对内距2" prop="internalDistance2">
+                                <el-col :span="5">
+                                    <el-form-item  prop="internalDistance2" label-width="0">
                                         <el-input v-model="ruleForm.internalDistance2"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="7">
-                                    <el-form-item label="轮对内距3" prop="internalDistance3">
+                                <el-col :span="5">
+                                    <el-form-item  prop="internalDistance3" label-width="0">
                                         <el-input v-model="ruleForm.internalDistance3"></el-input>
                                     </el-form-item>
                                 </el-col>

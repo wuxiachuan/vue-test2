@@ -2,47 +2,49 @@
     <div>
         <el-row>
             <el-col :span="24">
-                <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
-                    <el-row>
-                        <el-col :span="7">
-                            <el-form-item label="环境温度" prop="envTemperatureLeft" label-width="120px">
-                                <el-input v-model="ruleForm.envTemperatureLeft" placeholder=""  :disabled="enableLeft"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="7">
-                            <el-form-item label="最高温度" prop="highestTempLeft" label-width="120px">
-                                <el-input v-model="ruleForm.highestTempLeft" placeholder="" :disabled="enableLeft">
-                                    <template slot="prepend">左</template>
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item prop="highestTempRight" label-width="20">
-                                <el-input v-model="ruleForm.highestTempRight" placeholder="" :disabled="enableLeft">
-                                    <template slot="prepend">右</template>
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="7">
-                            <el-form-item label="最大温升" prop="temperatureRiseLeft" label-width="120px">
-                                <el-input v-model="ruleForm.temperatureRiseLeft" placeholder="" :disabled="enableLeft">
-                                    <template slot="prepend">左</template>
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item prop="temperatureRiseRight" label-width="20">
-                                <el-input v-model="ruleForm.temperatureRiseRight" placeholder="" :disabled="enableLeft">
-                                    <template slot="prepend">右</template>
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form>
+                <el-card>
+                    <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+                        <el-row>
+                            <el-col :span="7">
+                                <el-form-item label="环境温度" prop="envTemperatureLeft" label-width="120px">
+                                    <el-input v-model="ruleForm.envTemperatureLeft" placeholder=""  :disabled="enableLeft"></el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="7">
+                                <el-form-item label="最高温度" prop="highestTempLeft" label-width="120px">
+                                    <el-input v-model="ruleForm.highestTempLeft" placeholder="" :disabled="enableLeft">
+                                        <template slot="prepend">左</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item prop="highestTempRight" label-width="20">
+                                    <el-input v-model="ruleForm.highestTempRight" placeholder="" :disabled="enableLeft">
+                                        <template slot="prepend">右</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="7">
+                                <el-form-item label="最大温升" prop="temperatureRiseLeft" label-width="120px">
+                                    <el-input v-model="ruleForm.temperatureRiseLeft" placeholder="" :disabled="enableLeft">
+                                        <template slot="prepend">左</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                            <el-col :span="4">
+                                <el-form-item prop="temperatureRiseRight" label-width="20">
+                                    <el-input v-model="ruleForm.temperatureRiseRight" placeholder="" :disabled="enableLeft">
+                                        <template slot="prepend">右</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-col>
+                        </el-row>
+                    </el-form>
+                </el-card>
             </el-col>
         </el-row>
     </div>

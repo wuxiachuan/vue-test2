@@ -235,7 +235,7 @@
                 cy:0,
                 curIndex:-1,
                 curItem:'',
-                data: [1,2,3,4,5,6,7,8,9,10],
+                data: [],
                 changeData: [],
                 orgdata:{},
                 target:{},
@@ -338,7 +338,6 @@
                     return ;
                 }
                 this.vehicleNum = result.data.object;
-                console.log(this.vehicleNum);
             },
             resetSearchInfo(form){
 
@@ -363,7 +362,6 @@
                         }
                     }
                 }
-                console.log(this.vehicleInfo);
             },
             clearDispatched(){
                 for (var i = 0 ; i < this.choosenNum.length ; i++){
@@ -375,7 +373,7 @@
                 }
                 this.vehicleInfo = [];
                 this.choosenNum = [];
-                this.data = [1,2,3,4,5,6,7,8,9,10];
+                this.data = [];
                 this.changeData = [];
             },
             async handDispatch(){

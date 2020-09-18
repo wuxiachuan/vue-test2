@@ -163,9 +163,9 @@
                         </el-table-column>
                         <el-table-column prop="" label="修竣日期" ></el-table-column>
                         <el-table-column prop="wheelInfo.vehicleNumber" label="支出车型" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出车号" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出轴位" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="支出日期" ></el-table-column>
+                        <el-table-column prop="wheelInfo.dipatchVehicleNumber" label="支出车号" ></el-table-column>
+                        <el-table-column prop="wheelInfo.dipatchAxlePosition" label="支出轴位" ></el-table-column>
+                        <el-table-column prop="wheelInfo.dispatchDate" label="支出日期" ></el-table-column>
                         <el-table-column label="详细信息" fixed="right" width="180">
                             <template slot-scope="scope">
                                 <el-button
@@ -201,7 +201,7 @@
             <!--    分块显示详细信息-->
             <el-tabs v-model="activeName" @tab-click="handleClick" type="card" v-if="detailtableVisible">
                 <el-tab-pane label="收入信息" name="first" v-if="wheelInfoForTable.wheelInfo">
-                    <wheelinfotable ref="wheelinfotable" v-if="wheelInfoForTable.wheelInfo" :showinfo="wheelInfoForTable.wheelInfo"></wheelinfotable>
+                    <wheelinfotable ref="wheelinfotable" v-if="wheelInfoForTable.wheelInfo" :showinfo="wheelInfoForTable.wheelInfo" ></wheelinfotable>
                 </el-tab-pane>
                 <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure" >
                     <wheelMeasureTable ref="wheelMeasureTable" v-if="wheelInfoForTable.wheelMeasure"  :showinfo="wheelInfoForTable.wheelMeasure"></wheelMeasureTable>
