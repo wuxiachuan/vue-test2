@@ -261,6 +261,9 @@
                             <el-table-column prop="confirmTime" label="消耗时间" sortable></el-table-column>
                         </el-table>
                 </el-tab-pane>
+                <el-tab-pane label="51C卡片" name="eleven" >
+                    <sheetTable ref="wheelinfotable"  :showinfo="wheelInfoForTable"></sheetTable>
+                </el-tab-pane>
             </el-tabs>
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="closedetailable" size="small">关闭</el-button>
@@ -330,7 +333,7 @@
                         <h4>磨合试验: {{wheelInfoForTable.bearingTest.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对支出" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelDispatch.finishTime}}</h4>
                         <h4>支出: {{wheelInfoForTable.wheelDispatch.worker}}</h4>
@@ -354,6 +357,7 @@
     import bearingRepairTable from "./bearingRepairTable";
     import bearingTestTable from "./bearingTestTable";
     import axleInspectionTable from "./axleInspectionTable";
+    import sheetTable from "./sheetTable";
     export default {
         name: "information",
         components:{
@@ -365,7 +369,8 @@
             bearingRepairTable:bearingRepairTable,
             bearingLoadTable:bearingLoadTable,
             bearingCapTable:bearingCapTable,
-            axleInspectionTable:axleInspectionTable
+            axleInspectionTable:axleInspectionTable,
+            sheetTable:sheetTable
         },
         data(){
             return {

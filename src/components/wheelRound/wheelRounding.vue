@@ -633,8 +633,8 @@
             //多条件查找wheel
             searchWheelInfo(searchForm){
                 //保证至少一个查找条件
-                // if(this.search.wheelId==''&&this.search.takeInDate==null&&this.search.axleNumber==''&&
-                //     this.search.vehicleNumber==''&&this.search.infoTakeFinishTime==null){
+                // if(this.search.wheelId==''&&this.search.takeInDateFrom==null&&this.search.takeInDateTo==null&&this.search.axleNumber==''&&
+                //     this.search.vehicleNumber==''&&this.search.infoTakeFinishTimeFrom==null&&this.search.infoTakeFinishTimeTo==null){
                 //     this.searchUnFinish();
                 //     return;
                 // }

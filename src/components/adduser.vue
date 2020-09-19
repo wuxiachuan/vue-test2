@@ -273,7 +273,7 @@
         position: relative;
     }
     .el-tag{
-        margin-right: 10px;
+        margin:0 10px 5px 0;
     }
     .el-switch{
         margin-left: 10px;

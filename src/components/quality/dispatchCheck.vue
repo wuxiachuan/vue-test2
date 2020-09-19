@@ -755,7 +755,7 @@
         },
        async mounted() {
             var result = await axios.post(
-                "http://localhost:8081/spt2/manage/query",
+                "http://localhost:8081/spt2/manage/getInfo2check",
                 this.search);
             if (result.data.code != 100){
                 alert("添加失败");

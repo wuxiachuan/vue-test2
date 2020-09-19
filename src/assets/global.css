@@ -17,6 +17,7 @@ html,body,#app{
     padding: 5px !important;
 }
 .wheelInfo-list{
+    width: 100%;
     list-style: none;
     height: 600px;
     padding: 0;
