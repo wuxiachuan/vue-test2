@@ -59,7 +59,7 @@
         data(){
             return{
                 enableLeft:false,
-                enableRight:true,
+             //   enableRight:true,
                 ruleForm: {
                     id:'',
                     wheelId	:'',

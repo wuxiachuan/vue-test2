@@ -212,9 +212,9 @@
                                     <el-col :span="4">
                                         <el-form-item  prop="axleMaterial" label-width='0'>
                                             <el-select v-model="ruleForm.axleMaterial" placeholder="车轴钢种代号">
-                                                <el-option label="W" value="LZ50"></el-option>
-                                                <el-option label="S" value="LZ40"></el-option>
-                                                <el-option label="H" value="LZ45CrV"></el-option>
+                                                <el-option label="W" value="W"></el-option>
+                                                <el-option label="S" value="S"></el-option>
+                                                <el-option label="H" value="H"></el-option>
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
@@ -416,8 +416,8 @@
                                                 type="date"
                                                 placeholder="左"
                                                 v-model="ruleForm.unloadDateLeft"
-                                                format="yyyy 年 MM 月"
-                                                value-format="yyyy-MM"
+                                                format="yyyy 年 MM 月 dd 日"
+                                                value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>
@@ -427,8 +427,8 @@
                                                 type="date"
                                                 placeholder="右"
                                                 v-model="ruleForm.unloadDateRight"
-                                                format="yyyy 年 MM 月"
-                                                value-format="yyyy-MM"
+                                                format="yyyy 年 MM 月 dd 日"
+                                                value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>

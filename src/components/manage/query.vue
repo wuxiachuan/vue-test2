@@ -50,7 +50,7 @@
                         <el-form-item prop="infoTakeFinishTimeFrom">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择完工日期"
+                                    placeholder="请选择完工起始日期"
                                     v-model="search.infoTakeFinishTimeFrom"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
@@ -61,7 +61,7 @@
                         <el-form-item prop="infoTakeFinishTimeTo">
                             <el-date-picker
                                     type="date"
-                                    placeholder="请选择完工日期"
+                                    placeholder="请选择完工终止日期"
                                     v-model="search.infoTakeFinishTimeTo"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
@@ -161,7 +161,13 @@
                                 <span v-if="scope.row.wheelInfo.state =='4'" >已送厂</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="" label="修竣日期" ></el-table-column>
+                        <el-table-column prop="wheelInfo.isprocessFinishTime" label="修竣日期" ></el-table-column>
+                        <el-table-column prop="wheelDispatch" label="轮场位置" >
+                            <template slot-scope="scope">
+                                <span v-if="scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX != null" >{{scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX}}道</span>
+                                <span v-if="scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX != null" >{{scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionY}}号</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column prop="wheelInfo.dispatchVehicleType" label="支出车型" ></el-table-column>
                         <el-table-column prop="wheelInfo.dipatchVehicleNumber" label="支出车号" ></el-table-column>
                         <el-table-column prop="wheelInfo.dipatchAxlePosition" label="支出轴位" ></el-table-column>

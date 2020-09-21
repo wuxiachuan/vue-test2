@@ -203,11 +203,11 @@
                                 <el-col :span="7">
                                     <el-form-item label="修程" prop="repairProcess">
                                         <el-select v-model="ruleForm.repairProcess" placeholder="请选择">
-                                            <el-option label="0级" value="0"></el-option>
-                                            <el-option label="1级" value="1"></el-option>
-                                            <el-option label="2级" value="2"></el-option>
-                                            <el-option label="3级" value="3"></el-option>
-                                            <el-option label="4级" value="4"></el-option>
+                                            <el-option label="外观检查" value="0"></el-option>
+                                            <el-option label="旋面" value="1"></el-option>
+                                            <el-option label="探伤" value="2"></el-option>
+                                            <el-option label="旋面+探伤" value="3"></el-option>
+                                            <el-option label="送厂" value="4"></el-option>
                                         </el-select>
                                     </el-form-item>
                                 </el-col>

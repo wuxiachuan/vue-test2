@@ -72,10 +72,10 @@
                         </el-form-item>
                     </el-col>
 
-                    <el-col :span="5">
-                        <el-button size="mini" type="primary" @click="searchWheelInfo('searchForm')" >查询</el-button>
-                        <el-button size="mini" @click="resetSearchInfo('searchForm')" >重置</el-button>
-                        <el-button size="mini" @click="findMyProblem" >我的发现</el-button>
+                    <el-col :span="8">
+                        <el-button  type="primary" @click="searchWheelInfo('searchForm')" >查询</el-button>
+                        <el-button  @click="resetSearchInfo('searchForm')" >重置</el-button>
+                        <el-button  @click="findMyProblem" >我的发现</el-button>
                     </el-col>
                 </el-form>
             </el-row>

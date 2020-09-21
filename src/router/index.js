@@ -30,6 +30,7 @@ import query from "../components/manage/query";
 import monitor from "../components/manage/monitor";
 import sheet from "../components/manage/sheet";
 import dispatchCheck from "../components/quality/dispatchCheck";
+import qualityProblems from "../components/quality/qualityProblems";
 Vue.use(VueRouter)
 
   const routes = [
@@ -196,6 +197,11 @@ Vue.use(VueRouter)
         path: '/qualityInspection',
         name: 'qualityInspection',
         component: dispatchCheck
+      },
+      {
+        path: '/qualityFeedback',
+        name: 'qualityProblems',
+        component: qualityProblems
       }
     ]
   }

@@ -9,7 +9,7 @@
         <el-card>
             <el-row>
                 <el-tabs tab-position="left" style="height:1000px;">
-                    <el-tab-pane label="1-3股道">
+                    <el-tab-pane label="0-2股道">
                         <div class="container">
                             <span :class="['item',item == 'null'?'vacancy':'']"  v-for="(item,index) in wheellist.qualified0"
                                     @click="showDetail(item)">
@@ -29,7 +29,7 @@
                             </span>
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane label="4-6股道">
+                    <el-tab-pane label="3-5股道">
                         <div class="container">
                             <span :class="['item',item == 'null'?'vacancy':'']"  v-for="(item,index) in wheellist.qualified3"
                                   @click="showDetail(item)">
@@ -49,7 +49,7 @@
                             </span>
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane label="7-9股道">
+                    <el-tab-pane label="6-9股道">
                         <div class="container">
                             <span :class="['item',item == 'null'?'vacancy':'']"  v-for="(item,index) in wheellist.qualified6"
                                   @click="showDetail(item)">
@@ -64,6 +64,12 @@
                         </div>
                         <div class="container">
                             <span :class="['item',item == 'null'?'vacancy':'']"  v-for="(item,index) in wheellist.qualified8"
+                                  @click="showDetail(item)">
+                                         {{item == 'null'?'':item}}
+                            </span>
+                        </div>
+                        <div class="container">
+                            <span :class="['item',item == 'null'?'vacancy':'']"  v-for="(item,index) in wheellist.qualified9"
                                   @click="showDetail(item)">
                                          {{item == 'null'?'':item}}
                             </span>

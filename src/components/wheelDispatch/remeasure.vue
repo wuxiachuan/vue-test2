@@ -215,7 +215,7 @@
                             <el-row>
                                 <el-col :span="5">
                                     <el-form-item label="轴型/号/材质" prop="axleType" label-width="120px">
-                                        <el-select v-model="ruleForm.axleType" placeholder="请选择轴型">
+                                        <el-select v-model="ruleForm.axleType" placeholder="轴型">
                                             <el-option label="RE2B" value="RE2B"></el-option>
                                             <el-option label="RD2" value="RD2"></el-option>
                                         </el-select>
@@ -227,16 +227,16 @@
                                         </el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="3">
+                                <el-col :span="2">
                                     <el-form-item prop="axleMaterial" label-width="20">
-                                        <el-select v-model="ruleForm.axleMaterial" placeholder="车轴钢种代号">
-                                            <el-option label="W" value="LZ50"></el-option>
-                                            <el-option label="S" value="LZ40"></el-option>
-                                            <el-option label="H" value="LZ45CrV"></el-option>
+                                        <el-select v-model="ruleForm.axleMaterial" placeholder="材料">
+                                            <el-option label="W" value="W"></el-option>
+                                            <el-option label="S" value="S"></el-option>
+                                            <el-option label="H" value="H"></el-option>
                                         </el-select>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="6">
+                                <el-col :span="7">
                                     <el-form-item label="制造日期" prop="axleMadeDate" label-width="80px">
                                         <el-date-picker
                                                 type="date"
@@ -262,7 +262,7 @@
                                         </el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="6">
+                                <el-col :span="7">
                                     <el-form-item label="首装日期" prop="wheelAssemblefirst" label-width="80px">
                                         <el-date-picker
                                                 type="date"
@@ -273,7 +273,7 @@
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="6">
+                                <el-col :span="7">
                                     <el-form-item label="末装日期" prop="wheelAssemblelast" label-width="80px">
                                         <el-date-picker
                                                 type="date"
@@ -284,7 +284,7 @@
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="5">
+                                <el-col :span="4">
                                     <el-form-item label="末装单位" prop="wheelAssemblelastIn" label-width="80px">
                                         <el-input v-model="ruleForm.wheelAssemblelastIn" placeholder="" :disabled="enableLeft">
                                         </el-input>
@@ -320,7 +320,7 @@
                             <el-row>
                                 <el-col :span="7">
                                     <el-form-item label="轴承等级(右)" prop="bearingTypeRight" label-width="120px">
-                                        <el-select v-model="ruleForm.bearingTypeLeft" placeholder="轴承等级">
+                                        <el-select v-model="ruleForm.bearingTypeRight" placeholder="轴承等级">
                                             <el-option label="新造" value="0"></el-option>
                                             <el-option label="大修" value="1"></el-option>
                                         </el-select>

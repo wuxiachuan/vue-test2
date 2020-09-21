@@ -250,9 +250,9 @@
                                     <el-col :span="4">
                                         <el-form-item  prop="axleMaterial" label-width='0'>
                                             <el-select v-model="ruleForm.axleMaterial" placeholder="车轴钢种代号" :disabled="enableLeft">
-                                                <el-option label="W" value="LZ50"></el-option>
-                                                <el-option label="S" value="LZ40"></el-option>
-                                                <el-option label="H" value="LZ45CrV"></el-option>
+                                                <el-option label="W" value="W"></el-option>
+                                                <el-option label="S" value="S"></el-option>
+                                                <el-option label="H" value="H"></el-option>
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
@@ -364,36 +364,6 @@
                             </div>
 
                             <el-row>
-                                <el-col :span="7">
-                                    <el-form-item label="环境温度" prop="envTemperatureLeft" label-width="120px">
-                                        <el-input v-model="ruleForm.envTemperatureLeft" placeholder="左"  :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="envTemperatureRight" label-width="0">
-                                        <el-input v-model="ruleForm.envTemperatureRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="7">
-                                    <el-form-item label="最高温度" prop="highestTempLeft" label-width="120px">
-                                        <el-input v-model="ruleForm.highestTempLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="highestTempRight" label-width="0">
-                                        <el-input v-model="ruleForm.highestTempRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="7">
-                                    <el-form-item label="最大温升" prop="temperatureRiseLeft" label-width="120px">
-                                        <el-input v-model="ruleForm.temperatureRiseLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="temperatureRiseRight" label-width="0">
-                                        <el-input v-model="ruleForm.temperatureRiseRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
                                 <el-col :span="7">
                                     <el-form-item label="施封标记" prop="sealMarkLeft" label-width="120px">
                                         <el-select v-model="ruleForm.sealMarkLeft" placeholder="左" :disabled="enableLeft">

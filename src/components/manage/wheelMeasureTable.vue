@@ -121,8 +121,8 @@
         },
         data(){
             return{
-                enableLeft:false,
-                enableRight:true,
+             //   enableLeft:false,
+            //    enableRight:true,
                 ruleForm: {
                     id:'',
                     wheelId:'',
