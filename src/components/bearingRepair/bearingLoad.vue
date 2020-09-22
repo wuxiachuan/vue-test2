@@ -135,8 +135,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterLeftAvgA" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterLeftAvgA" placeholder="" :disabled="enableLeft">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterLeftAvgA" placeholder="" :disabled="enableLeft">
                                                 <template slot="prepend">平均:</template>
                                             </el-input>
                                         </el-form-item>
@@ -171,8 +171,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterLeftAvgB" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterLeftAvgB" placeholder="" :disabled="enableLeft">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterLeftAvgB" placeholder="" :disabled="enableLeft">
                                                 <template slot="prepend">平均:</template>
                                             </el-input>
                                         </el-form-item>
@@ -208,8 +208,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterRightAvgA" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterRightAvgA" placeholder="" :disabled="enableRight">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterRightAvgA" placeholder="" :disabled="enableRight">
                                                 <template slot="prepend">平均:</template>
                                             </el-input>
                                         </el-form-item>
@@ -244,8 +244,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterRightAvgB" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterRightAvgB" placeholder="" :disabled="enableRight">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterRightAvgB" placeholder="" :disabled="enableRight">
                                                 <template slot="prepend">平均:</template>
                                             </el-input>
                                         </el-form-item>
@@ -261,14 +261,14 @@
                                 <el-row>
                                     <el-col :span="3" class="innertext"><span>左轴颈平均值:</span></el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterLeftAvg" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterLeftAvg" placeholder="" :disabled="enableLeft"></el-input>
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterLeftAvg" placeholder="" :disabled="enableLeft"></el-input>
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="3" class="innertext"><span>右轴颈平均值:</span></el-col>
                                     <el-col :span="4">
-                                        <el-form-item  prop="axleNeckDiameterRightAvg" label-width='0'>
-                                            <el-input v-model="ruleForm.axleNeckDiameterRightAvg" placeholder="" :disabled="enableRight"></el-input>
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CaxleNeckDiameterRightAvg" placeholder="" :disabled="enableRight"></el-input>
                                         </el-form-item>
                                     </el-col>
                                 </el-row>
@@ -291,8 +291,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6">
-                                        <el-form-item  prop="bearingmadeInLeft" label-width='0'>
-                                            <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableLeft">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CneckFootDiameterLeftAvg" placeholder="" :disabled="enableLeft">
                                                 <template slot="prepend">直径平均值:</template>
                                             </el-input>
                                         </el-form-item>
@@ -320,8 +320,8 @@
                                         </el-form-item>
                                     </el-col>
                                     <el-col :span="6">
-                                        <el-form-item  prop="bearingmadeInLeft" label-width='0'>
-                                            <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableRight">
+                                        <el-form-item  prop="" label-width='0'>
+                                            <el-input v-model="CneckFootDiameterRightAvg" placeholder="" :disabled="enableRight">
                                                 <template slot="prepend">直径平均值:</template>
                                             </el-input>
                                         </el-form-item>
@@ -537,34 +537,36 @@
                 ruleForm: {
                     id	:'',
                     wheelId	:'',
-                    axleNeckDiameterLeftA1	:'',
-                    axleNeckDiameterLeftA2	:'',
-                    axleNeckDiameterLeftA3	:'',
-                    axleNeckDiameterLeftB1	:'',
-                    axleNeckDiameterLeftB2	:'',
-                    axleNeckDiameterLeftB3	:'',
-                    axleNeckDiameterRightA1	:'',
-                    axleNeckDiameterRightA2	:'',
-                    axleNeckDiameterRightA3	:'',
-                    axleNeckDiameterRightB1	:'',
-                    axleNeckDiameterRightB2	:'',
-                    axleNeckDiameterRightB3	:'',
-                    axleNeckRoundnessLeftA	:'',
-                    axleNeckRoundnessLeftB	:'',
-                    axleNeckRoundnessRightA	:'',
-                    axleNeckRoundnessRightB	:'',
-                    axleNeckDiameterLeftAvgA:'',
-                    axleNeckDiameterLeftAvgB:'',
-                    axleNeckDiameterRightAvgA:'',
-                    axleNeckDiameterRightAvgB:'',
-                    axleNeckDiameterLeftAvg:'',
-                    axleNeckDiameterRightAvg:'',
-                    neckFootDiameterLeft1	:'',
-                    neckFootDiameterLeft2	:'',
-                    neckFootDiameterRight1	:'',
-                    neckFootDiameterRight2	:'',
-                    neckFootRoundnessLeft	:'',
-                    neckFootRoundnessRight	:'',
+                    axleNeckDiameterLeftA1	:0,
+                    axleNeckDiameterLeftA2	:0,
+                    axleNeckDiameterLeftA3	:0,
+                    axleNeckDiameterLeftB1	:0,
+                    axleNeckDiameterLeftB2	:0,
+                    axleNeckDiameterLeftB3	:0,
+                    axleNeckDiameterRightA1	:0,
+                    axleNeckDiameterRightA2	:0,
+                    axleNeckDiameterRightA3	:0,
+                    axleNeckDiameterRightB1	:0,
+                    axleNeckDiameterRightB2	:0,
+                    axleNeckDiameterRightB3	:0,
+                    axleNeckRoundnessLeftA	:0,
+                    axleNeckRoundnessLeftB	:0,
+                    axleNeckRoundnessRightA	:0,
+                    axleNeckRoundnessRightB	:0,
+                    axleNeckDiameterLeftAvgA:0,
+                    axleNeckDiameterLeftAvgB:0,
+                    axleNeckDiameterRightAvgA:0,
+                    axleNeckDiameterRightAvgB:0,
+                    axleNeckDiameterLeftAvg:0,
+                    axleNeckDiameterRightAvg:0,
+                    neckFootDiameterLeft1	:0,
+                    neckFootDiameterLeft2	:0,
+                    neckFootDiameterRight1	:0,
+                    neckFootDiameterRight2	:0,
+                    neckFootDiameterLeftAvg :0,
+                    neckFootDiameterRightAvg :0,
+                    neckFootRoundnessLeft	:0,
+                    neckFootRoundnessRight	:0,
                     axleTypeLeft	:'',
                     axleTypeRight	:'',
                     bearingInnerDiameterLeft	:'',
@@ -769,7 +771,30 @@
             };
         },
         computed: {
-
+            CaxleNeckDiameterLeftAvgA:function () {
+                return Math.round(this.ruleForm.axleNeckDiameterLeftA1/3+this.ruleForm.axleNeckDiameterLeftA2/3+this.ruleForm.axleNeckDiameterLeftA3/3)
+            },
+            CaxleNeckDiameterLeftAvgB:function () {
+                return Math.round (this.ruleForm.axleNeckDiameterLeftB1/3+this.ruleForm.axleNeckDiameterLeftB2/3+this.ruleForm.axleNeckDiameterLeftB3/3)
+            },
+            CaxleNeckDiameterRightAvgA:function () {
+                return Math.round (this.ruleForm.axleNeckDiameterRightA1/3+this.ruleForm.axleNeckDiameterRightA2/3+this.ruleForm.axleNeckDiameterRightA3/3)
+            },
+            CaxleNeckDiameterRightAvgB:function () {
+                return Math.round (this.ruleForm.axleNeckDiameterRightB1/3+this.ruleForm.axleNeckDiameterRightB2/3+this.ruleForm.axleNeckDiameterRightB3/3)
+            },
+            CaxleNeckDiameterLeftAvg:function () {
+                return Math.round (this.CaxleNeckDiameterLeftAvgA/2+this.CaxleNeckDiameterLeftAvgB/2)
+            },
+            CaxleNeckDiameterRightAvg:function () {
+                return Math.round (this.CaxleNeckDiameterRightAvgA/2+this.CaxleNeckDiameterRightAvgB/2)
+            },
+            CneckFootDiameterLeftAvg(){
+                return Math.round (this.ruleForm.neckFootDiameterLeft1/2+this.ruleForm.neckFootDiameterLeft2/2)
+            },
+            CneckFootDiameterRightAvg(){
+                return Math.round (this.ruleForm.neckFootDiameterRight1/2+this.ruleForm.neckFootDiameterRight2/2)
+            }
         },
         methods: {
             //刷新表单
@@ -800,7 +825,8 @@
                         this.ruleForm.loaderRight = sessionStorage.getItem("name");
                         this.ruleForm.isFinish = '1';
                         this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                        //保存修程
+                        this.apeendAvg();
+                        //仅第一次创建时保存修程
                         this.ruleForm.repairSaved = this.wheelInfo.isbearingLoadFinish;
                         var result = await axios.post(
                             "http://localhost:8081/spt2/bearingLoad/addBearingLoad",
@@ -826,6 +852,17 @@
                     }
                 });
             },
+            apeendAvg(){
+                console.log("hello");
+                this.ruleForm.axleNeckDiameterLeftAvg = this.CaxleNeckDiameterLeftAvgA;
+                this.ruleForm.axleNeckDiameterRightAvg = this.CaxleNeckDiameterRightAvg;
+                this.ruleForm.neckFootDiameterLeftAvg = this.CneckFootDiameterLeftAvg;
+                this.ruleForm.neckFootDiameterRightAvg = this.CneckFootDiameterRightAvg;
+                this.ruleForm.axleNeckDiameterLeftAvgA = this.axleNeckDiameterLeftAvgA;
+                this.ruleForm.axleNeckDiameterLeftAvgB = this.axleNeckDiameterLeftAvgB;
+                this.ruleForm.axleNeckDiameterRightAvgA = this.axleNeckDiameterRightAvgA;
+                this.ruleForm.axleNeckDiameterRightAvgB = this.axleNeckDiameterRightAvgB;
+             },
             //从保存列表删除
             deleteFromSaveInfo(id){
                 for (var i=0;i<this.savedInfo.length;i++){
@@ -919,6 +956,7 @@
                 this.ruleForm.worker = sessionStorage.getItem("name");
                 this.ruleForm.loaderRight = sessionStorage.getItem("name");
                 this.ruleForm.finishTime = this.dateFormate(new Date(),'');
+                this.apeendAvg();
                 var result = await axios.post(
                     "http://localhost:8081/spt2/bearingLoad/modifyBearingLoad",
                     this.ruleForm);

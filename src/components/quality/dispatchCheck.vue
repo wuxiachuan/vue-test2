@@ -71,7 +71,16 @@
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
-
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTime">
+                            <el-input v-model="search.infoTakeFinishTime" placeholder="请输入车轴制造单位" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="dispatchDate">
+                            <el-input v-model="search.dispatchDate" placeholder="请输入车轮制造单位" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
                     <el-col :span="8">
                         <el-button  type="primary" @click="searchWheelInfo('searchForm')" >查询</el-button>
                         <el-button  @click="resetSearchInfo('searchForm')" >重置</el-button>

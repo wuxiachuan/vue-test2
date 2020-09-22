@@ -109,7 +109,7 @@
                             <span>车号: {{wheelInfo.vehicleNumber}}</span>
                             <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                         </el-row>
-                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
 
 
                             <el-row style="margin-bottom: 10px"><el-col :span="6"><span>轴端螺栓力矩</span></el-col></el-row>
@@ -460,6 +460,7 @@
                 wheelList:[],
                 unFinishMeasureList:[],
 
+                disableForm:true,
                 wheelInfo:{},
                 savedInfoHeads:[],
 
@@ -667,7 +668,7 @@
                 this.isModify = false;
                 this.ruleForm = {};
                 this.wheelInfo = {};
-                this.enableLeft = true;
+                this.disableForm = true;
             },
             //创建新表
             creatNewWheelInfo(){
@@ -876,6 +877,8 @@
                     this.ruleForm = {};
                     this.ruleForm.wheelId = item.wheelId;
                 }
+                //开放表单
+                this.disableForm = false;
             },
             async deleteForm(formName){
                 var res = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {

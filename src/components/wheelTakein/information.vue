@@ -161,8 +161,9 @@
                                 <el-col :span="8">
                                     <el-form-item label="材质" prop="axleMaterial">
                                         <el-select v-model="ruleForm.axleMaterial" placeholder="请轴材质">
-                                            <el-option label="RE2B" value="RE2B"></el-option>
-                                            <el-option label="RD2" value="RD2"></el-option>
+                                            <el-option label="LZ50" value="LZ50"></el-option>
+                                            <el-option label="LZ45CrV" value="LZ45CrV"></el-option>
+                                            <el-option label="LZ40" value="LZ40"></el-option>
                                         </el-select>
                                     </el-form-item>
                                 </el-col>
@@ -199,16 +200,21 @@
                                 <el-col :span="8">
                                     <el-form-item label="轮型" prop="wheelType">
                                         <el-select v-model="ruleForm.wheelType" placeholder="请选择轮型">
-                                            <el-option label="RE2B" value="RE2B"></el-option>
-                                            <el-option label="RD2" value="RD2"></el-option>
+                                            <el-option label="HESA" value="HESA"></el-option>
+                                            <el-option label="HEZB" value="HEZB"></el-option>
+                                            <el-option label="HDSA" value="HDSA"></el-option>
+                                            <el-option label="HDZA" value="HDZA"></el-option>
+                                            <el-option label="HDZB" value="HDZB"></el-option>
+                                            <el-option label="HDZC" value="HDZC"></el-option>
+                                            <el-option label="HDZD" value="HDZD"></el-option>
                                         </el-select>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="8">
                                     <el-form-item label="材质" prop="wheelMaterial">
                                         <el-select v-model="ruleForm.wheelMaterial" placeholder="请选择轮材质">
-                                            <el-option label="RE2B" value="RE2B"></el-option>
-                                            <el-option label="RD2" value="RD2"></el-option>
+                                            <el-option label="辗钢" value="辗钢"></el-option>
+                                            <el-option label="铸钢" value="铸钢"></el-option>
                                         </el-select>
                                     </el-form-item>
                                 </el-col>
@@ -222,11 +228,11 @@
                                 <el-col :span="8">
                                     <el-form-item label="首次组装" prop="wheelAssemblefirstDate">
                                         <el-date-picker
-                                                type="month"
+                                                type="date"
                                                 placeholder="选择日期"
                                                 v-model="ruleForm.wheelAssemblefirstDate"
-                                                format="yyyy 年 MM 月 "
-                                                value-format="yyyy-MM"
+                                                format="yyyy 年 MM 月 dd 日 "
+                                                value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>
@@ -240,11 +246,11 @@
                                 <el-col :span="12">
                                     <el-form-item label="末次组装" prop="wheelAssemblelastDate">
                                         <el-date-picker
-                                                type="month"
+                                                type="date"
                                                 placeholder="选择日期"
                                                 v-model="ruleForm.wheelAssemblelastDate"
-                                                format="yyyy 年 MM 月 "
-                                                value-format="yyyy-MM"
+                                                format="yyyy 年 MM 月 dd 日"
+                                                value-format="yyyy-MM-dd"
                                                 style="width: 100%;"></el-date-picker>
                                     </el-form-item>
                                 </el-col>
@@ -299,7 +305,7 @@
             var checkvehicleTypes = (rule,value,callback)=>{
                 var vehicleTypes = ["P70","P62NK","P64GK","P64K","P62K",
                 "C64K","C64","C70","C70E","C64H","G70","G70K","G70H","GQ70",
-                    "NX70","NX70A","X70"];
+                "NX70","NX70A","X70"];
                 if (vehicleTypes.indexOf(value.toUpperCase())==-1) {
                     return callback(new Error("输入合法的车型"));
                 }

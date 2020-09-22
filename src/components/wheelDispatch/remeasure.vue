@@ -213,7 +213,7 @@
                             </el-row>
 
                             <el-row>
-                                <el-col :span="5">
+                                <el-col :span="6">
                                     <el-form-item label="轴型/号/材质" prop="axleType" label-width="120px">
                                         <el-select v-model="ruleForm.axleType" placeholder="轴型">
                                             <el-option label="RE2B" value="RE2B"></el-option>
@@ -291,9 +291,6 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-
-
-
 
                             <el-row>
                                 <el-col :span="7">

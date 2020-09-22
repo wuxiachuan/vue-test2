@@ -122,7 +122,16 @@
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
-
+                    <el-col :span="4">
+                        <el-form-item prop="infoTakeFinishTime">
+                            <el-input v-model="search.infoTakeFinishTime" placeholder="请输入车轴制造单位" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-form-item prop="dispatchDate">
+                            <el-input v-model="search.dispatchDate" placeholder="请输入车轮制造单位" clearable></el-input>
+                        </el-form-item>
+                    </el-col>
                     <el-col :span="4">
                         <el-form-item prop="other">
                             <el-input v-model="search.other" placeholder="请输入..." clearable></el-input>
@@ -289,13 +298,13 @@
                         <h4>收入: {{wheelInfoForTable.wheelInfo.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure" >
+                <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure && wheelInfoForTable.wheelInfo.isMeasureFinish == '1'" >
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelMeasure.finishTime}}</h4>
                         <h4>测量: {{wheelInfoForTable.wheelMeasure.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair">
+                <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair && wheelInfoForTable.wheelInfo.isbearingRepairFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingRepair.finishTime}}</h4>
                         <h4>检查: {{wheelInfoForTable.bearingRepair.bearingExaminers}}</h4>
@@ -303,7 +312,7 @@
                         <h4>推卸(右): {{wheelInfoForTable.bearingRepair.unloaderRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮轴探伤" name="fourth" v-if="wheelInfoForTable.axleInspection">
+                <el-tab-pane label="轮轴探伤" name="fourth" v-if="wheelInfoForTable.axleInspection && wheelInfoForTable.wheelInfo.ismagnetInspectionFinish == '1'">
                     <div>
                         <h4>磁粉探伤完工时间: {{wheelInfoForTable.axleInspection.reultfinishTime}}</h4>
                         <h4>磁粉探伤: {{wheelInfoForTable.axleInspection.reultInspector}}</h4>
@@ -311,13 +320,13 @@
                         <h4>超声波探伤: {{wheelInfoForTable.axleInspection.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound">
+                <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound && wheelInfoForTable.wheelInfo.isWheelRoundingFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelRound.finishTime}}</h4>
                         <h4>旋面: {{wheelInfoForTable.wheelRound.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad">
+                <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad && wheelInfoForTable.wheelInfo.isbearingLoadFinish == '4'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingLoad.finishTime}}</h4>
                         <h4>选配(左): {{wheelInfoForTable.bearingLoad.matcherLeft}}</h4>
@@ -326,20 +335,20 @@
                         <h4>压装(右): {{wheelInfoForTable.bearingLoad.loaderRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承关盖" name="seventh" v-if="wheelInfoForTable.bearingCap" >
+                <el-tab-pane label="轴承关盖" name="seventh" v-if="wheelInfoForTable.bearingCap && wheelInfoForTable.wheelInfo.isbearingCapFinish == '1'" >
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingCap.finishTime}}</h4>
                         <h4>关盖(左): {{wheelInfoForTable.bearingCap.worker}}</h4>
                         <h4>关盖(右): {{wheelInfoForTable.bearingCap.caperRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest">
+                <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest && wheelInfoForTable.wheelInfo.isbearingrollTestFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingTest.finishTime}}</h4>
                         <h4>磨合试验: {{wheelInfoForTable.bearingTest.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch && wheelInfoForTable.wheelInfo.iswheelDispatchFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelDispatch.finishTime}}</h4>
                         <h4>支出: {{wheelInfoForTable.wheelDispatch.worker}}</h4>
@@ -399,7 +408,7 @@
                      infoTakeFinishTime:null,
                      infoTakeFinishTimeFrom:null,
                      infoTakeFinishTimeTo:null,
-                    dispatchDate:null,
+                     dispatchDate:null,
                      dispatchDateFrom:null,
                      dispatchDateTo:null,
                     takeInReason:'',

@@ -183,8 +183,8 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-form-item  prop="bearingmadeInLeft" label-width='0'>
-                                        <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableLeft">
+                                    <el-form-item  prop="neckFootDiameterLeftAvg" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootDiameterLeftAvg" placeholder="" :disabled="enableLeft">
                                             <template slot="prepend">直径平均值:</template>
                                         </el-input>
                                     </el-form-item>
@@ -212,8 +212,8 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="6">
-                                    <el-form-item  prop="bearingmadeInLeft" label-width='0'>
-                                        <el-input v-model="ruleForm.bearingmadeInLeft" placeholder="" :disabled="enableRight">
+                                    <el-form-item  prop="neckFootDiameterRightAvg" label-width='0'>
+                                        <el-input v-model="ruleForm.neckFootDiameterRightAvg" placeholder="" :disabled="enableRight">
                                             <template slot="prepend">直径平均值:</template>
                                         </el-input>
                                     </el-form-item>
@@ -409,6 +409,8 @@
                     neckFootDiameterLeft2	:'',
                     neckFootDiameterRight1	:'',
                     neckFootDiameterRight2	:'',
+                    neckFootDiameterLeftAvg :0,
+                    neckFootDiameterRightAvg :0,
                     neckFootRoundnessLeft	:'',
                     neckFootRoundnessRight	:'',
                     axleTypeLeft	:'',
@@ -476,8 +478,21 @@
                 }
             }
         },
+        methods:{
+            enableForm(index){
+                this.enableLeft = true;
+                this.enableRight = true;
+                if (index=='1') this.enableLeft = false;
+                if (index=='2') this.enableRight = false;
+                if (index=='3') {
+                    this.enableLeft = false;
+                    this.enableRight = false;
+                }
+            }
+        },
         mounted() {
             this.ruleForm = this.showinfo;
+            this.enableForm(this.showinfo.repairSaved);
         }
     }
 </script>

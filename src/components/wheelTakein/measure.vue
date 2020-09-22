@@ -396,6 +396,9 @@
                     internalDistance3: [
                         { required: true, message: '请输入', trigger: 'blur' },
                         { validator:checkinternalDistance,trigger: 'blur' }
+                    ],
+                    repairProcess:[
+                        { required: true, message: '请选择修程', trigger: 'blur' }
                     ]
                 },
                 searchrules:{
