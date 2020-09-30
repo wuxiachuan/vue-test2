@@ -153,34 +153,35 @@
                             :row-class-name="tableRowClassName"
                             border stripe>
                         <el-table-column type="index" label="序号" width="50"></el-table-column>
-                        <el-table-column prop="wheelInfo.wheelId" label="单号" width="80" sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.axleNumber" label="轴号" width="150" sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.axleType" label="轴型"  sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.takeInReason" label="收入来源" ></el-table-column>
-                        <el-table-column prop="wheelInfo.takeInDate" label="收入日期" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleType" label="收入车型" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="收入车号" ></el-table-column>
-                        <el-table-column prop="wheelInfo.axlePosition" label="收入轴位" ></el-table-column>
-                        <el-table-column prop="wheelInfo.isprocessFinish" label="完工状态" >
+                        <el-table-column prop="wheelId" label="单号" width="80" sortable></el-table-column>
+                        <el-table-column prop="axleNumber" label="轴号" width="150" sortable></el-table-column>
+                        <el-table-column prop="axleType" label="轴型"  sortable></el-table-column>
+                        <el-table-column prop="axleMadeIn" label="厂代号"  sortable></el-table-column>
+                        <el-table-column prop="takeInReason" label="收入来源" ></el-table-column>
+                        <el-table-column prop="takeInDate" label="收入日期" ></el-table-column>
+                        <el-table-column prop="vehicleType" label="收入车型" ></el-table-column>
+                        <el-table-column prop="vehicleNumber" label="收入车号" ></el-table-column>
+                        <el-table-column prop="axlePosition" label="收入轴位" ></el-table-column>
+                        <el-table-column prop="isprocessFinish" label="完工状态" >
                             <template slot-scope="scope">
-                                <span v-if="scope.row.wheelInfo.state =='0'" >检修中</span>
-                                <span v-if="scope.row.wheelInfo.state =='1'" >待支出</span>
-                                <span v-if="scope.row.wheelInfo.state =='2'" >已支出</span>
-                                <span v-if="scope.row.wheelInfo.state =='3'" >报废</span>
-                                <span v-if="scope.row.wheelInfo.state =='4'" >已送厂</span>
+                                <span v-if="scope.row.state =='0'" >检修中</span>
+                                <span v-if="scope.row.state =='1'" >待支出</span>
+                                <span v-if="scope.row.state =='2'" >已支出</span>
+                                <span v-if="scope.row.state =='3'" >报废</span>
+                                <span v-if="scope.row.state =='4'" >已送厂</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="wheelInfo.isprocessFinishTime" label="修竣日期" ></el-table-column>
+                        <el-table-column prop="isprocessFinishTime" label="修竣日期" ></el-table-column>
                         <el-table-column prop="wheelDispatch" label="轮场位置" >
                             <template slot-scope="scope">
-                                <span v-if="scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX != null" >{{scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX}}道</span>
-                                <span v-if="scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionX != null" >{{scope.row.wheelDispatch&&scope.row.wheelDispatch.storePositionY}}号</span>
+                                <span v-if="scope.row.storePositionX != null" >{{scope.row.storePositionX}}道</span>
+                                <span v-if="scope.row.storePositionX != null" >{{scope.row.storePositionY}}号</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="wheelInfo.dispatchVehicleType" label="支出车型" ></el-table-column>
-                        <el-table-column prop="wheelInfo.dipatchVehicleNumber" label="支出车号" ></el-table-column>
-                        <el-table-column prop="wheelInfo.dipatchAxlePosition" label="支出轴位" ></el-table-column>
-                        <el-table-column prop="wheelInfo.dispatchDate" label="支出日期" ></el-table-column>
+                        <el-table-column prop="dispatchVehicleType" label="支出车型" ></el-table-column>
+                        <el-table-column prop="dipatchVehicleNumber" label="支出车号" ></el-table-column>
+                        <el-table-column prop="dipatchAxlePosition" label="支出轴位" ></el-table-column>
+                        <el-table-column prop="dispatchDate" label="支出日期" ></el-table-column>
                         <el-table-column label="详细信息" fixed="right" width="180">
                             <template slot-scope="scope">
                                 <el-button
@@ -239,7 +240,7 @@
                 <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest">
                     <bearingTestTable ref="bearingTestTable" v-if="wheelInfoForTable.bearingTest" :showinfo="wheelInfoForTable.bearingTest"></bearingTestTable>
                 </el-tab-pane>
-                <el-tab-pane label="轮对支出" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
                     <wheelDispatchTable ref="wheelinfotable" v-if="wheelInfoForTable.wheelDispatch" :showinfo="wheelInfoForTable.wheelDispatch"></wheelDispatchTable>
                 </el-tab-pane>
                 <el-tab-pane label="故障信息" name="ten">
@@ -278,6 +279,11 @@
                 </el-tab-pane>
                 <el-tab-pane label="51C卡片" name="eleven" >
                     <sheetTable ref="wheelinfotable"  :showinfo="wheelInfoForTable"></sheetTable>
+                </el-tab-pane>
+                <el-tab-pane label="二维码" name="twelve">
+                    <div class="QRimg">
+                        <img  :src="QRimgpath">
+                    </div>
                 </el-tab-pane>
             </el-tabs>
             <span slot="footer" class="dialog-footer">
@@ -348,7 +354,7 @@
                         <h4>磨合试验: {{wheelInfoForTable.bearingTest.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch && wheelInfoForTable.wheelInfo.iswheelDispatchFinish == '1'">
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch && wheelInfoForTable.wheelInfo.isreMeasureFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelDispatch.finishTime}}</h4>
                         <h4>支出: {{wheelInfoForTable.wheelDispatch.worker}}</h4>
@@ -393,6 +399,8 @@
                 wheelInfoForTable:{},
                 detailtableVisible:false,
                 progresstableVisible:false,
+                QRcodeVisible:false,
+                QRimgpath:'',
                 activeStep:'',
                 activeName:'first',
                 //显示用户条数
@@ -462,13 +470,27 @@
             resetSearchInfo(searchForm){
                 this.$refs[searchForm].resetFields();
             },
-            handleForDetail(index,data){
+            async handleForDetail(index,data){
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/manage/queryAll",
+                    data);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
                 this.detailtableVisible = true;
-                this.wheelInfoForTable = data;
+                this.wheelInfoForTable = result.data.object;
             },
-            handleForProgress(index,data){
+            async handleForProgress(index,data){
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/manage/queryAll",
+                    data);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
                 this.progresstableVisible = true;
-                this.wheelInfoForTable = data;
+                this.wheelInfoForTable = result.data.object;
              },
             handleClose(done) {
                 this.$confirm('确认关闭？')
@@ -491,6 +513,10 @@
                     var id = this.wheelInfoForTable.wheelId;
                     this.getProblem(id);
                 }
+                if (tab.name == 'twelve'){
+                    var id = this.wheelInfoForTable.wheelId;
+                    this.getQRcode(id);
+                }
             },
             async getProblem(id){
                 var result = await axios.get(
@@ -510,20 +536,30 @@
                 this.progresstableVisible = false;
             },
             tableRowClassName({row}){
-                if(row.wheelInfo.state === '0'){
+                if(row.state === '0'){
                     return '';
-                } else if(row.wheelInfo.state === '1'){
+                } else if(row.state === '1'){
                     return 'repaired';
-                } else if(row.wheelInfo.state === '2'){
+                } else if(row.state === '2'){
                     return 'dispatched';
-                } else if(row.wheelInfo.state === '3'){
+                } else if(row.state === '3'){
                     return 'discard';
-                } else if(row.wheelInfo.state === '4'){
+                } else if(row.state === '4'){
                      return 'back2plant';
                 } else {
                     return '';
                 }
-            }
+            },
+            //获取二维码
+            async getQRcode(wheelId){
+                var result = await axios.get(
+                    "http://localhost:8081/spt2/wheelTakein/getQRcode?id="+wheelId);
+                if (result.data.code != 100){
+                    alert("二维码生成失败");
+                    return ;
+                }
+                this.QRimgpath = 'http://localhost:8081/spt2/wheelqrcode/'+result.data.object;
+            },
         },
         filters:{
             dateFormate: function(datastr,patt){
@@ -575,5 +611,15 @@
 }
 .back2plant{
     color: #B3B3B3  !important;
+}
+.QRimg{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+.QRimg img{
+    margin: 0 auto;
 }
 </style>

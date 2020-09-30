@@ -186,7 +186,7 @@
                     <el-col :span="10" class="vcenter">
                         <el-row>
                             <el-card>
-                                <div style="margin-bottom: 5px">为{{this.curItem}}找到{{this.changeData.length}}条可选数据</div>
+                                <div style="margin-bottom: 5px">为 {{curItem.vehicleType}} {{curItem.vehicleNumber}} 找到 {{changeData.length}} 条可选数据</div>
                                 <div class="hee">
                                     <span class="he1">序</span>
                                     <span class="he2">轴型</span>
@@ -267,7 +267,7 @@
                 item.isShow = !item.isShow;
                 if (this.curIndex != index){
                     this.curIndex = index;
-                    this.curItem = item.vehicleNum;
+                    this.curItem = item;
                     this.findMatch(this.data[this.curIndex]);
                 }
                 this.$forceUpdate();
@@ -296,7 +296,7 @@
                 if (this.curIndex != index){
                     this.curIndex = index;
                     this.findMatch(this.data[this.curIndex]);
-                    this.curItem = this.data[this.curIndex].vehicleNum;
+                    this.curItem = this.data[this.curIndex];
                 }
                 this.x = index;
                 this.y = index2;

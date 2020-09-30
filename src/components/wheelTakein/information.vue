@@ -68,10 +68,11 @@
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="4">
+                    <el-col :span="8">
                         <el-button type="primary" @click="searchWheelInfo('searchForm')" size="small">查询</el-button>
                         <el-button  @click="searchSavedInfo" size="small">未完成</el-button>
                         <el-button  @click="creatNewWheelInfo" size="small">新建</el-button>
+                        <el-button  @click="creatQrcode" size="small">二维码</el-button>
                     </el-col>
                 </el-form>
             </el-row>
@@ -225,7 +226,7 @@
                                 </el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="8">
+                                <el-col :span="12">
                                     <el-form-item label="首次组装" prop="wheelAssemblefirstDate">
                                         <el-date-picker
                                                 type="date"
@@ -286,6 +287,14 @@
                 </el-col>
             </el-row>
         </el-card>
+        <el-dialog
+                title="二维码"
+                :visible.sync="QRcodeVisible"
+                width="30%">
+            <div class="QRimg">
+                <img  :src="QRimgpath">
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -322,6 +331,8 @@
                 itemUnderMod:{},
                 savedInfo:[],
                 saveIndex:1,
+                QRcodeVisible:false,
+                QRimgpath:'',
                 ruleForm: {
                     wheelId:'',
                     takeInDate: '',
@@ -624,6 +635,21 @@
                     }
                 }
             },
+            creatQrcode(){
+                this.QRcodeVisible = true;
+                this.getQRcode(this.ruleForm.wheelId);
+            },
+            //生成二维码
+            async getQRcode(wheelId){
+                var result = await axios.get(
+                    "http://localhost:8081/spt2/wheelTakein/getQRcode?id="+wheelId);
+                if (result.data.code != 100){
+                    alert("二维码生成失败");
+                    return ;
+                }
+                this.QRimgpath = 'http://localhost:8081/spt2/wheelqrcode/'+result.data.object;
+                console.log(this.QRimgpath);
+            },
             //日期格式化
             dateFormate(data,patt){
                 var y = data.getFullYear();
@@ -674,6 +700,16 @@
     .listContainer{
         text-align: center;
         line-height: 40px;
+    }
+    .QRimg{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+    }
+    .QRimg img{
+        margin: 0 auto;
     }
 
 </style>

@@ -109,7 +109,7 @@
                             <span>车号: {{wheelInfo.vehicleNumber}}</span>
                             <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                         </el-row>
-                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
+                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
                             <el-row style="margin-bottom: 20px">
                                 <el-col :span="6" :offset="1"><span>旋面前尺寸：</span></el-col>
                                 <el-col :span="6" :offset="4"><span>旋面后尺寸：</span></el-col>
@@ -292,6 +292,7 @@
                 wheelList:[],
                 unFinishMeasureList:[],
 
+                disableForm:true,
                 wheelInfo:{},
                 savedInfoHeads:[],
 
@@ -493,6 +494,7 @@
                 this.ruleForm = {};
                 this.wheelInfo = {};
                 this.enableRight = true;
+                this.disableForm = true;
             },
             //创建新表
             creatNewWheelInfo(){
@@ -701,6 +703,8 @@
                 }
                 //获取车轮旋面前原始数据
                 this.getoriginwheelround(this.ruleForm.wheelId);
+                //开放表单
+                this.disableForm = false;
             },
             //获取车轮旋面前原始数据
            async getoriginwheelround(wheelId){

@@ -92,18 +92,18 @@
                 <el-col :span="24">
                     <el-table :data="wheelList" style="width: 100%" :default-sort = "{prop: 'id', order: 'ascending'}" border stripe>
                         <el-table-column type="index" label="序号" width="50"></el-table-column>
-                        <el-table-column prop="wheelInfo.wheelId" label="单号" width="80" sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.axleNumber" label="轴号" width="150" sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.axleType" label="轴型"  sortable></el-table-column>
-                        <el-table-column prop="wheelInfo.takeInReason" label="收入来源" ></el-table-column>
-                        <el-table-column prop="wheelInfo.takeInDate" label="收入日期" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleType" label="收入车型" ></el-table-column>
-                        <el-table-column prop="wheelInfo.vehicleNumber" label="收入车号" ></el-table-column>
-                        <el-table-column prop="wheelInfo.axlePosition" label="收入轴位" ></el-table-column>
-                        <el-table-column prop="wheelInfo.isprocessFinish" label="完工状态" >
+                        <el-table-column prop="wheelId" label="单号" width="80" sortable></el-table-column>
+                        <el-table-column prop="axleNumber" label="轴号" width="150" sortable></el-table-column>
+                        <el-table-column prop="axleType" label="轴型"  sortable></el-table-column>
+                        <el-table-column prop="takeInReason" label="收入来源" ></el-table-column>
+                        <el-table-column prop="takeInDate" label="收入日期" ></el-table-column>
+                        <el-table-column prop="vehicleType" label="收入车型" ></el-table-column>
+                        <el-table-column prop="vehicleNumber" label="收入车号" ></el-table-column>
+                        <el-table-column prop="axlePosition" label="收入轴位" ></el-table-column>
+                        <el-table-column prop="isprocessFinish" label="完工状态" >
                             <template slot-scope="scope">
-                                <span v-if="scope.row.wheelInfo.isprocessFinish =='1'" >已完工</span>
-                                <span v-if="scope.row.wheelInfo.isprocessFinish =='0'" >未完工</span>
+                                <span v-if="scope.row.isprocessFinish =='1'" >已完工</span>
+                                <span v-if="scope.row.isprocessFinish =='0'" >未完工</span>
                             </template>
                         </el-table-column>
 <!--                        <el-table-column prop="" label="修竣日期" ></el-table-column>-->
@@ -124,7 +124,7 @@
                                 <el-button
                                         icon="el-icon-edit"
                                         size="mini"
-                                        :disabled="scope.row.wheelInfo.isprocessFinish =='1'"
+                                        :disabled="scope.row.isprocessFinish =='1'"
                                         @click="handle2FinishInspection(scope.$index, scope.row)">通过</el-button>
                             </template>
                         </el-table-column>
@@ -198,21 +198,21 @@
                         <h4>收入: {{wheelInfoForTable.wheelInfo.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure" >
+                <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure && wheelInfoForTable.wheelInfo.isMeasureFinish == '1'" >
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelMeasure.finishTime}}</h4>
                         <h4>测量: {{wheelInfoForTable.wheelMeasure.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair">
+                <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair && wheelInfoForTable.wheelInfo.isbearingRepairFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingRepair.finishTime}}</h4>
-                        <h4>检查: {{wheelInfoForTable.bearingRepair.worker}}</h4>
-                        <h4>推卸(左): {{wheelInfoForTable.bearingRepair.unloaderLeft}}</h4>
+                        <h4>检查: {{wheelInfoForTable.bearingRepair.bearingExaminers}}</h4>
+                        <h4>推卸(左): {{wheelInfoForTable.bearingRepair.worker}}</h4>
                         <h4>推卸(右): {{wheelInfoForTable.bearingRepair.unloaderRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮轴探伤" name="fourth" v-if="wheelInfoForTable.axleInspection">
+                <el-tab-pane label="轮轴探伤" name="fourth" v-if="wheelInfoForTable.axleInspection && wheelInfoForTable.wheelInfo.ismagnetInspectionFinish == '1'">
                     <div>
                         <h4>磁粉探伤完工时间: {{wheelInfoForTable.axleInspection.reultfinishTime}}</h4>
                         <h4>磁粉探伤: {{wheelInfoForTable.axleInspection.reultInspector}}</h4>
@@ -220,13 +220,13 @@
                         <h4>超声波探伤: {{wheelInfoForTable.axleInspection.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound">
+                <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound && wheelInfoForTable.wheelInfo.isWheelRoundingFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelRound.finishTime}}</h4>
                         <h4>旋面: {{wheelInfoForTable.wheelRound.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad">
+                <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad && wheelInfoForTable.wheelInfo.isbearingLoadFinish == '4'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingLoad.finishTime}}</h4>
                         <h4>选配(左): {{wheelInfoForTable.bearingLoad.matcherLeft}}</h4>
@@ -235,20 +235,20 @@
                         <h4>压装(右): {{wheelInfoForTable.bearingLoad.loaderRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轴承关盖" name="seventh" v-if="wheelInfoForTable.bearingCap" >
+                <el-tab-pane label="轴承关盖" name="seventh" v-if="wheelInfoForTable.bearingCap && wheelInfoForTable.wheelInfo.isbearingCapFinish == '1'" >
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingCap.finishTime}}</h4>
                         <h4>关盖(左): {{wheelInfoForTable.bearingCap.worker}}</h4>
                         <h4>关盖(右): {{wheelInfoForTable.bearingCap.caperRight}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest">
+                <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest && wheelInfoForTable.wheelInfo.isbearingrollTestFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.bearingTest.finishTime}}</h4>
                         <h4>磨合试验: {{wheelInfoForTable.bearingTest.worker}}</h4>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="轮对支出" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch && wheelInfoForTable.wheelInfo.isreMeasureFinish == '1'">
                     <div>
                         <h4>完工时间: {{wheelInfoForTable.wheelDispatch.finishTime}}</h4>
                         <h4>支出: {{wheelInfoForTable.wheelDispatch.worker}}</h4>
@@ -561,17 +561,31 @@
                 this.$refs[searchForm].resetFields();
             },
             //查看详细
-            handleForDetail(index,data){
+            async handleForDetail(index,data){
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/manage/queryAll",
+                    data);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
                 this.detailtableVisible = true;
-                this.wheelInfoForTable = data;
+                this.wheelInfoForTable = result.data.object;
                 //给当前信息赋第一个工序wheelInfo值
                 this.currentInfo = this.wheelInfoForTable.wheelInfo;
                 console.log(this.currentInfo);
             },
             //查看进度
-            handleForProgress(index,data){
+             async handleForProgress(index,data){
+                var result = await axios.post(
+                    "http://localhost:8081/spt2/manage/queryAll",
+                    data);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
                 this.progresstableVisible = true;
-                this.wheelInfoForTable = data;
+                this.wheelInfoForTable = result.data.object;
             },
             //关闭
             handleClose(done) {

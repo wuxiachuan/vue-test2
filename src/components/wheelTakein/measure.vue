@@ -109,7 +109,7 @@
                             <span>车号: {{wheelInfo.vehicleNumber}}</span>
                             <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                         </el-row>
-                        <el-form :model="ruleForm"  ref="ruleForm" label-width="150px">
+                        <el-form :model="ruleForm"  ref="ruleForm" label-width="150px" :disabled="disableForm">
                             <el-row>
                                 <el-col :span="10">
                                     <el-form-item label="车轴直径" prop="axleDiameter">
@@ -302,6 +302,7 @@
                 unFinishMeasureList:[],
                 saveIndex:1,
 
+                disableForm:true,
                 wheelInfo:{},
                 savedInfoHeads:[],
                 ruleForm: {
@@ -422,6 +423,7 @@
                 this.isModify = false;
                 this.ruleForm = {};
                 this.wheelInfo = {};
+                this.disableForm = true;
             },
             //创建新表
             creatNewWheelInfo(){
@@ -648,6 +650,8 @@
                     this.ruleForm = {};
                     this.ruleForm.wheelId = item.wheelId;
                 }
+               //开放表单
+               this.disableForm = false;
             },
             async deleteForm(formName){
                 var res = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {
