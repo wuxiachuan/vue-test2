@@ -100,7 +100,7 @@
                 this.$refs[formName].resetFields();
             },
             async getroles(){
-                var result = await axios.get("http://localhost:8081/spt2/userManage/rolenames");
+                var result = await this.$http.get("/userManage/rolenames");
                 if (result.data.code == 100){
                     this.roles = result.data.object;
                 }

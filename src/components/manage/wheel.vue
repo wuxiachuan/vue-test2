@@ -142,7 +142,7 @@
         methods:{
                 async getWheelList(){
                     var result = await axios.post(
-                        "http://localhost:8081/spt2/wheelManage/getWheels",
+                        "/wheelManage/getWheels",
                         this.search);
                     if (result.data.code != 100){
                         alert("添加失败");
@@ -152,7 +152,7 @@
                 },
                 async showDetail(item){
                     var result = await axios.get(
-                        "http://localhost:8081/spt2/wheelManage/getWheelsDetails?id="+item);
+                        "/wheelManage/getWheelsDetails?id="+item);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;

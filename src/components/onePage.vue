@@ -68,7 +68,7 @@
         },
         methods:{
             async getusers(){
-                var result = await axios.post("http://localhost:8081/spt2/userManage/getusers");
+                var result = await axios.post("/userManage/getusers");
                 if (result.data.code == 100){
                     this.userlist = result.data.object;
                 }

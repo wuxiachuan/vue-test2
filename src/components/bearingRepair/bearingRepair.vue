@@ -743,8 +743,8 @@
                         this.ruleForm.worker = sessionStorage.getItem("name");
                         this.ruleForm.isFinish = '1';
                         this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/bearingRepair/addBearing",
+                        var result = await this.$http.post(
+                            "/bearingRepair/addBearing",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -790,8 +790,8 @@
             },
             //更新wheelinfo的isbearingLoadFinish状态
             // async flushWheelInfo(wheelId,index){
-            //     var result = await axios.get(
-            //         "http://localhost:8081/spt2/bearingRepair/flushWheelInfo?id="+wheelId+"&index="+index);
+            //     var result = await this.$http.get(
+            //         "/bearingRepair/flushWheelInfo?id="+wheelId+"&index="+index);
             //     if (result.data.code != 100){
             //         alert("添加失败");
             //         return ;
@@ -851,8 +851,8 @@
             },
             //从数据库查找未完成的wheel
             async searchUnFinish(){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/bearingRepair/unFinishBearing",
+                var result = await this.$http.post(
+                    "/bearingRepair/unFinishBearing",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("查询失败");
@@ -866,8 +866,8 @@
             async modifyForm(formName){
                 this.ruleForm.worker = sessionStorage.getItem("name");
                 this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/bearingRepair/modifyBearing",
+                var result = await this.$http.post(
+                    "/bearingRepair/modifyBearing",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -895,8 +895,8 @@
                 }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/bearingRepair/searchWheelInfoByconditionRepair",
+                        var result = await this.$http.post(
+                            "/bearingRepair/searchWheelInfoByconditionRepair",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -939,8 +939,8 @@
                     this.cancelbtnstatus = true;
                     this.isModify = true;
                     //已完成从数据库内查找，提交到显示表单
-                    var result = await axios.get(
-                        "http://localhost:8081/spt2/bearingRepair/findBearingById?id="+item.wheelId);
+                    var result = await this.$http.get(
+                        "/bearingRepair/findBearingById?id="+item.wheelId);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
@@ -971,7 +971,7 @@
                         return;
                     }
                     console.log(id);
-                    var result = await axios.get('http://localhost:8081/spt2/bearingRepair/deleteBearing?id=' + id);
+                    var result = await this.$http.get('/bearingRepair/deleteBearing?id=' + id);
                     if (result.data.code != 100) {
                         alert("删除失败");
                         return;

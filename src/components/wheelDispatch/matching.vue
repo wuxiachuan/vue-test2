@@ -57,8 +57,14 @@
                                      :data="vehicleNum">
                             <el-button class="transfer-footer" slot="left-footer" size="small" @click="">操作</el-button>
                             <el-button class="transfer-footer" slot="right-footer"
-                                       size="small" @click="sendToDispatch"
+                                       size="small" @click="addOffset"
                                        :disabled="this.choosenNum.length == 0"
+                            >
+                                调整
+                            </el-button>
+                            <el-button class="transfer-footer" slot="right-footer"
+                                       size="small" @click="sendToDispatch"
+                                       :disabled="this.choosenNum.length == 0||this.offsetAdded==false"
                             >
                                 匹配
                             </el-button>
@@ -124,7 +130,7 @@
             <el-dialog
                     title="手动匹配"
                     :visible.sync="matchTableVisible"
-                    width="90%"
+                    width="100%"
             >
                 <el-row >
                     <el-col :span="10" class="vcenter">
@@ -217,6 +223,40 @@
                 </el-row>
             </el-dialog>
         </el-card>
+        <el-dialog
+                title="高度调整"
+                :visible.sync="offsetTableVisible"
+                width="50%"
+        >
+            <el-card>
+                <el-row>
+                    <el-table :data="vehicleInfo" style="width: 100%">
+                        <el-table-column
+                                label="车型"
+                                prop="vehicleType">
+                        </el-table-column>
+                        <el-table-column
+                                label="车号"
+                                prop="vehicleNumber">
+                        </el-table-column>
+                        <el-table-column
+                                label="调整高度">
+                            <template  slot-scope="scope">
+                                <el-input
+                                        v-model="scope.row.offset"
+                                        placeholder="输入调整高度"/>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+                <el-row>
+                    <el-col :offset="20">
+                        <el-button @click="confirmForm" size="small">确认</el-button>
+                        <el-button @click="cancelmodForm" size="small">取消</el-button>
+                    </el-col>
+                </el-row>
+            </el-card>
+        </el-dialog>
     </div>
 </template>
 
@@ -229,6 +269,8 @@
                 choosenNum:[],
                 vehicleInfo:[],
                 matchTableVisible:false,
+                offsetTableVisible:false,
+                offsetAdded:false,
                 x:0,
                 y:0,
                 cx:0,
@@ -273,8 +315,8 @@
                 this.$forceUpdate();
             },
             async findMatch(item){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/find2match",
+                var result = await this.$http.post(
+                    "/wheelDispatch/find2match",
                     item);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -331,8 +373,8 @@
                 this.$forceUpdate();
             },
             async searchVehicle(form){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/getvehicleNum",
+                var result = await this.$http.post(
+                    "/wheelDispatch/getvehicleNum",
                     this.search);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -344,18 +386,29 @@
 
             },
             async sendToDispatch(){
-                this.findvehicleInfo();
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/dispatch",
+                var result = await this.$http.post(
+                    "/wheelDispatch/dispatch",
                     this.vehicleInfo);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;
                 }
                 this.data = result.data.object;
-                this.vehicleInfo = [];
+            },
+            addOffset(){
+                this.offsetTableVisible = true;
+                this.findvehicleInfo();
+            },
+            confirmForm(){
+                this.offsetAdded = true;
+                this.offsetTableVisible = false;
+                console.log(this.vehicleInfo);
+            },
+            cancelmodForm(){
+                this.offsetTableVisible = false;
             },
             findvehicleInfo(){
+                this.vehicleInfo = [];
                 for (var i = 0 ; i < this.choosenNum.length ; i++){
                     for (var j = 0 ; j < this.vehicleNum.length ; j++){
                         if (this.choosenNum[i] == this.vehicleNum[j].vehicleNumber){
@@ -363,20 +416,10 @@
                         }
                     }
                 }
+                // console.log(this.choosenNum);
+                // console.log(this.vehicleInfo);
             },
-            clearDispatched(){
-                for (var i = 0 ; i < this.choosenNum.length ; i++){
-                    for (var j = 0 ; j < this.vehicleNum.length ; j++){
-                        if (this.choosenNum[i] == this.vehicleNum[j].vehicleNumber){
-                            this.vehicleNum.splice(j,1);
-                        }
-                    }
-                }
-                this.vehicleInfo = [];
-                this.choosenNum = [];
-                this.data = [];
-                this.changeData = [];
-            },
+
             async handDispatch(){
                 if (this.choosenNum.length == 0){
                     alert("请选择匹配轮对");
@@ -399,8 +442,8 @@
                 });
                 if (res == "confirm"){
                     var matcher = sessionStorage.getItem("name");
-                    var result = await axios.post(
-                        "http://localhost:8081/spt2/wheelDispatch/receiveResult?matcher="+matcher,
+                    var result = await this.$http.post(
+                        "/wheelDispatch/receiveResult?matcher="+matcher,
                         this.data);
                     if (result.data.code != 100){
                         alert("添加失败");
@@ -411,6 +454,20 @@
                 }else {
                     alert("取消");
                 }
+            },
+            clearDispatched(){
+                for (var i = 0 ; i < this.choosenNum.length ; i++){
+                    for (var j = 0 ; j < this.vehicleNum.length ; j++){
+                        if (this.choosenNum[i] == this.vehicleNum[j].vehicleNumber){
+                            this.vehicleNum.splice(j,1);
+                        }
+                    }
+                }
+                this.vehicleInfo = [];
+                this.choosenNum = [];
+                this.data = [];
+                this.changeData = [];
+                this.offsetAdded = false;
             }
         }
     }

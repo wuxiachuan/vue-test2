@@ -93,7 +93,7 @@
         methods:{
             //获取角色信息
             async getroles(){
-                var result = await axios.get("http://localhost:8081/spt2/rightManage/modrolerights");
+                var result = await this.$http.get("/rightManage/modrolerights");
                 if (result.data.code != 100){
                     alert("权限列表获取失败");
                     return ;
@@ -118,7 +118,7 @@
                this.dialogVisible = false;
                var checkedrights = this.$refs.assignmentRight.getCheckedRights();
                console.log(checkedrights);
-                var result = await axios.post("http://localhost:8081/spt2/rightManage/assignmentRight",checkedrights);
+                var result = await this.$http.post("/rightManage/assignmentRight",checkedrights);
                 if (result.data.code != 100){
                     alert("权限分配失败");
                     return ;
@@ -147,8 +147,8 @@
                     return err;
                 });
                 if (res == "confirm"){
-                    var result =await axios.post(
-                        "http://localhost:8081/spt2/rightManage/delright",
+                    var result =await this.$http.post(
+                        "/rightManage/delright",
                         {
                             roleid:role.id,
                             rightid:id1,
@@ -174,8 +174,8 @@
                     return err;
                 });
                 if (res == "confirm"){
-                    var result =await axios.post(
-                        "http://localhost:8081/spt2/rightManage/delright",
+                    var result =await this.$http.post(
+                        "/rightManage/delright",
                         {
                             roleid:role.id,
                             rightid:id1,

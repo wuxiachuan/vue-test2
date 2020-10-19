@@ -3,8 +3,8 @@
         <!--        面包屑导航条-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>轴承检修</el-breadcrumb-item>
-            <el-breadcrumb-item>轴承关盖</el-breadcrumb-item>
+            <el-breadcrumb-item>轮轴探伤</el-breadcrumb-item>
+            <el-breadcrumb-item>磁粉探伤</el-breadcrumb-item>
         </el-breadcrumb>
         <el-card>
             <el-row :gutter="5">
@@ -278,8 +278,8 @@
                         this.ruleForm.magInspector = sessionStorage.getItem("name");
                         this.ruleForm.magisFinish = '1';
                         this.ruleForm.magfinishTime = this.dateFormate(new Date(),'');
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/axleInspection/addMagInspection",
+                        var result = await this.$http.post(
+                            "/axleInspection/addMagInspection",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -367,8 +367,8 @@
             },
             //从数据库查找未完成的WheelInfo
             async searchUnFinish(){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/axleInspection/unFinishMagInspection",
+                var result = await this.$http.post(
+                    "/axleInspection/unFinishMagInspection",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("查询失败");
@@ -382,8 +382,8 @@
             async modifyForm(formName){
                 this.ruleForm.magInspector = sessionStorage.getItem("name");
                 this.ruleForm.magfinishTime = this.dateFormate(new Date(),'');
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/axleInspection/modifyMagInspection",
+                var result = await this.$http.post(
+                    "/axleInspection/modifyMagInspection",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -411,8 +411,8 @@
                 // }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/axleInspection/searchWheelInfoByconditionMagInspection",
+                        var result = await this.$http.post(
+                            "/axleInspection/searchWheelInfoByconditionMagInspection",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -456,8 +456,8 @@
                     this.cancelbtnstatus = true;
                     this.isModify = true;
                     //已完成从数据库内查找，提交到显示表单
-                    var result = await axios.get(
-                        "http://localhost:8081/spt2/axleInspection/findMagInspectionById?id="+item.wheelId);
+                    var result = await this.$http.get(
+                        "/axleInspection/findMagInspectionById?id="+item.wheelId);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
@@ -485,7 +485,7 @@
                         alert("请选择删除项");
                         return;
                     }
-                    var result = await axios.get('http://localhost:8081/spt2/axleInspection/deleteMagInspection?id=' + id);
+                    var result = await this.$http.get('/axleInspection/deleteMagInspection?id=' + id);
                     if (result.data.code != 100) {
                         alert("删除失败");
                         return;

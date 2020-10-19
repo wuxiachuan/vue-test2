@@ -32,7 +32,7 @@
         },
         methods:{
           async getrights(){
-             var result = await axios.get("http://localhost:8081/spt2/rightManage/rightlist");
+             var result = await this.$http.get("/rightManage/rightlist");
               if (result.data.code != 100){
                   alert("权限列表获取失败");
                   return ;

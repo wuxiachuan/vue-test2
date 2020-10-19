@@ -270,11 +270,17 @@
                     <el-input v-model="problem.problemDescription"></el-input>
                 </el-form-item>
                 <el-form-item label="所属部位">
-                    <el-select v-model="problem.processBelong" placeholder="请选择活动区域">
-                        <el-option label="车轮" value="1"></el-option>
-                        <el-option label="车轴" value="2"></el-option>
-                        <el-option label="轴承" value="3"></el-option>
-                        <el-option label="探伤" value="4"></el-option>
+                    <el-select v-model="problem.processBelong" placeholder="请选择所属工位">
+                        <el-option label="信息采集" value="0"></el-option>
+                        <el-option label="轮对测量" value="1"></el-option>
+                        <el-option label="轴承检查" value="2"></el-option>
+                        <el-option label="磁粉探伤" value="3"></el-option>
+                        <el-option label="超声探伤" value="4"></el-option>
+                        <el-option label="车轮旋面" value="5"></el-option>
+                        <el-option label="轴承压装" value="6"></el-option>
+                        <el-option label="轴承关盖" value="7"></el-option>
+                        <el-option label="磨合测试" value="8"></el-option>
+                        <el-option label="轮对复测" value="9"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="发现时间">
@@ -317,11 +323,17 @@
                     </el-col>
                     <el-col :span="4">
                         <el-form-item prop="processBelong">
-                            <el-select v-model="searchProblem.processBelong" placeholder="故障部位" clearable>
-                                <el-option label="车轮" value="1"></el-option>
-                                <el-option label="车轴" value="2"></el-option>
-                                <el-option label="轴承" value="3"></el-option>
-                                <el-option label="探伤" value="4"></el-option>
+                            <el-select v-model="searchProblem.processBelong" placeholder="所属工位" clearable>
+                                <el-option label="信息采集" value="0"></el-option>
+                                <el-option label="轮对测量" value="1"></el-option>
+                                <el-option label="轴承检查" value="2"></el-option>
+                                <el-option label="磁粉探伤" value="3"></el-option>
+                                <el-option label="超声探伤" value="4"></el-option>
+                                <el-option label="车轮旋面" value="5"></el-option>
+                                <el-option label="轴承压装" value="6"></el-option>
+                                <el-option label="轴承关盖" value="7"></el-option>
+                                <el-option label="磨合测试" value="8"></el-option>
+                                <el-option label="轮对复测" value="9"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -376,14 +388,21 @@
             </el-row>
             <el-table :data="problemList" style="width: 100%" height="600" :default-sort = "{prop: 'id', order: 'ascending'}" border stripe>
                 <el-table-column type="index" label="序号" width="50"></el-table-column>
-                <el-table-column prop="axleNumber" label="轴号" width="50"></el-table-column>
                 <el-table-column prop="axleType" label="轴型" width="50"></el-table-column>
+                <el-table-column prop="axleNumber" label="轴号" width="50"></el-table-column>
+                <el-table-column prop="axleMadeIn" label="厂代号" width="50"></el-table-column>
                 <el-table-column prop="processBelong" label="部位" width="80" sortable>
                     <template slot-scope="scope">
-                        <span v-if="scope.row.processBelong==1" >车轮</span>
-                        <span v-if="scope.row.processBelong==2" >车轴</span>
-                        <span v-if="scope.row.processBelong==3" >轴承</span>
-                        <span v-if="scope.row.processBelong==4" >探伤</span>
+                        <span v-if="scope.row.processBelong==0" >信息采集</span>
+                        <span v-if="scope.row.processBelong==1" >轮对测量</span>
+                        <span v-if="scope.row.processBelong==2" >轴承检查</span>
+                        <span v-if="scope.row.processBelong==3" >磁粉探伤</span>
+                        <span v-if="scope.row.processBelong==4" >超声探伤</span>
+                        <span v-if="scope.row.processBelong==5" >车轮旋面</span>
+                        <span v-if="scope.row.processBelong==6" >轴承压装</span>
+                        <span v-if="scope.row.processBelong==7" >轴承关盖</span>
+                        <span v-if="scope.row.processBelong==8" >磨合测试</span>
+                        <span v-if="scope.row.processBelong==9" >轮对复测</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="problemDescription" label="简介"  sortable></el-table-column>
@@ -542,8 +561,8 @@
             searchWheelInfo(searchForm){
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/manage/getInfo2check",
+                        var result = await this.$http.post(
+                            "/manage/getInfo2check",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -562,8 +581,8 @@
             },
             //查看详细
             async handleForDetail(index,data){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/manage/queryAll",
+                var result = await this.$http.post(
+                    "/manage/queryAll",
                     data);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -577,8 +596,8 @@
             },
             //查看进度
              async handleForProgress(index,data){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/manage/queryAll",
+                var result = await this.$http.post(
+                    "/manage/queryAll",
                     data);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -651,8 +670,8 @@
                     database:this.dataBaseName,
                     data:this.currentInfo
                 }
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/quality/modify",
+                var result = await this.$http.post(
+                    "/quality/modify",
                     data);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -666,8 +685,8 @@
                 this.problem.problemFinder = sessionStorage.getItem("name");
                 this.problem.wheelId = this.currentInfo.wheelId;
                 this.problem.worker = this.currentInfo.worker;
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/quality/addProblem",
+                var result = await this.$http.post(
+                    "/quality/addProblem",
                     this.problem);
                 if (result.data.code != 100){
                     alert("提交失败");
@@ -688,8 +707,8 @@
             },
             async getMyProblem(){
                 var finder = sessionStorage.getItem("name");
-                var result = await axios.get(
-                    "http://localhost:8081/spt2/quality/findProblemF?finder="+finder);
+                var result = await this.$http.get(
+                    "/quality/findProblemF?finder="+finder);
                 if (result.data.code != 100){
                     alert("提交失败");
                     return ;
@@ -698,8 +717,8 @@
             },
             //消号
             async handleToDone(index,row){
-                var result = await axios.get(
-                    "http://localhost:8081/spt2/quality/finishProblem?id="+row.id);
+                var result = await this.$http.get(
+                    "/quality/finishProblem?id="+row.id);
                 if (result.data.code != 100){
                     alert("修改失败");
                     return ;
@@ -710,8 +729,8 @@
             //查找我发现的问题
            async searchProblemCond(){
                 this.searchProblem.problemFinder = sessionStorage.getItem("name");
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/quality/findProblemCond",
+                var result = await this.$http.post(
+                    "/quality/findProblemCond",
                     this.searchProblem);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -728,8 +747,8 @@
             },
             async finishInspection(){
                 var name = sessionStorage.getItem("name");
-                var result = await axios.get(
-                    "http://localhost:8081/spt2/quality/finishInspection?name="+name+"&id="+this.finishInspect.wheelId);
+                var result = await this.$http.get(
+                    "/quality/finishInspection?name="+name+"&id="+this.finishInspect.wheelId);
                 if (result.data.code != 100){
                     alert("修改失败");
                     return ;
@@ -777,8 +796,8 @@
 
         },
        async mounted() {
-            var result = await axios.post(
-                "http://localhost:8081/spt2/manage/getInfo2check",
+            var result = await this.$http.post(
+                "/manage/getInfo2check",
                 this.search);
             if (result.data.code != 100){
                 alert("添加失败");

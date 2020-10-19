@@ -454,8 +454,8 @@
                         this.ruleForm.infoTakeFinish = '1';
                         this.ruleForm.isMeasureFinish = '0';
                         this.ruleForm.infoTakeFinishTime = this.dateFormate(new Date(),'');
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/wheelTakein/addWheel",
+                        var result = await this.$http.post(
+                            "/wheelTakein/addWheel",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -522,8 +522,8 @@
             },
             //修改wheel
            async modifyForm(formName){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelTakein/modifyWheel",
+                var result = await this.$http.post(
+                    "/wheelTakein/modifyWheel",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -553,8 +553,8 @@
                // }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/wheelTakein/sesrchinfo",
+                        var result = await this.$http.post(
+                            "/wheelTakein/sesrchinfo",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -606,7 +606,7 @@
                        if (finishNum == '1') {
                            var id = this.ruleForm.wheelId;
                            console.log(id);
-                           var result = await axios.get('http://localhost:8081/spt2/wheelTakein/deleteWheel?id=' + id);
+                           var result = await this.$http.get('/wheelTakein/deleteWheel?id=' + id);
                            if (result.data.code != 100) {
                                alert("删除失败");
                                return;
@@ -641,13 +641,13 @@
             },
             //生成二维码
             async getQRcode(wheelId){
-                var result = await axios.get(
-                    "http://localhost:8081/spt2/wheelTakein/getQRcode?id="+wheelId);
+                var result = await this.$http.get(
+                    "/wheelTakein/getQRcode?id="+wheelId);
                 if (result.data.code != 100){
                     alert("二维码生成失败");
                     return ;
                 }
-                this.QRimgpath = 'http://localhost:8081/spt2/wheelqrcode/'+result.data.object;
+                this.QRimgpath = '/wheelqrcode/'+result.data.object;
                 console.log(this.QRimgpath);
             },
             //日期格式化

@@ -3,8 +3,8 @@
         <!--        面包屑导航条-->
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>车轮旋面</el-breadcrumb-item>
-            <el-breadcrumb-item>车轮旋面</el-breadcrumb-item>
+            <el-breadcrumb-item>轮轴探伤</el-breadcrumb-item>
+            <el-breadcrumb-item>超声波探伤</el-breadcrumb-item>
         </el-breadcrumb>
         <el-card>
             <el-row :gutter="5">
@@ -68,185 +68,157 @@
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="4">
-                        <el-button type="primary" @click="searchWheelInfo('searchForm')" size="small">查询</el-button>
-                        <el-button  @click="searchSavedInfo" size="small">已保存</el-button>
-                        <!--                        <el-button  @click="creatNewWheelInfo" size="small">新建</el-button>-->
+                    <el-col :span="10">
+                        <el-button  @click="searchWheelInfo('searchForm')" >查询</el-button>
+                        <el-button  @click="searchSavedInfo" >已保存</el-button>
+                        <el-button  @click="searchUnFinish" >获取</el-button>
                     </el-col>
                 </el-form>
             </el-row>
-            <el-row :gutter="10">
-                <el-col :span="7">
-                    <el-card class="wheelInfo-Container">
-                        <div class="wheelInfoHead">
-                            <span class="wheelInfoList1">序</span>
-                            <span class="wheelInfoList2">轴号</span>
-                            <span class="wheelInfoList3">轴型</span>
-                            <span class="wheelInfoList4">车型车号</span>
-                            <span class="wheelInfoList5">轴位</span>
-                            <span class="wheelInfoList6">收入日期</span>
-                        </div>
-                        <ul class="wheelInfo-list" ref="infolist">
-                            <li :class="['wheelInfo-list-item',item.isWheelRoundingFinish=='0'?'notfinish':'']" v-for="(item,index) in wheelList" :ref="'li'+index"
-                                :key="item.wheelId" @click="showitem(item,index,$event)">
-                                <span class="wheelInfoList1">{{ index+1 }}</span>
-                                <span class="wheelInfoList2">{{item.axleNumber}}</span>
-                                <span class="wheelInfoList3">{{item.axleType}}</span>
-                                <span class="wheelInfoList4">{{item.vehicleType}} {{item.vehicleNumber}}</span>
-                                <span class="wheelInfoList5">{{item.axlePosition}}</span>
-                                <span class="wheelInfoList6">{{item.takeInDate}}</span>
-                            </li>
-                        </ul>
-                    </el-card>
-                </el-col>
-                <el-col :span="17">
+            <el-row>
+                <el-col>
                     <el-card>
-                        <el-row class="status">
-                            <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
-                            <span>轴型: {{wheelInfo.axleType}}</span>
-                            <span>轴号: {{wheelInfo.axleNumber}}</span>
-                            <span>车型: {{wheelInfo.vehicleType}}</span>
-                            <span>车号: {{wheelInfo.vehicleNumber}}</span>
-                            <span>轴位: {{wheelInfo.axlePosition}} 位</span>
-                        </el-row>
-                        <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
-                            <el-row style="margin-bottom: 20px">
-                                <el-col :span="6" :offset="1"><span>旋面前尺寸：</span></el-col>
-                                <el-col :span="6" :offset="4"><span>旋面后尺寸：</span></el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="车轮直径" prop="closeStateLeft">
-                                        <el-input v-model="origindata.wheelDiameterLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="closeStateRight" label-width="0">
-                                        <el-input v-model="origindata.wheelDiameterRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="车轮直径" prop="wheelDiameterLeft">
-                                        <el-input v-model="ruleForm.wheelDiameterLeft" placeholder="左" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="wheelDiameterRight" label-width="0">
-                                        <el-input v-model="ruleForm.wheelDiameterRight" placeholder="右" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="踏面磨耗" prop="appearanceLeft">
-                                        <el-input v-model="origindata.treadWearLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="appearanceRight" label-width="0">
-                                        <el-input v-model="origindata.treadWearRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="踏面磨耗" prop="treadWearLeft">
-                                        <el-input v-model="ruleForm.treadWearLeft" placeholder="左" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="treadWearRight" label-width="0">
-                                        <el-input v-model="ruleForm.treadWearRight" placeholder="右" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="轮缘厚" prop="unloadDateLeft">
-                                        <el-input v-model="origindata.flangeThickLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="unloadDateRight" label-width="0">
-                                        <el-input v-model="origindata.flangeThickRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="轮缘厚" prop="flangeThickLeft">
-                                        <el-input v-model="ruleForm.flangeThickLeft" placeholder="左" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="flangeThickRight" label-width="0">
-                                        <el-input v-model="ruleForm.flangeThickRight" placeholder="右" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-
-
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="轮辋厚" prop="unloaderLeft">
-                                        <el-input v-model="origindata.rimThickLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="unloaderRight" label-width="0">
-                                        <el-input v-model="origindata.rimThickRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="轮辋厚" prop="rimThickLeft">
-                                        <el-input v-model="ruleForm.rimThickLeft" placeholder="左" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="rimThickRight" label-width="0">
-                                        <el-input v-model="ruleForm.rimThickRight" placeholder="右" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-
-                            <el-row>
-                                <el-col :span="6">
-                                    <el-form-item label="轮辋宽" prop="unloaderLeft">
-                                        <el-input v-model="origindata.rimWideLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="unloaderRight" label-width="0">
-                                        <el-input v-model="origindata.rimWideRight" placeholder="右" :disabled="enableLeft"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="6">
-                                    <el-form-item label="轮辋宽" prop="rimWideLeft">
-                                        <el-input v-model="ruleForm.rimWideLeft" placeholder="左" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                                <el-col :span="4">
-                                    <el-form-item prop="rimWideRight" label-width="0">
-                                        <el-input v-model="ruleForm.rimWideRight" placeholder="右" :disabled="enableRight"></el-input>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-
-                            <el-row>
-                                <el-col :span="12" :offset="10">
-                                    <el-form-item >
-                                        <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
-                                        <el-button @click="resetForm" size="small">重置</el-button>
-                                        <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
-                                        <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
-                                        <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
-                                        <el-button @click="deleteForm('ruleForm')" size="small" type="warring">删除</el-button>
-                                    </el-form-item>
-                                </el-col>
-                            </el-row>
-                        </el-form>
+                        <el-table :data="wheelList" style="width: 100%" :default-sort = "{prop: 'id', order: 'ascending'}" border stripe>
+                            <el-table-column type="index" label="序号" width="50"></el-table-column>
+                            <el-table-column prop="wheelId" label="单号" width="80" sortable></el-table-column>
+                            <el-table-column prop="axleType" label="轴型"  sortable></el-table-column>
+                            <el-table-column prop="axleNumber" label="轴号" width="150" sortable></el-table-column>
+                            <el-table-column prop="axleMadeIn" label="厂代号"  sortable></el-table-column>
+                            <el-table-column prop="takeInReason" label="收入来源" ></el-table-column>
+                            <el-table-column prop="takeInDate" label="收入日期" ></el-table-column>
+                            <el-table-column prop="vehicleType" label="收入车型" ></el-table-column>
+                            <el-table-column prop="vehicleNumber" label="收入车号" ></el-table-column>
+                            <el-table-column prop="axlePosition" label="收入轴位" ></el-table-column>
+                            <el-table-column prop="" label="完工状态" >
+                                <template slot-scope="scope">
+                                    <span v-if="scope.row.isaxleInspectionFinish =='0'" >未完工</span>
+                                    <span v-if="scope.row.isaxleInspectionFinish =='1'" >完工</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作" fixed="right" width="200">
+                                <template slot-scope="scope">
+                                    <el-button
+                                            icon="el-icon-edit"
+                                            size="mini"
+                                            v-if="issaved=='0'"
+                                            @click="captureitem(scope.$index, scope.row)">捕获</el-button>
+                                    <el-button
+                                            icon="el-icon-edit"
+                                            size="mini"
+                                            v-if="issaved=='1'"
+                                            @click="operateitem(scope.$index, scope.row)">操作</el-button>
+                                    <el-button
+                                            icon="el-icon-edit"
+                                            size="mini"
+                                            v-if="issaved=='2'"
+                                            @click="showitem(scope.$index, scope.row)">查看</el-button>
+                                    <el-button
+                                            icon="el-icon-delete"
+                                            size="mini"
+                                            type="danger"
+                                            :disabled="scope.row.isaxleInspectionFinish =='0'"
+                                            v-if="issaved=='2'||issaved=='0'"
+                                            @click="deleteForm(scope.$index, scope.row)">删除</el-button>
+                                    <el-button
+                                            icon="el-icon-delete"
+                                            size="mini"
+                                            type="danger"
+                                            v-if="issaved=='1'"
+                                            @click="turnBack(scope.$index, scope.row)">退回</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </el-card>
                 </el-col>
             </el-row>
         </el-card>
+        <el-dialog
+                title="超声波探伤"
+                :visible.sync="operateTableVisible"
+                width="80%"
+                :before-close="handleProblemTable"
+        >
+            <el-card>
+                <el-row class="status">
+                    <span v-text="isModify ?'当前状态: 修改':'当前状态: 新建'"></span>
+                    <span>轴型: {{wheelInfo.axleType}}</span>
+                    <span>轴号: {{wheelInfo.axleNumber}}</span>
+                    <span>车型: {{wheelInfo.vehicleType}}</span>
+                    <span>车号: {{wheelInfo.vehicleNumber}}</span>
+                    <span>轴位: {{wheelInfo.axlePosition}} 位</span>
+                </el-row>
+                <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="穿透初探左" prop="ultAxleLeft" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleLeft" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item  label="穿透初探右" prop="ultAxleRight" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleRight" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="穿透复探左" prop="reultAxleLeft" label-width="120px">
+                                <el-input v-model="ruleForm.reultAxleLeft" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item  label="穿透复探右" prop="reultAxleRight" label-width="120px">
+                                <el-input v-model="ruleForm.reultAxleRight" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="轮座左" prop="ultAxleFootLeft" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleFootLeft" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item  label="轮座右" prop="ultAxleFootRight" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleFootRight" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="卸荷槽初探左" prop="ultAxleNeckLeft" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleNeckLeft" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item  label="卸荷槽初探右" prop="ultAxleNeckRight" label-width="120px">
+                                <el-input v-model="ruleForm.ultAxleNeckRight" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12">
+                            <el-form-item label="卸荷槽复探左" prop="reultAxleNeckLeft" label-width="120px">
+                                <el-input v-model="ruleForm.reultAxleNeckLeft" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item  label="卸荷槽复探右" prop="reultAxleNeckRight" label-width="120px">
+                                <el-input v-model="ruleForm.reultAxleNeckRight" placeholder="" ></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')"  v-show="addbtnstatus" size="small">创建</el-button>
+                        <el-button @click="resetForm" size="small">重置</el-button>
+                        <el-button @click="saveForm('ruleForm')" v-show="savebtnstatus" size="small">保存</el-button>
+                        <el-button @click="modifyForm('ruleForm')" v-show="modbtnstatus" size="small">修改</el-button>
+                        <el-button @click="cancelmodForm('ruleForm')" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </el-dialog>
     </div>
 </template>
 
@@ -285,59 +257,64 @@
                 savebtnstatus:true,
                 modbtnstatus:false,
                 cancelbtnstatus:false,
-                enableLeft:true,
-                enableRight:false,
                 itemUnderMod:{},
                 savedInfo:[],
                 wheelList:[],
                 unFinishMeasureList:[],
+                saveIndex:1,
+
+                operateTableVisible:false,
+                issaved:'0',
+                hassaved:false,
 
                 disableForm:true,
                 wheelInfo:{},
                 savedInfoHeads:[],
-
                 ruleForm: {
                     id:'',
                     wheelId:'',
-                    wheelDiameterLeft:'',
-                    wheelDiameterRight:'',
-                    treadWearLeft:'',
-                    treadWearRight:'',
-                    rimWideLeft:'',
-                    rimWideRight:'',
-                    flangeThickLeft:'',
-                    flangeThickRight:'',
-                    rimThickLeft:'',
-                    rimThickRight:'',
+                    bearingTypeLeft:'',
+                    bearingTypeRight:'',
+                    bearingBoxType:'',
+                    bearingAssemble1stLeft:'',
+                    bearingLevelLeft:'',
+                    bearingmadeInLeft:'',
+                    wheelAssemble1st:'',
+                    axleNumber:'',
+                    bearingAssembleLeft:'',
+                    axleMadeDate:'',
+                    axleMaterial:'',
+                    axleMadeIn:'',
+                    bearingAssembleInLeft:'',
+                    repairLevelLeft:'',
+                    bearingAssemble1stRight:'',
+                    bearingLevelRight:'',
+                    bearingmadeInRight:'',
+                    wheelAssemblelast:'',
+                    wheelAssembleIn:'',
+                    bearingAssembleRight:'',
+                    bearingAssembleInRight:'',
+                    repairLevelRight:'',
+                    closeStateLeft:'',
+                    closeStateRight:'',
+                    axleGapLeft:'',
+                    axleGapRight:'',
+                    appearanceLeft:'',
+                    appearanceRight:'',
+                    uncapReasonLeft:'',
+                    uncapReasonRight:'',
+                    unloadReasonLeft:'',
+                    unloadReasonRight:'',
+                    unloadDateLeft:'',
+                    unloadDateRight:'',
+                    repairProgressLeft:'',
+                    repairProgressRight:'',
                     worker:'',
-                    isFinish:'',
-                    finishTime:'',
-                    other:''
-                },
-                origindata: {
-                    id:'',
-                    wheelId:'',
-                    axleDiameter:'',
-                    wheelDiameterLeft:'',
-                    wheelDiameterRight:'',
-                    treadWearLeft:'',
-                    treadWearRight:'',
-                    rimThickLeft:'',
-                    rimThickRight:'',
-                    rimWideLeft:'',
-                    rimWideRight:'',
-                    flangeThickLeft:'',
-                    flangeThickRight:'',
-                    internalDistance1:'',
-                    internalDistance2:'',
-                    internalDistance3:'',
-                    problem:'',
-                    repairProcess:'',
-                    wheelExaminers:'',
+                    unloaderLeft:'',
+                    unloaderRight:'',
                     isFinish:'0',
                     finishTime:'',
                     other:'',
-                    saveNumer:0
                 },
                 search:{
                     wheelId:'',
@@ -350,7 +327,7 @@
                     infoTakeFinishTimeFrom:null,
                     infoTakeFinishTimeTo:null
                 },
-                rules: {
+                rrules: {
                     bearingTypeLeft: [
                         { required: true, message: '请输入', trigger: 'blur' },
                     ],
@@ -483,9 +460,13 @@
 
         },
         methods: {
+            //重置表单内容
+            resetForm() {
+                this.$refs['ruleForm'].resetFields();
+                this.ruleForm = {};
+            },
             //刷新表单
             flushRuleForm(){
-                this.resetForm();
                 this.addbtnstatus = true;
                 this.savebtnstatus = true;
                 this.modbtnstatus = false;
@@ -493,15 +474,7 @@
                 this.isModify = false;
                 this.ruleForm = {};
                 this.wheelInfo = {};
-                this.enableRight = true;
                 this.disableForm = true;
-            },
-            //创建新表
-            creatNewWheelInfo(){
-                this.$refs['infolist'].childNodes.forEach(function (child,index) {
-                    child.classList.remove("choosen");
-                });
-                this.flushRuleForm();
             },
             //添加新wheel
             submitForm(formName) {
@@ -511,13 +484,23 @@
                         this.ruleForm.isFinish = '1';
                         this.ruleForm.finishTime = this.dateFormate(new Date(),'');
                         var result = await this.$http.post(
-                            "/wheelRound/addWheelRound",
+                            "/axleInspection/addaxleInspection",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
                             return ;
                         }
                         alert("添加成功");
+                        //设置保存按钮
+                        this.hassaved = true;
+                        //从列表内跟新
+                        for(var i=0;i<this.wheelList.length;i++){
+                            if (this.wheelList[i].wheelId == this.ruleForm.wheelId){
+                                this.wheelInfo.isaxleInspectionFinish = '1';
+                                this.wheelList[i] = this.wheelInfo;
+                                break;
+                            }
+                        }
                         //检查保存列表如有相同的从保存列表删除
                         var id = this.ruleForm.wheelId;
                         this.deleteFromSaveInfo(id);
@@ -545,10 +528,6 @@
                     }
                 }
             },
-            //重置表单内容
-            resetForm() {
-                this.$refs['ruleForm'].resetFields();
-            },
             //保存未完成RuleForm
             saveForm(formName){
                 var id = this.ruleForm.wheelId;
@@ -560,33 +539,54 @@
                 for (var i=0;i<this.savedInfo.length;i++){
                     if (this.savedInfo[i].wheelId==id){
                         this.savedInfo[i] = JSON.parse(JSON.stringify(this.ruleForm));
+                        this.savedInfoHeads[i] = JSON.parse(JSON.stringify(this.wheelInfo));
                         this.saveToSession(this.savedInfo,this.saveIndex,this.savedInfoHeads);
-                        this.creatNewWheelInfo();
                         alert("已保存");
                         return;
                     }
                 }
                 //保存新
-                this.ruleForm.testerLeft = sessionStorage.getItem("name");
-                this.ruleForm.testerRight = sessionStorage.getItem("name");
+                this.ruleForm.worker = sessionStorage.getItem("name");
                 this.ruleForm.isFinish = '0';
                 var saved = JSON.parse(JSON.stringify(this.ruleForm));
                 this.savedInfo.push(saved);
                 this.savedInfoHeads.push(this.wheelInfo);
                 this.saveToSession(this.savedInfo,this.saveIndex,this.savedInfoHeads);
-                this.creatNewWheelInfo();
                 alert("已保存");
             },
-            saveToSession(data,index,heads){
+            //创建新表
+            creatNewWheelInfo(){
+                this.flushRuleForm();
+            },
+            async saveToSession(info,index,heads){
                 var wheelInfo = {
-                    data:data,
+                    data:info,
                     heads:heads
                 }
-                sessionStorage.setItem("savedWheelRound",JSON.stringify(wheelInfo));
+                //sessionStorage.setItem("savedMeasureInfo",JSON.stringify(wheelInfo));
+                var name = sessionStorage.getItem("name");
+                var data = JSON.stringify(wheelInfo);
+                var result = await this.$http.post(
+                    "/axleInspection/savedWheelInfoA",
+                    {name:name,data:data});
+                if (result.data.code != 100){
+                    alert("查询失败");
+                    return ;
+                }
+                //设置保存按钮
+                this.hassaved = true;
             },
             //从seesion中获取保存的未完成表单
-            getSavedWheelInfoFromSession(){
-                var measureInfo = JSON.parse(sessionStorage.getItem("savedWheelRound"));
+            async getSavedWheelInfoFromSession(){
+                var name = sessionStorage.getItem("name");
+                var result = await this.$http.get(
+                    "/axleInspection/getSavedWheelInfoA?name="+name);
+                if (result.data.code != 100){
+                    alert("查询失败");
+                    return ;
+                }
+                //var measureInfo = JSON.parse(sessionStorage.getItem("savedMeasureInfo"));
+                var measureInfo = JSON.parse(result.data.object);
                 if (measureInfo!=null){
                     this.savedInfo = measureInfo.data;
                     this.savedInfoHeads = measureInfo.heads;
@@ -594,14 +594,16 @@
             },
             //查找保存的未完成表单
             searchSavedInfo(){
+                this.issaved = '1';
                 this.getSavedWheelInfoFromSession();
                 this.wheelList = this.savedInfoHeads;
                 this.flushRuleForm();
             },
-            //从数据库查找未完成的WheelInfo
+            //从数据库查找未完成的wheel
             async searchUnFinish(){
+                this.issaved = '0';
                 var result = await this.$http.post(
-                    "/wheelRound/unFinishWheelRound",
+                    "/axleInspection/unFinishAxleInspection2",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("查询失败");
@@ -614,12 +616,15 @@
             //修改wheel
             async modifyForm(formName){
                 var result = await this.$http.post(
-                    "/wheelRound/modifyWheelRound",
+                    "/axleInspection/modifyAxleInspection",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
                     return ;
                 }
+
+                //刷新item
+                this.wheelList[this.itemUnderMod] = result.data.object;
                 //重置表单
                 this.isModify = false;
                 this.flushRuleForm();
@@ -634,16 +639,17 @@
             },
             //多条件查找wheel
             searchWheelInfo(searchForm){
+                this.issaved = '2';
                 //保证至少一个查找条件
-                // if(this.search.wheelId==''&&this.search.takeInDateFrom==null&&this.search.takeInDateTo==null&&this.search.axleNumber==''&&
-                //     this.search.vehicleNumber==''&&this.search.infoTakeFinishTimeFrom==null&&this.search.infoTakeFinishTimeTo==null){
-                //     this.searchUnFinish();
-                //     return;
-                // }
+                if(this.search.wheelId==''&&this.search.takeInDateFrom==null&&this.search.takeInDateTo==null&&this.search.axleNumber==''&&
+                    this.search.vehicleNumber==''&&this.search.infoTakeFinishTimeFrom==null&&this.search.infoTakeFinishTimeTo==null){
+                    this.wheelList = [];
+                    return;
+                }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
                         var result = await this.$http.post(
-                            "/wheelRound/searchWheelInfoByconditionWheelRound",
+                            "/axleInspection/searchWheelInfoByconditionAxleInspection",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -657,31 +663,69 @@
                     }
                 });
             },
-            //显示wheel信息
-            async showitem(item,index,e){
+            async captureitem(index,item){
+                //重置保存按钮
+                this.hassaved = false;
+                //显示操作面板
+                this.operateTableVisible = true;
                 //如果已提交屏蔽 创建 按钮，提供修改和取消按钮
                 this.flushRuleForm();
                 //显示基本信息
                 this.wheelInfo = item;
-                this.enableRight = false;
-                //高亮显示
-                //清除choosen类
-                e.currentTarget.parentElement.childNodes.forEach(function (child,index) {
-                    child.classList.remove("choosen");
-                });
-                //添加choosen类
-                e.currentTarget.classList.add("choosen");
+                const id = item.wheelId;
+                //未完成给个空值和表单id
+                if (item.isaxleInspectionFinish == '0'){
+                    //从候选set中删除
+                    var result = await this.$http.get(
+                        "/axleInspection/chooseWheelA?id="+id);
+                    if (result.data.code != 100){
+                        //获取未完成列表
+                        this.searchUnFinish();
+                        alert("捕获失败");
+                        //关闭操作面板
+                        this.operateTableVisible = false;
+                        return ;
+                    }
+                    this.ruleForm = {};
+                    this.ruleForm.wheelId = id;
+                }
+                //开放表单
+                this.disableForm = false;
+            },
+            async operateitem(index,item){
+                //重置保存按钮
+                this.hassaved = false;
+                //显示操作面板
+                this.operateTableVisible = true;
+                //如果已提交屏蔽 创建 按钮，提供修改和取消按钮
+                this.flushRuleForm();
+                //显示基本信息
+                this.wheelInfo = item;
+                const id = item.wheelId;
                 //检查保存里是否有数据
-                var id = item.wheelId;
                 for (var i=0;i<this.savedInfo.length;i++){
                     if (this.savedInfo[i].wheelId == id){
                         this.ruleForm = JSON.parse(JSON.stringify(this.savedInfo[i]));
-                        this.getoriginwheelround(this.ruleForm.wheelId);
+                        //开放表单
+                        this.disableForm = false;
                         return;
                     }
                 }
+            },
+            //显示wheel信息
+            async showitem(index,item){
+                //重置保存按钮
+                this.hassaved = false;
+                //显示操作面板
+                this.operateTableVisible = true;
+                //如果已提交,屏蔽"创建"按钮，提供"修改"和"取消"按钮
+                this.flushRuleForm();
+                //显示基本信息
+                this.wheelInfo = item;
+                const id = item.wheelId;
+
                 //是否完成
-                if (item.isWheelRoundingFinish == '1'){
+                if (item.isaxleInspectionFinish == '1'){
                     this.addbtnstatus = false;
                     this.savebtnstatus = false;
                     this.modbtnstatus = true;
@@ -689,34 +733,53 @@
                     this.isModify = true;
                     //已完成从数据库内查找，提交到显示表单
                     var result = await this.$http.get(
-                        "/wheelRound/findWheelRoundById?id="+item.wheelId);
+                        "/axleInspection/findAxleInspectionById?id="+id);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
                     }
                     this.ruleForm = result.data.object;
                 }
-                //未完成给个空值和表单id
-                if (item.isWheelRoundingFinish == '0'){
-                    this.ruleForm = {};
-                    this.ruleForm.wheelId = item.wheelId;
-                }
-                //获取车轮旋面前原始数据
-                this.getoriginwheelround(this.ruleForm.wheelId);
                 //开放表单
                 this.disableForm = false;
             },
-            //获取车轮旋面前原始数据
-           async getoriginwheelround(wheelId){
+            handleEdit(){
+                this.operateTableVisible = true;
+            },
+            async turnBack(index,item){
+                const id = item.wheelId;
                 var result = await this.$http.get(
-                    "/wheelRound/getoriginwheelround?id="+wheelId);
+                    "/axleInspection/turnBackA?id="+id);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;
                 }
-                this.origindata = result.data.object;
+                this.deleteFromSaveInfo(id);
+                this.searchSavedInfo();
+                alert("已退回！");
             },
-            async deleteForm(formName){
+            //关闭
+            async handleProblemTable(done){
+                if(this.wheelInfo.isaxleInspectionFinish=='0'&&this.hassaved == false){
+                    var res = await  this.$confirm('是否保存?', '提示', {
+                        confirmButtonText: '保存',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).catch(err=>{
+                        return err;
+                    });
+                    if (res == "confirm"){
+                        this.saveForm('ruleForm');
+                    }else {
+                        if (this.issaved == false){
+                            this.turnBack(0,this.ruleForm);
+                        }
+                    }
+                }
+                this.$refs['ruleForm'].resetFields();
+                done();
+            },
+            async deleteForm(index,item){
                 var res = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -726,20 +789,20 @@
                 });
                 if (res == "confirm") {
                     //从数据库删除
-                    var id = this.ruleForm.wheelId;
+                    var id = item.wheelId;
                     if (id==''||id==null||id==undefined) {
                         alert("请选择删除项");
                         return;
                     }
-                    var result = await this.$http.get('/wheelRound/deleteWheelRound?id=' + id);
+                    var result = await this.$http.get('/axleInspection/deleteAxleInspection?id=' + id);
                     if (result.data.code != 100) {
                         alert("删除失败");
                         return;
                     }
                     //从保存列表删除
                     this.deleteFromSaveInfo(id);
-                    //刷新列表,获取未完成表单
-                    this.searchUnFinish();
+                    //刷新列表
+                    this.searchSavedInfo();
                     alert("已删除");
                 } else {
                     // alert("取消删除");
@@ -781,18 +844,18 @@
             }
         },
         created() {
-            //获取未完成列表F
+            //获取未完成列表
             this.getSavedWheelInfoFromSession();
         },
         mounted() {
             //获取未完成列表
             this.searchUnFinish();
-            this.enableLeft = true;
         }
     }
 </script>
 
 <style lang="scss" scoped>
+
     .status{
         font-size: 14px;
         margin: 0 0 20px 10px;
@@ -801,6 +864,7 @@
             font-size: 16px;
         }
     }
+
     .listContainer{
         text-align: center;
         line-height: 40px;
@@ -817,5 +881,4 @@
         border: 1px solid black;
         margin-bottom: 20px;
     }
-
 </style>

@@ -685,8 +685,8 @@
                         this.ruleForm.caperRight = sessionStorage.getItem("name");
                         this.ruleForm.isFinish = '1';
                         this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                            var result = await axios.post(
-                            "http://localhost:8081/spt2/bearingCap/addbearingCap",
+                            var result = await this.$http.post(
+                            "/bearingCap/addbearingCap",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -774,8 +774,8 @@
             },
             //从数据库查找未完成的WheelInfo
             async searchUnFinish(){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/bearingCap/unFinishBearingCap",
+                var result = await this.$http.post(
+                    "/bearingCap/unFinishBearingCap",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("查询失败");
@@ -790,8 +790,8 @@
                 this.ruleForm.worker = sessionStorage.getItem("name");
                 this.ruleForm.caperRight = sessionStorage.getItem("name");
                 this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/bearingCap/modifyBearingCap",
+                var result = await this.$http.post(
+                    "/bearingCap/modifyBearingCap",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -819,8 +819,8 @@
                 // }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/bearingCap/searchWheelInfoBycondition",
+                        var result = await this.$http.post(
+                            "/bearingCap/searchWheelInfoBycondition",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -864,8 +864,8 @@
                     this.cancelbtnstatus = true;
                     this.isModify = true;
                     //已完成从数据库内查找，提交到显示表单
-                    var result = await axios.get(
-                        "http://localhost:8081/spt2/bearingCap/findBearingCapById?id="+item.wheelId);
+                    var result = await this.$http.get(
+                        "/bearingCap/findBearingCapById?id="+item.wheelId);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
@@ -895,7 +895,7 @@
                         alert("请选择删除项");
                         return;
                     }
-                    var result = await axios.get('http://localhost:8081/spt2/bearingCap/deleteBearingCap?id=' + id);
+                    var result = await this.$http.get('/bearingCap/deleteBearingCap?id=' + id);
                     if (result.data.code != 100) {
                         alert("删除失败");
                         return;

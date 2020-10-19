@@ -83,7 +83,7 @@
             return{
                 enable:'',
                 enableLeft:false,
-                enableRight:true,
+                enableRight:false,
                 ruleForm: {
                     id:'',
                     wheelId:'',

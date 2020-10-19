@@ -23,6 +23,14 @@
                         </el-select>
                     </span>
                 </el-col>
+                <el-col :span="4">
+                    <span>
+                        <el-select v-model="queryInfo.ismobile" v-show="queryInfo.isonline=='1'" slot="prepend" placeholder="请选择登录终端">
+                            <el-option label="PC端" value="1"></el-option>
+                            <el-option label="移动端" value="0"></el-option>
+                        </el-select>
+                    </span>
+                </el-col>
                 <el-col :span="1">
                     <el-button type="primary" @click="showAllUser">查找</el-button>
                 </el-col>
@@ -106,6 +114,7 @@
                 //查询页码参数
                 queryInfo:{
                     isonline:'1',
+                    ismobile:'1',
                     query:'',
                     currentPage:1,
                     pagesize:5
@@ -115,8 +124,8 @@
         methods:{
             //获取用户列表
             async getusers(){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/getusersWithLog",
+                var result = await this.$http.post(
+                    "/userManage/getusersWithLog",
                     this.queryInfo);
                 if (result.data.code == 100){
                     this.userlist = result.data.object.list;
@@ -128,8 +137,8 @@
             async handle4Log(index, row) {
                 this.currentUser = row;
                 this.LogDialogVisible = true;
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/getusersLog",
+                var result = await this.$http.post(
+                    "/userManage/getusersLog?ismobile="+this.queryInfo.ismobile+"&isonline="+this.queryInfo.isonline,
                     row);
                 if (result.data.code != 100){
                     alert("日志获取失败！")
@@ -149,8 +158,8 @@
             },
             //强制用户下线
             async onLineChange(row){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/onLineChange",
+                var result = await this.$http.post(
+                    "/userManage/onLineChange",
                     row);
                 if (result.data.code != 100){
                     alert("日志获取失败！")
@@ -163,8 +172,8 @@
                     alert("查询内容为空");
                     return ;
                 }
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/searchusers",
+                var result = await this.$http.post(
+                    "/userManage/searchusers",
                     {
                         username:this.queryInfo.query
                     }

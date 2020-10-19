@@ -45,7 +45,7 @@
             submitForm(formName) {
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
-                       var result = await axios.post("http://localhost:8081/spt2/userManage/login",this.ruleForm);
+                       var result = await this.$http.post("/userManage/login",this.ruleForm);
                        console.log(result.data);
                        if (result.data.code == 100){
                            var token = result.data.object.token;

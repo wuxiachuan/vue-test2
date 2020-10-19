@@ -513,8 +513,8 @@
                         this.ruleForm.worker = sessionStorage.getItem("name");
                         this.ruleForm.isFinish = '1';
                         this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/wheelDispatch/addWheelDispatch",
+                        var result = await this.$http.post(
+                            "/wheelDispatch/addWheelDispatch",
                             this.ruleForm);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -602,8 +602,8 @@
             },
             //从数据库查找未完成的WheelInfo
             async searchUnFinish(){
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/unFinishWheelDispatch",
+                var result = await this.$http.post(
+                    "/wheelDispatch/unFinishWheelDispatch",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("查询失败");
@@ -617,8 +617,8 @@
             async modifyForm(formName){
                 this.ruleForm.worker = sessionStorage.getItem("name");
                 this.ruleForm.finishTime = this.dateFormate(new Date(),'');
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/wheelDispatch/modifyWheelDispatch",
+                var result = await this.$http.post(
+                    "/wheelDispatch/modifyWheelDispatch",
                     this.ruleForm);
                 if (result.data.code != 100){
                     alert("修改失败");
@@ -646,8 +646,8 @@
                 // }
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
-                        var result = await axios.post(
-                            "http://localhost:8081/spt2/wheelDispatch/searchWheelInfoByconditionDispatch",
+                        var result = await this.$http.post(
+                            "/wheelDispatch/searchWheelInfoByconditionDispatch",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -691,8 +691,8 @@
                     this.cancelbtnstatus = true;
                     this.isModify = true;
                     //已完成从数据库内查找，提交到显示表单
-                    var result = await axios.get(
-                        "http://localhost:8081/spt2/wheelDispatch/findWheelDispatchById?id="+item.wheelId);
+                    var result = await this.$http.get(
+                        "/wheelDispatch/findWheelDispatchById?id="+item.wheelId);
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
@@ -720,7 +720,7 @@
                         alert("请选择删除项");
                         return;
                     }
-                    var result = await axios.get('http://localhost:8081/spt2/wheelDispatch/deleteWheelDispatch?id=' + id);
+                    var result = await this.$http.get('/wheelDispatch/deleteWheelDispatch?id=' + id);
                     if (result.data.code != 100) {
                         alert("删除失败");
                         return;

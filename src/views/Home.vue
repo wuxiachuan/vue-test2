@@ -1,12 +1,12 @@
 <template>
   <el-container>
     <el-header>
-      <span>权限管理系统</span>
+      <span>轮轴管理系统</span>
       <div class="loginUser">
           <div class="infoNum" v-if="problemNum != 0"><span v-text="problemNum"></span></div>
           <el-button type="primary"  size="mini" round @click="showTable">{{currentUser}}</el-button>
       </div>
-      <el-button type="info" round @click="logout">退出</el-button>
+      <el-button type="info" size="small" round @click="logout">退出</el-button>
     </el-header>
     <el-container>
       <el-aside width="200px">
@@ -35,14 +35,21 @@
 
       <el-table :data="problemList" style="width: 100%" height="600" :default-sort = "{prop: 'findTime', order: 'descending'}" border stripe>
         <el-table-column type="index" label="序号" width="50"></el-table-column>
-        <el-table-column prop="axleNumber" label="轴号" width="50"></el-table-column>
         <el-table-column prop="axleType" label="轴型" width="50"></el-table-column>
+        <el-table-column prop="axleNumber" label="轴号" width="50"></el-table-column>
+        <el-table-column prop="axleMadeIn" label="厂代号" width="50"></el-table-column>
         <el-table-column prop="processBelong" label="部位" width="80" >
           <template slot-scope="scope">
-            <span v-if="scope.row.processBelong==1" >车轮</span>
-            <span v-if="scope.row.processBelong==2" >车轴</span>
-            <span v-if="scope.row.processBelong==3" >轴承</span>
-            <span v-if="scope.row.processBelong==4" >探伤</span>
+            <span v-if="scope.row.processBelong==0" >信息采集</span>
+            <span v-if="scope.row.processBelong==1" >轮对测量</span>
+            <span v-if="scope.row.processBelong==2" >轴承检查</span>
+            <span v-if="scope.row.processBelong==3" >磁粉探伤</span>
+            <span v-if="scope.row.processBelong==4" >超声探伤</span>
+            <span v-if="scope.row.processBelong==5" >车轮旋面</span>
+            <span v-if="scope.row.processBelong==6" >轴承压装</span>
+            <span v-if="scope.row.processBelong==7" >轴承关盖</span>
+            <span v-if="scope.row.processBelong==8" >磨合测试</span>
+            <span v-if="scope.row.processBelong==9" >轮对复测</span>
           </template>
         </el-table-column>
         <el-table-column prop="problemDescription" label="简介" ></el-table-column>
@@ -94,7 +101,7 @@ export default {
   },
   methods:{
     async logout(){
-      var result =await axios.get("http://localhost:8081/spt2/userManage/logout");
+      var result =await this.$http.get("/userManage/logout");
       if (result.data.code == 100){
         this.menulist = result.data.object;
       }
@@ -102,7 +109,7 @@ export default {
       this.$router.push("/login");
     },
     async getmenus(){
-      var result =await axios.get("http://localhost:8081/spt2/userManage/getmenus");
+      var result =await this.$http.get("/userManage/getmenus");
       if (result.data.code == 100){
          this.menulist = result.data.object;
       }
@@ -122,8 +129,8 @@ export default {
       this.problemListVisible = true;
     },
     async getProblem(){
-      var result = await axios.get(
-              "http://localhost:8081/spt2/quality/getProblems?worker="+this.currentUser);
+      var result = await this.$http.get(
+              "/quality/getProblems?worker="+this.currentUser);
       if (result.data.code != 100){
         alert("添加失败");
         return ;
@@ -139,8 +146,8 @@ export default {
               .catch();
     },
    async handleToDone(index,row){
-      var result = await axios.get(
-              "http://localhost:8081/spt2/quality/resoveProblem?id="+row.id);
+      var result = await this.$http.get(
+              "/quality/resoveProblem?id="+row.id);
       if (result.data.code != 100){
         alert("整改失败");
         return ;

@@ -137,8 +137,8 @@
         methods:{
             //获取用户列表
            async getusers(){
-              var result = await axios.post(
-                  "http://localhost:8081/spt2/userManage/getusers",
+              var result = await this.$http.post(
+                  "/userManage/getusers",
                   this.queryInfo);
                if (result.data.code == 100){
                    this.userlist = result.data.object.list;
@@ -161,7 +161,6 @@
             },
             //删除用户
            async handleDelete(index, row) {
-                console.log(index, row);
              var res = await this.$confirm('此操作将永久删除用户, 是否继续?', '提示', {
                    confirmButtonText: '确定',
                    cancelButtonText: '取消',
@@ -170,7 +169,7 @@
                    return err;
                });
               if (res == "confirm"){
-                  var {data:res} = await axios.post("http://localhost:8081/spt2/userManage/deleteuser",{id:row.id});
+                  var {data:res} = await this.$http.post("/userManage/deleteuser",{id:row.id});
                   if (res.code == 101){
                       alert("删除失败");
                       return ;
@@ -193,7 +192,7 @@
             },
             //改变用户状态
            async statusChange(info){
-             await axios.post("http://localhost:8081/spt2/userManage/moduser",info)
+             await this.$http.post("/userManage/moduser",info)
                    .then(resp =>{
                        alert(resp.data.message);
                    })
@@ -204,8 +203,8 @@
                     alert("查询内容为空");
                     return ;
                 }
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/searchusers",
+                var result = await this.$http.post(
+                    "/userManage/searchusers",
                     {
                             username:this.queryInfo.query
                         }
@@ -230,8 +229,8 @@
             //添加用户
            async getinfo(userinfo){
                console.log(userinfo);
-                var result = await axios.post(
-                       "http://localhost:8081/spt2/userManage/adduser",
+                var result = await this.$http.post(
+                       "/userManage/adduser",
                        {
                            userinfo:userinfo
                        });
@@ -245,8 +244,8 @@
             //修改用户
             async getmodyinfo(userinfo){
                 console.log(userinfo);
-                var result = await axios.post(
-                    "http://localhost:8081/spt2/userManage/modyuser",
+                var result = await this.$http.post(
+                    "/userManage/modyuser",
                     {
                         userinfo:userinfo
                     });

@@ -31,7 +31,7 @@
         },
         methods:{
           async getorginright(){
-                var result = await axios.get("http://localhost:8081/spt2/rightManage/allright");
+                var result = await this.$http.get("/rightManage/allright");
                 if (result.data.code != 100){
                     alert("权限列表获取失败");
                     return ;

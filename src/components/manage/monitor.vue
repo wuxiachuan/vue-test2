@@ -63,7 +63,7 @@
             async handleClick(tab, event) {
                 console.log(tab.name);
                 var result = await axios.post(
-                    "http://localhost:8081/spt2/manage/getWheelList?name="+tab.name);
+                    "/manage/getWheelList?name="+tab.name);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;

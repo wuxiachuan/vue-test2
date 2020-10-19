@@ -4,7 +4,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>轴承检修</el-breadcrumb-item>
-            <el-breadcrumb-item>轴承关盖</el-breadcrumb-item>
+            <el-breadcrumb-item>轴承磨合</el-breadcrumb-item>
         </el-breadcrumb>
         <el-card>
             <el-row :gutter="5">
@@ -490,7 +490,7 @@
             },
             //从数据库查找未完成的WheelInfo
             async searchUnFinish(){
-                var result = await axios.post(
+                var result = await this.$http.post(
                     "http://localhost:8081/spt2/bearingTest/unFinishBearingTest",
                     this.ruleForm);
                 if (result.data.code != 100){

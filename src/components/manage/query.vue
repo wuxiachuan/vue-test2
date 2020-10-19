@@ -403,6 +403,7 @@
                 QRimgpath:'',
                 activeStep:'',
                 activeName:'first',
+                resourceURL:this.$GLOBAL.resourceURL,
                 //显示用户条数
                 total:100,
                 problemList:[],
@@ -453,7 +454,7 @@
                 this.$refs[searchForm].validate(async (valid) => {
                     if (valid) {
                         var result = await axios.post(
-                            "http://localhost:8081/spt2/manage/query",
+                            "/manage/query",
                             this.search);
                         if (result.data.code != 100){
                             alert("添加失败");
@@ -472,7 +473,7 @@
             },
             async handleForDetail(index,data){
                 var result = await axios.post(
-                    "http://localhost:8081/spt2/manage/queryAll",
+                    "/manage/queryAll",
                     data);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -483,7 +484,7 @@
             },
             async handleForProgress(index,data){
                 var result = await axios.post(
-                    "http://localhost:8081/spt2/manage/queryAll",
+                    "/manage/queryAll",
                     data);
                 if (result.data.code != 100){
                     alert("添加失败");
@@ -520,7 +521,7 @@
             },
             async getProblem(id){
                 var result = await axios.get(
-                    "http://localhost:8081/spt2/quality/getProblemsById?id="+id);
+                    "/quality/getProblemsById?id="+id);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;
@@ -553,12 +554,12 @@
             //获取二维码
             async getQRcode(wheelId){
                 var result = await axios.get(
-                    "http://localhost:8081/spt2/wheelTakein/getQRcode?id="+wheelId);
+                    "/wheelTakein/getQRcode?id="+wheelId);
                 if (result.data.code != 100){
                     alert("二维码生成失败");
                     return ;
                 }
-                this.QRimgpath = 'http://localhost:8081/spt2/wheelqrcode/'+result.data.object;
+                this.QRimgpath = this.resourceURL + '/wheelqrcode/'+result.data.object;
             },
         },
         filters:{
@@ -584,7 +585,7 @@
         },
         async mounted() {
             var result = await axios.post(
-                "http://localhost:8081/spt2/manage/query",
+                "/manage/query",
                 this.search);
             if (result.data.code != 100){
                 alert("添加失败");
