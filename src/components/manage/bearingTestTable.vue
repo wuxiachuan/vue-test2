@@ -79,7 +79,7 @@
             }
         },
         mounted() {
-            this.ruleForm = this.showinfo;
+            this.ruleForm = this.showinfo?this.showinfo:{};
         }
 
     }

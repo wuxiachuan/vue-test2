@@ -13,18 +13,6 @@
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :disabled="disableForm">
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="穿透初探左" prop="ultAxleLeft" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleLeft" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item  label="穿透初探右" prop="ultAxleRight" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleRight" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item label="穿透复探左" prop="reultAxleLeft" label-width="120px">
                             <el-input v-model="ruleForm.reultAxleLeft" placeholder="" ></el-input>
                         </el-form-item>
@@ -37,30 +25,6 @@
                 </el-row>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="轮座左" prop="ultAxleFootLeft" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleFootLeft" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item  label="轮座右" prop="ultAxleFootRight" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleFootRight" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
-                        <el-form-item label="卸荷槽初探左" prop="ultAxleNeckLeft" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleNeckLeft" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item  label="卸荷槽初探右" prop="ultAxleNeckRight" label-width="120px">
-                            <el-input v-model="ruleForm.ultAxleNeckRight" placeholder="" ></el-input>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="12">
                         <el-form-item label="卸荷槽复探左" prop="reultAxleNeckLeft" label-width="120px">
                             <el-input v-model="ruleForm.reultAxleNeckLeft" placeholder="" ></el-input>
                         </el-form-item>
@@ -68,6 +32,21 @@
                     <el-col :span="12">
                         <el-form-item  label="卸荷槽复探右" prop="reultAxleNeckRight" label-width="120px">
                             <el-input v-model="ruleForm.reultAxleNeckRight" placeholder="" ></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="是否送厂" prop="repairProcess">
+                            <el-radio-group v-model="ruleForm.repairProcess">
+                                <el-radio label="1">是</el-radio>
+                                <el-radio label="0">否</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="送厂原因" prop="discardReason">
+                            <el-input v-model="ruleForm.discardReason"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -146,6 +125,7 @@
                 this.ruleForm = {};
             },
             submitForm(){
+                this.ruleForm.wheelId = this.wheelInfo.wheelId;
                 this.$refs['ruleForm'].validate(async (valid) => {
                     if (valid) {
                         this.$emit("sendwheeldata",{data:this.ruleForm,flag:'0'});

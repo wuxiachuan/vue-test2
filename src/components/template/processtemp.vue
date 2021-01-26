@@ -71,7 +71,7 @@
                     <el-col :span="10">
                         <el-button  @click="searchWheelInfo('searchForm')" >查询</el-button>
                         <el-button  @click="creatNewWheelInfo" v-if="index=='0'">新建</el-button>
-                        <el-button  @click="searchSavedInfo" v-if="index!='0'">已保存</el-button>
+                        <el-button  @click="searchSavedInfo" v-if="false&&index!='0'">已保存</el-button>
                         <el-button  @click="searchUnFinish" v-if="index!='0'">获取</el-button>
                     </el-col>
                 </el-form>
@@ -96,13 +96,13 @@
                                     <span v-if="scope.row[finishFlag] =='1'" >完工</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="操作" fixed="right" :width="index=='0'?280:200">
+                            <el-table-column label="操作" fixed="right" :width="index=='0'?200:100">
                                 <template slot-scope="scope">
                                     <el-button
                                             icon="el-icon-edit"
                                             size="mini"
                                             v-if="issaved=='0'"
-                                            @click="captureitem(scope.$index, scope.row)">捕获</el-button>
+                                            @click="captureitem(scope.$index, scope.row)">加工</el-button>
                                     <el-button
                                             icon="el-icon-edit"
                                             size="mini"
@@ -122,13 +122,13 @@
                                             size="mini"
                                             type="danger"
                                             :disabled="scope.row[finishFlag] =='0'"
-                                            v-if="issaved=='2'||issaved=='0'"
+                                            v-if="false&&(issaved=='2'||issaved=='0')"
                                             @click="deleteForm(scope.$index, scope.row)">删除</el-button>
                                     <el-button
                                             icon="el-icon-delete"
                                             size="mini"
                                             type="danger"
-                                            v-if="issaved=='1'"
+                                            v-if="false&&issaved=='1'"
                                             @click="turnBack(scope.$index, scope.row)">退回</el-button>
                                 </template>
                             </el-table-column>
@@ -187,7 +187,10 @@
                                v-bind:addbtnstatus="addbtnstatus"
                                v-bind:savebtnstatus="savebtnstatus"
                                v-bind:modbtnstatus="modbtnstatus"
-                               v-bind:cancelbtnstatus="cancelbtnstatus"></bearingLoadTable>
+                               v-bind:cancelbtnstatus="cancelbtnstatus"
+                               v-bind:enableLeft="disableLeft"
+                               v-bind:enableRight="disableRight"
+                               v-bind:origindata="originBearingNeckMeasure"></bearingLoadTable>
             <magneticInspectionTable  v-if="index=='3'"
                                v-on:sendwheeldata="handledata"
                                v-bind:showinfo="ruleForm"
@@ -233,9 +236,53 @@
                               v-bind:savebtnstatus="savebtnstatus"
                               v-bind:modbtnstatus="modbtnstatus"
                               v-bind:cancelbtnstatus="cancelbtnstatus"
-                              v-bind:enableLeft="true"
-                              v-bind:enableRight="false"
+                              v-bind:enableLeft="disableLeft"
+                              v-bind:enableRight="disableRight"
                               v-bind:origindata="originwheeldata"></wheelRoundTable>
+            <bearingUncapTable  v-if="index=='10'"
+                              v-on:sendwheeldata="handledata"
+                              v-bind:showinfo="ruleForm"
+                              v-bind:wheelInfo="wheelInfo"
+                              v-bind:disableForm="disableForm"
+                              v-bind:addbtnstatus="addbtnstatus"
+                              v-bind:savebtnstatus="savebtnstatus"
+                              v-bind:modbtnstatus="modbtnstatus"
+                              v-bind:cancelbtnstatus="cancelbtnstatus"
+                              v-bind:origindata="originwheeldata"></bearingUncapTable>
+            <bearingUnloadTable  v-if="index=='11'"
+                                v-on:sendwheeldata="handledata"
+                                v-bind:showinfo="ruleForm"
+                                v-bind:wheelInfo="wheelInfo"
+                                v-bind:disableForm="disableForm"
+                                v-bind:addbtnstatus="addbtnstatus"
+                                v-bind:savebtnstatus="savebtnstatus"
+                                v-bind:modbtnstatus="modbtnstatus"
+                                v-bind:cancelbtnstatus="cancelbtnstatus"
+                                v-bind:enableLeft="disableLeft"
+                                v-bind:enableRight="disableRight"
+                                v-bind:origindata="originwheeldata"></bearingUnloadTable>
+            <bearingNeckTable  v-if="index=='12'"
+                                v-on:sendwheeldata="handledata"
+                                v-bind:showinfo="ruleForm"
+                                v-bind:wheelInfo="wheelInfo"
+                                v-bind:disableForm="disableForm"
+                                v-bind:addbtnstatus="addbtnstatus"
+                                v-bind:savebtnstatus="savebtnstatus"
+                                v-bind:modbtnstatus="modbtnstatus"
+                                v-bind:cancelbtnstatus="cancelbtnstatus"
+                                v-bind:enableLeft="disableLeft"
+                                v-bind:enableRight="disableRight"
+                                v-bind:origindata="originwheeldata"></bearingNeckTable>
+            <reinspectionTable  v-if="index=='13'"
+                                v-on:sendwheeldata="handledata"
+                                v-bind:showinfo="ruleForm"
+                                v-bind:wheelInfo="wheelInfo"
+                                v-bind:disableForm="disableForm"
+                                v-bind:addbtnstatus="addbtnstatus"
+                                v-bind:savebtnstatus="savebtnstatus"
+                                v-bind:modbtnstatus="modbtnstatus"
+                                v-bind:cancelbtnstatus="cancelbtnstatus"
+                                v-bind:origindata="originwheeldata"></reinspectionTable>
         </el-dialog>
         <el-dialog
                 title="二维码"
@@ -259,6 +306,10 @@
     import ultrasonicInspectionTable from "./ultrasonicInspectionTable";
     import remeasureTable from "./remeasureTable";
     import wheelRoundTable from "./wheelRoundTable";
+    import bearingNeckTable from "./bearingNeckTable";
+    import bearingUncapTable from "./bearingUncapTable";
+    import bearingUnloadTable from "./bearingUnloadTable";
+    import reinspectionTable from "./reinspectionTable";
     export default {
         name: "information",
         components: {
@@ -271,7 +322,11 @@
             magneticInspectionTable,
             ultrasonicInspectionTable,
             remeasureTable,
-            wheelRoundTable
+            wheelRoundTable,
+            bearingNeckTable,
+            bearingUncapTable,
+            bearingUnloadTable,
+            reinspectionTable
         },
         props:{
             finishFlag:String,
@@ -289,6 +344,8 @@
                 modbtnstatus:false,
                 cancelbtnstatus:false,
                 disableForm:true,
+                disableLeft:false,
+                disableRight:false,
                 itemUnderMod:{},
                 savedInfo:[],
                 wheelList:[],
@@ -306,6 +363,7 @@
                 savedInfoHeads:[],
                 ruleForm:{},
                 originwheeldata:{},
+                originBearingNeckMeasure:{},
                 search:{
                     wheelId:'',
                     takeInDate: null,
@@ -354,19 +412,28 @@
                             this.URL+"/add",
                             ruleForm);
                         if (result.data.code != 100){
+                            if(this.index !='0') {
+                                this.turnBack(ruleForm.wheelId);
+                            }
                             alert("添加失败");
                             return ;
                         }
                         alert("添加成功");
-                        //设置保存按钮
                         this.hassaved = true;
+                        //设置保存按钮
+                            //this.hassaved = true;
                         //检查保存列表如有相同的从保存列表删除
-                        var id = ruleForm.wheelId;
-                        this.deleteFromSaveInfo(id);
-                        //获取未完成列表
-                        this.searchUnFinish();
-                        //清空列表
-                        this.flushRuleForm();
+                            //var id = ruleForm.wheelId;
+                            //this.deleteFromSaveInfo(id);
+                        //添加完成获取今日的数据
+                        if(this.index=='0') {
+                            this.searchToday();
+                        }else {
+                            //获取未完成列表
+                            this.searchUnFinish();
+                            //清空列表
+                            this.flushRuleForm();
+                        }
             },
             //保存未完成RuleForm
             saveForm(ruleForm){
@@ -474,6 +541,18 @@
                 this.wheelList = result.data.object;
                 this.flushRuleForm();
             },
+            //从数据库查找今日的wheel
+            async searchToday(){
+                this.issaved = '0';
+                var result = await this.$http.get(
+                    this.URL+"/today");
+                if (result.data.code != 100){
+                    alert("查询失败");
+                    return ;
+                }
+                this.wheelList = result.data.object;
+                this.flushRuleForm();
+            },
             //取消修改
             cancelmodForm(formName){
                 //重置表单
@@ -516,10 +595,14 @@
                 //显示基本信息
                 this.wheelInfo = item;
                 const id = item.wheelId;
+                //设置压装轴承的位置
+                this.setBearingPosition();
                 //如果旋面获取原始值
                 if(this.index=='5') this.getoriginwheelround(id);
+                //如果压装获取轴颈测量
+                if(this.index=='6') this.getoriginBearingNeckMeasure(id);
                 //未完成给个空值和表单id
-                if (item[this.finishFlag] === '0'||item[this.finishFlag] === '1'||item[this.finishFlag] === '2'||item[this.finishFlag] === '3') {
+                if (item[this.finishFlag] === '0'||item[this.finishFlag] === '5'||item[this.finishFlag] === '2'||item[this.finishFlag] === '3') {
                     //从候选set中删除
                     var result = await this.$http.get(
                         this.URL + "/chooseWheel?id=" + id);
@@ -562,9 +645,11 @@
             //显示wheel信息
             async showitem(index,item){
                 //重置保存按钮
-                this.hassaved = false;
+                this.hassaved = true;
                 //显示操作面板
                 this.operateTableVisible = true;
+                //禁止表单
+                this.disableForm = true;
                 //如果已提交,屏蔽"创建"按钮，提供"修改"和"取消"按钮
                 this.flushRuleForm();
                 //显示基本信息
@@ -573,55 +658,58 @@
                 //如果旋面获取原始值
                 if(this.index=='5') this.getoriginwheelround(id);
                 //是否完成
-                if (item.isMeasureFinish == '1'){
-                    this.addbtnstatus = false;
-                    this.savebtnstatus = false;
-                    this.modbtnstatus = true;
-                    this.cancelbtnstatus = true;
-                    this.isModify = true;
-                    //已完成从数据库内查找，提交到显示表单
-                    var result = await this.$http.get(
-                        this.URL+"/findById?id="+id);
-                    if (result.data.code != 100){
-                        alert("添加失败");
-                        return ;
-                    }
-                    this.ruleForm = result.data.object;
+                this.addbtnstatus = false;
+                this.savebtnstatus = false;
+                this.modbtnstatus = true;
+                this.cancelbtnstatus = true;
+                this.isModify = true;
+                //已完成从数据库内查找，提交到显示表单
+                var result = await this.$http.get(
+                    this.URL+"/findById?id="+id);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
                 }
+                this.ruleForm = result.data.object;
                 //开放表单
                 this.disableForm = false;
             },
-            async turnBack(index,item){
-                const id = item.wheelId;
+            async turnBack(id){
                 var result = await this.$http.get(
                     this.URL+"/turnBack?id="+id);
                 if (result.data.code != 100){
                     alert("添加失败");
                     return ;
                 }
-                this.deleteFromSaveInfo(id);
-                this.searchSavedInfo();
-                alert("已退回！");
+                //删除本地保存
+                //this.deleteFromSaveInfo(id);
+                //搜索保存的
+                //this.searchSavedInfo();
+                //获取未完成列表
+                this.searchUnFinish();
             },
             //关闭
             async handleProblemTable(done){
-                if(this.wheelInfo.isMeasureFinish=='0'&&this.hassaved == false){
-                    var res = await  this.$confirm('是否保存?', '提示', {
-                        confirmButtonText: '保存',
+                if(this.hassaved == false){
+                    var res = await  this.$confirm('是否提交?', '提示', {
+                        confirmButtonText: '提交',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).catch(err=>{
                         return err;
                     });
                     if (res == "confirm"){
-                        this.saveForm('ruleForm');
+                        this.addWheel('ruleForm');
                     }else {
                         if (this.issaved == false){
-                            this.turnBack(0,this.ruleForm);
+                            if(this.index !='0') {
+                                this.turnBack(this.wheelInfo.wheelId);
+                            }
                         }
                     }
                 }
                 done();
+                this.hassaved = false;
             },
             async deleteForm(index,item){
                 var res = await this.$confirm('此操作将永久删除, 是否继续?', '提示', {
@@ -661,6 +749,23 @@
                     return ;
                 }
                 this.originwheeldata = result.data.object;
+                if (this.originwheeldata==null) this.originwheeldata = {};
+            },
+            //获取车轮旋面前原始数据
+            async getoriginBearingNeckMeasure(wheelId){
+                var result = await this.$http.get(
+                    "/bearingLoad/getoriginBearingNeckMeasure?id="+wheelId);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
+                this.originBearingNeckMeasure = result.data.object;
+                if(this.originBearingNeckMeasure==null) this.originBearingNeckMeasure = {};
+            },
+            setBearingPosition(){
+                if(this.wheelInfo.isbearingLoadFinish =="2") this.disableLeft = false;
+                if(this.wheelInfo.isbearingLoadFinish =="3") this.disableRight = false;
+                if(this.wheelInfo.isbearingLoadFinish =="5") {this.disableLeft = false;this.disableRight = false;}
             },
             creatNewWheelInfo(){
                 //重置保存按钮
@@ -731,7 +836,7 @@
             this.URL = this.requestURL;
             if(this.index!='0'){
                 //获取未完成列表
-                this.getSavedWheelInfoFromSession();
+                //this.getSavedWheelInfoFromSession();
                 //获取未完成列表
                 this.searchUnFinish();
             }

@@ -10,7 +10,7 @@
                     <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                 </el-col>
             </el-row>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :disabled="disableForm">
+            <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
                 <el-row>
                     <el-col :span="6">
                         <el-form-item label="收入单位" prop="takeInDepot">
@@ -25,6 +25,7 @@
                                     v-model="ruleForm.takeInDate"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="yyyy-MM-dd"
+                                    @change="getgetVehicleNum"
                                     style="width: 100%;"></el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -45,7 +46,13 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="收入车号" prop="vehicleNumber">
-                            <el-input v-model="ruleForm.vehicleNumber"></el-input>
+                            <el-autocomplete
+                                    v-model="ruleForm.vehicleNumber"
+                                    :fetch-suggestions="querySearch"
+                                    placeholder="请输入车号"
+                                    :trigger-on-focus="false"
+                                    @select="handleSelect"
+                            ></el-autocomplete>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -167,25 +174,51 @@
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="20">
                         <el-form-item label="车轮标记左" prop="wheelMarkLeft">
                             <el-input v-model="ruleForm.wheelMarkLeft"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="20">
                         <el-form-item label="车轮标记右" prop="wheelMarkRight">
                             <el-input v-model="ruleForm.wheelMarkRight"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="施修范围" prop="repairWay">
+                            <el-checkbox-group v-model="repairWay">
+                                <el-checkbox label="1">送厂</el-checkbox>
+                                <el-checkbox label="2">旋面</el-checkbox>
+                                <el-checkbox label="4">超探</el-checkbox>
+                            </el-checkbox-group>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="送厂原因" prop="discardReason">
+                            <el-input v-model="ruleForm.discardReason"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item label="修程" prop="repairProcess">
+                            <el-radio-group v-model="ruleForm.repairProcess">
+                                <el-radio label="1">一级修</el-radio>
+                                <el-radio label="2">二级修</el-radio>
+                                <el-radio label="3">三级修</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">创建</el-button>
-                    <el-button @click="resetForm" size="small">重置</el-button>
-                    <el-button @click="modifyForm" v-show="modbtnstatus" size="small">修改</el-button>
-                    <el-button @click="cancelmodForm" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    <el-button @click="resetForm" size="small" v-show="addbtnstatus">重置</el-button>
+                    <el-button @click="modifyForm" v-show="false&&modbtnstatus" size="small">修改</el-button>
+                    <el-button @click="cancelmodForm" v-show="false&&cancelbtnstatus" size="small">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -228,6 +261,8 @@
             };
             return{
                 ruleForm: {},
+                vehicleNums:[],
+                repairWay:[],
                 rules: {
                     takeInDepot: [
                         { required: true, message: '请输入收入单位', trigger: 'blur' },
@@ -306,6 +341,11 @@
                 this.ruleForm = {};
             },
             submitForm(){
+                var way = 0;
+                this.repairWay.forEach(item=>{
+                    way = way + Number(item);
+                });
+                this.ruleForm.repairWay = way;
                 this.$refs['ruleForm'].validate(async (valid) => {
                     if (valid) {
                         this.$emit("sendwheeldata",{data:this.ruleForm,flag:'0'});
@@ -331,14 +371,35 @@
             cancelmodForm(){
 
             },
+            async getgetVehicleNum(){
+                var result = await this.$http.get(
+                    "/plan/getVehicleNum?date="+this.ruleForm.takeInDate);
+                if (result.data.code != 100){
+                    alert("修改失败");
+                    return ;
+                }
+                var list = result.data.object;
+                this.vehicleNums = [];
+                list.forEach((data)=>{
+                    this.vehicleNums.push({value:data});
+                });
+            },
+            querySearch(queryString, cb){
+               var nums = this.vehicleNums;
+               var result = queryString ? nums.filter(this.createFilter(queryString)) : nums;
+               cb(result);
+            },
+            createFilter(queryString) {
+                return (vehicleNums) => {
+                    return (vehicleNums.value.indexOf(queryString) === 0);
+                };
+            },
+            handleSelect(item){
+                //console.log(item);
+            }
         },
         mounted() {
-            this.ruleForm = this.showinfo;
-        },
-        watch:{
-            showinfo:function (val) {
-                this.ruleForm = val;
-            }
+            this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }
 </script>

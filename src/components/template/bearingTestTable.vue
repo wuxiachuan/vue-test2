@@ -52,11 +52,11 @@
                 </el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">创建</el-button>
-                    <el-button @click="resetForm" size="small">重置</el-button>
-                    <el-button @click="saveForm" v-show="savebtnstatus" size="small">保存</el-button>
-                    <el-button @click="modifyForm" v-show="modbtnstatus" size="small">修改</el-button>
-                    <el-button @click="cancelmodForm" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">提交</el-button>
+                    <el-button @click="resetForm" v-show="addbtnstatus" size="small">重置</el-button>
+                    <el-button @click="saveForm" v-show="false&&savebtnstatus" size="small">保存</el-button>
+                    <el-button @click="modifyForm" v-show="false&&modbtnstatus" size="small">修改</el-button>
+                    <el-button @click="cancelmodForm" v-show="false&&cancelbtnstatus" size="small">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -99,12 +99,7 @@
             },
         },
         mounted() {
-            this.ruleForm = this.showinfo;
-        },
-        watch:{
-            showinfo:function (val) {
-                this.ruleForm = val;
-            }
+            this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }
 </script>

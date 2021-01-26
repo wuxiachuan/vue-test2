@@ -89,6 +89,7 @@
                     <el-col :span="6">
                         <el-button  type="primary" @click="searchforProblem('problemForm')" >查询</el-button>
                         <el-button  @click="resetSearchProblemCond('problemForm')" >重置</el-button>
+                        <el-button  @click="exportToExcel" >导出</el-button>
                     </el-col>
                 </el-form>
             </el-row>
@@ -151,6 +152,7 @@
         data(){
             return {
                 problemList:[],
+                exportList:[],
                 total:100,
                 pagesInfo:{
                     page:1,
@@ -192,6 +194,18 @@
                 this.problemList = result.data.object.list;
                 this.total = result.data.object.total;
             },
+            async searchProblemCondWithOutPage(){
+                var result = await this.$http.post(
+                    "/quality/findProblemCond",
+                    this.searchProblem);
+                if (result.data.code != 100){
+                    alert("修改失败");
+                    return [];
+                }
+                this.exportList = result.data.object;
+                console.log(this.exportList);
+                return result.data.object;
+            },
             resetSearchProblemCond(searchForm){
                 this.$refs[searchForm].resetFields();
             },
@@ -203,6 +217,47 @@
             handleCurrentChange(val){
                 this.pagesInfo.page = val;
                 this.searchProblemCond(this.pagesInfo.page, this.pagesInfo.size);
+            },
+            exportToExcel(){
+                this.searchProblemCondWithOutPage();
+                require.ensure([], () => {
+                    const { export_json_to_excel } = require('../../excel/Export2Excel.js');
+                    const tHeader = [
+                        '轴号',
+                        '轴型',
+                        '部位',
+                        '简介',
+                        '问题',
+                        '责任人',
+                        '发现人',
+                        '发现时间',
+                        '整改情况',
+                        '整改时间',
+                        '消耗情况',
+                        '消耗时间'
+                    ];
+                    const filterVal = [
+                        'axleNumber',
+                        'axleType',
+                        'processBelong',
+                        'problemDescription',
+                        'problemDetails',
+                        'worker',
+                        'problemFinder',
+                        'findTime',
+                        'problemStatus',
+                        'correctTime',
+                        'confirm',
+                        'confirmTime'
+                    ];
+                    const list = this.exportList;
+                    console.log(list);
+                    const data = this.formatJson(filterVal, list);
+                    export_json_to_excel(tHeader, data, '故障列表');
+                })
+            },
+            formatJson(filterVal, jsonData) {
+                return jsonData.map(v => filterVal.map(j => v[j]))
             },
             //日期格式化
             dateFormate(data,patt){

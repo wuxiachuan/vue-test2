@@ -141,6 +141,7 @@
                     <el-col :span="4">
                         <el-button type="primary" @click="searchWheelInfo('searchForm')" >查询</el-button>
                         <el-button  @click="resetSearchInfo('searchForm')" >重置</el-button>
+                        <el-button  @click="exportToExcel" >导出</el-button>
                     </el-col>
                 </el-form>
             </el-row>
@@ -225,11 +226,26 @@
                 <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair">
                     <bearingRepairTable ref="bearingRepairTable" v-if="wheelInfoForTable.bearingRepair" :showinfo="wheelInfoForTable.bearingRepair"></bearingRepairTable>
                 </el-tab-pane>
-                <el-tab-pane label="轮轴探伤" name="fourth" v-if="wheelInfoForTable.axleInspection">
+                <el-tab-pane label="轴承开盖" name="thirteen" v-if="wheelInfoForTable.bearingRepair">
+                    <bearingUncapTable ref="bearingUnCap" v-if="wheelInfoForTable.bearingRepair" :showinfo="wheelInfoForTable.bearingRepair"></bearingUncapTable>
+                </el-tab-pane>
+                <el-tab-pane label="轴承退卸" name="fourteen" v-if="wheelInfoForTable.bearingUnLoad">
+                    <bearingUnloadTable ref="bearingUnload" v-if="wheelInfoForTable.bearingUnLoad" :showinfo="bearingUnload"></bearingUnloadTable>
+                </el-tab-pane>
+                <el-tab-pane label="磁粉探伤" name="sixteen" v-if="wheelInfoForTable.axleInspection">
+                    <magneticInspectionTable ref="magneticInspection" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></magneticInspectionTable>
+                </el-tab-pane>
+                <el-tab-pane label="超声波探伤" name="fourth" v-if="wheelInfoForTable.axleInspection">
                     <axleInspectionTable ref="wheelinfotable" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></axleInspectionTable>
+                </el-tab-pane>
+                <el-tab-pane label="人工复探" name="seventeen" v-if="wheelInfoForTable.axleInspection">
+                    <reinspectionTable ref="reinspection" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></reinspectionTable>
                 </el-tab-pane>
                 <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound">
                     <wheelRoundTable ref="wheelinfotable" v-if="wheelInfoForTable.wheelRound" :showinfo="wheelInfoForTable.wheelRound"></wheelRoundTable>
+                </el-tab-pane>
+                <el-tab-pane label="轴颈测量" name="fifteen" v-if="wheelInfoForTable.bearingLoad">
+                    <bearingNeckTable ref="bearingNeck" v-if="wheelInfoForTable.bearingLoad" :showinfo="wheelInfoForTable.bearingLoad"></bearingNeckTable>
                 </el-tab-pane>
                 <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad">
                     <bearingLoadTable ref="bearingLoadTable" v-if="wheelInfoForTable.bearingLoad" :showinfo="wheelInfoForTable.bearingLoad"></bearingLoadTable>
@@ -364,6 +380,25 @@
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="closeprogressTable" size="small">关闭</el-button>
             </span>
+            <el-steps :space="200" :active="currentStep" finish-status="success">
+                <el-step title="轮对收入" ></el-step>
+                <el-step title="轮对测量" ></el-step>
+                <el-step title="轴承检查" ></el-step>
+                <el-step title="轴承开盖" v-if="currentWheelInfo.isbearingUnCapFinish!=='-1'"></el-step>
+                <el-step title="轴承退卸" v-if="currentWheelInfo.isbearingUnloadFinish!=='-1'"></el-step>
+                <el-step title="磁粉探伤" v-if="currentWheelInfo.ismagnetInspectionFinish!=='-1'"></el-step>
+                <el-step title="超声波探伤" v-if="currentWheelInfo.isaxleInspectionFinish!=='-1'"></el-step>
+                <el-step title="人工复探" v-if="currentWheelInfo.isreInspectionFinish!=='-1'"></el-step>
+                <el-step title="车轮旋面" v-if="currentWheelInfo.isWheelRoundingFinish!=='-1'"></el-step>
+                <el-step title="轴颈测量" v-if="currentWheelInfo.isbearingNeckFinish!=='-1'"></el-step>
+                <el-step title="轴承压装" v-if="currentWheelInfo.isbearingLoadFinish!=='-1'"></el-step>
+                <el-step title="轴承关盖" v-if="currentWheelInfo.isbearingCapFinish!=='-1'"></el-step>
+                <el-step title="轴承磨合" ></el-step>
+                <el-step title="支出复测" ></el-step>
+                <el-step title="质量检查" ></el-step>
+                <el-step title="轮对支出" ></el-step>
+                <el-step title="轮对待送厂" v-if="currentWheelInfo.state=='3'"></el-step>
+            </el-steps>
         </el-dialog>
     </div>
 </template>
@@ -379,6 +414,11 @@
     import bearingTestTable from "./bearingTestTable";
     import axleInspectionTable from "./axleInspectionTable";
     import sheetTable from "./sheetTable";
+    import bearingUncapTable from "./bearingUncapTable";
+    import bearingUnloadTable from "./bearingUnloadTable";
+    import bearingNeckTable from "./bearingNeckTable";
+    import magneticInspectionTable from "./magneticInspectionTable";
+    import reinspectionTable from "./reinspectionTable";
     export default {
         name: "information",
         components:{
@@ -391,6 +431,11 @@
             bearingLoadTable:bearingLoadTable,
             bearingCapTable:bearingCapTable,
             axleInspectionTable:axleInspectionTable,
+            bearingUncapTable:bearingUncapTable,
+            bearingUnloadTable:bearingUnloadTable,
+            bearingNeckTable:bearingNeckTable,
+            magneticInspectionTable:magneticInspectionTable,
+            reinspectionTable:reinspectionTable,
             sheetTable:sheetTable
         },
         data(){
@@ -404,10 +449,14 @@
                 activeStep:'',
                 activeName:'first',
                 resourceURL:this.$GLOBAL.resourceURL,
+                bearingUnload:[],
+                currentWheelInfo:{},
+                currentStep:0,
                 //显示用户条数
                 total:100,
                 problemList:[],
-                 search:{
+                exportList:[],
+                search:{
                      wheelId:'',
                      takeInDate: null,
                      takeInDateFrom: null,
@@ -468,6 +517,24 @@
                     }
                 });
             },
+            async searchWheelInfoWithOutPage(searchForm){
+                this.$refs[searchForm].validate(async (valid) => {
+                    if (valid) {
+                        var result = await axios.post(
+                            "/manage/queryWithOutPage",
+                            this.search);
+                        if (result.data.code != 100){
+                            alert("添加失败");
+                            return ;
+                        }
+                        this.exportList = result.data.object;
+                        return result.data.object;
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+              },
             resetSearchInfo(searchForm){
                 this.$refs[searchForm].resetFields();
             },
@@ -479,8 +546,9 @@
                     alert("添加失败");
                     return ;
                 }
-                this.detailtableVisible = true;
                 this.wheelInfoForTable = result.data.object;
+                this.bearingUnload = this.wheelInfoForTable.bearingUnLoad;
+                this.detailtableVisible = true;
             },
             async handleForProgress(index,data){
                 var result = await axios.post(
@@ -492,7 +560,28 @@
                 }
                 this.progresstableVisible = true;
                 this.wheelInfoForTable = result.data.object;
+                this.currentWheelInfo = this.wheelInfoForTable.wheelInfo;
+                this.setCurrentStep(this.currentWheelInfo);
              },
+            setCurrentStep(currentWheelInfo){
+                this.currentStep = 0;
+                if (currentWheelInfo.infoTakeFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isMeasureFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingRepairFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingUnCapFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingUnloadFinish=='1') this.currentStep++;
+                if (currentWheelInfo.ismagnetInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isaxleInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isreInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isWheelRoundingFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingNeckFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingLoadFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingCapFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingrollTestFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isreMeasureFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isqualityInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.iswheelDispatchFinish=='1') this.currentStep++;
+            },
             handleClose(done) {
                 this.$confirm('确认关闭？')
                     .then(()=>{
@@ -550,6 +639,54 @@
                 } else {
                     return '';
                 }
+            },
+            exportToExcel(){
+                this.searchWheelInfoWithOutPage('searchForm');
+                require.ensure([], () => {
+                    const { export_json_to_excel } = require('../../excel/Export2Excel.js');
+                    const tHeader = [
+                        '单号',
+                        '轴号',
+                        '轴型',
+                        '厂代号',
+                        '收入来源',
+                        '收入日期',
+                        '收入车型',
+                        '收入车号',
+                        '收入轴位',
+                        '完工状态',
+                        '修竣日期',
+                        '轮场位置',
+                        '支出车型',
+                        '支出车号',
+                        '支出轴位',
+                        '支出日期'
+                    ];
+                    const filterVal = [
+                        'wheelId',
+                        'axleNumber',
+                        'axleType',
+                        'axleMadeIn',
+                        'takeInReason',
+                        'takeInDate',
+                        'vehicleType',
+                        'vehicleNumber',
+                        'axlePosition',
+                        'isprocessFinish',
+                        'isprocessFinishTime',
+                        'wheelDispatch',
+                        'dispatchVehicleType',
+                        'dipatchVehicleNumber',
+                        'dipatchAxlePosition',
+                        'dispatchDate'
+                    ];
+                    const list = this.exportList;
+                    const data = this.formatJson(filterVal, list);
+                    export_json_to_excel(tHeader, data, '故障列表');
+                })
+            },
+            formatJson(filterVal, jsonData) {
+                return jsonData.map(v => filterVal.map(j => v[j]))
             },
             //获取二维码
             async getQRcode(wheelId){

@@ -10,7 +10,7 @@
                     <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                 </el-col>
             </el-row>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" :disabled="disableForm">
+            <el-form :model="ruleForm" ref="ruleForm" label-width="150px" :disabled="disableForm">
                 <el-row>
                     <el-col :span="10">
                         <el-form-item label="车轴直径" prop="axleDiameter">
@@ -96,30 +96,33 @@
                     </el-col>
                 </el-row>
                 <el-row>
-                    <el-col :span="14">
+                    <el-col :span="20">
                         <el-form-item label="故障情况" prop="problem">
                             <el-input v-model="ruleForm.problem"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="7">
-                        <el-form-item label="修程" prop="repairProcess">
-                            <el-select v-model="ruleForm.repairProcess" placeholder="请选择">
-                                <el-option label="外观检查" value="0"></el-option>
-                                <el-option label="旋面" value="1"></el-option>
-                                <el-option label="探伤" value="2"></el-option>
-                                <el-option label="旋面+探伤" value="3"></el-option>
-                                <el-option label="送厂" value="4"></el-option>
-                            </el-select>
+                </el-row>
+                <el-row>
+                    <el-col :span="8">
+                        <el-form-item label="施修范围" prop="repairWay">
+                            <el-radio-group v-model="ruleForm.repairProcess">
+                                <el-radio label="1">送厂</el-radio>
+                                <el-radio label="2">旋面</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item label="送厂原因" prop="discardReason">
+                            <el-input v-model="ruleForm.discardReason"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
-
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">创建</el-button>
-                    <el-button @click="resetForm" size="small">重置</el-button>
-                    <el-button @click="saveForm" v-show="savebtnstatus" size="small">保存</el-button>
-                    <el-button @click="modifyForm" v-show="modbtnstatus" size="small">修改</el-button>
-                    <el-button @click="cancelmodForm" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">提交</el-button>
+                    <el-button @click="resetForm" v-show="addbtnstatus" size="small">重置</el-button>
+                    <el-button @click="saveForm" v-show="false&&savebtnstatus" size="small">保存</el-button>
+                    <el-button @click="modifyForm" v-show="false&&modbtnstatus" size="small">修改</el-button>
+                    <el-button @click="cancelmodForm" v-show="false&&cancelbtnstatus" size="small">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -197,6 +200,7 @@
             };
             return{
                 ruleForm: {},
+                repairWay:[],
                 rules: {
                     axleDiameter: [
                         { required: true, message: '请输入', trigger: 'blur' },

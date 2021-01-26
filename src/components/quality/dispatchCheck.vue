@@ -150,32 +150,47 @@
         >
             <!--    分块显示详细信息-->
             <el-tabs v-model="activeName" @tab-click="handleClick" type="card" v-if="detailtableVisible">
-                <el-tab-pane label="收入信息" name="wheelinfo" v-if="wheelInfoForTable.wheelInfo">
-                    <wheelinfotable ref="wheelinfotable" v-if="wheelInfoForTable.wheelInfo" :showinfo="wheelInfoForTable.wheelInfo"></wheelinfotable>
+                <el-tab-pane label="收入信息" name="first" v-if="wheelInfoForTable.wheelInfo">
+                    <wheelinfotable ref="wheelinfo" v-if="wheelInfoForTable.wheelInfo" :showinfo="wheelInfoForTable.wheelInfo" ></wheelinfotable>
                 </el-tab-pane>
-                <el-tab-pane label="轮对测量" name="wheelmeasure" v-if="wheelInfoForTable.wheelMeasure" >
-                    <wheelMeasureTable ref="wheelMeasureTable" v-if="wheelInfoForTable.wheelMeasure"  :showinfo="wheelInfoForTable.wheelMeasure"></wheelMeasureTable>
+                <el-tab-pane label="轮对测量" name="second" v-if="wheelInfoForTable.wheelMeasure" >
+                    <wheelMeasureTable ref="wheelmeasure" v-if="wheelInfoForTable.wheelMeasure"  :showinfo="wheelInfoForTable.wheelMeasure"></wheelMeasureTable>
                 </el-tab-pane>
-                <el-tab-pane label="轴承检查" name="bearingRepair" v-if="wheelInfoForTable.bearingRepair">
-                    <bearingRepairTable ref="bearingRepairTable" v-if="wheelInfoForTable.bearingRepair" :showinfo="wheelInfoForTable.bearingRepair"></bearingRepairTable>
+                <el-tab-pane label="轴承检查" name="third" v-if="wheelInfoForTable.bearingRepair">
+                    <bearingRepairTable ref="bearingRepair" v-if="wheelInfoForTable.bearingRepair" :showinfo="wheelInfoForTable.bearingRepair"></bearingRepairTable>
                 </el-tab-pane>
-                <el-tab-pane label="轮轴探伤" name="axleInspection" v-if="wheelInfoForTable.axleInspection">
-                    <axleInspectionTable ref="wheelinfotable" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></axleInspectionTable>
+                <el-tab-pane label="轴承开盖" name="thirteen" v-if="wheelInfoForTable.bearingRepair">
+                    <bearingUncapTable ref="bearingUnCap" v-if="wheelInfoForTable.bearingRepair" :showinfo="wheelInfoForTable.bearingRepair"></bearingUncapTable>
                 </el-tab-pane>
-                <el-tab-pane label="车轮旋面" name="wheelRounding" v-if="wheelInfoForTable.wheelRound">
-                    <wheelRoundTable ref="wheelinfotable" v-if="wheelInfoForTable.wheelRound" :showinfo="wheelInfoForTable.wheelRound"></wheelRoundTable>
+                <el-tab-pane label="轴承退卸" name="fourteen" v-if="wheelInfoForTable.bearingUnLoad">
+                    <bearingUnloadTable ref="bearingUnload" v-if="wheelInfoForTable.bearingUnLoad" :showinfo="bearingUnload"></bearingUnloadTable>
                 </el-tab-pane>
-                <el-tab-pane label="轴承压装" name="bearingLoad" v-if="wheelInfoForTable.bearingLoad">
-                    <bearingLoadTable ref="bearingLoadTable" v-if="wheelInfoForTable.bearingLoad" :showinfo="wheelInfoForTable.bearingLoad"></bearingLoadTable>
+                <el-tab-pane label="磁粉探伤" name="sixteen" v-if="wheelInfoForTable.axleInspection">
+                    <magneticInspectionTable ref="magneticInspection" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></magneticInspectionTable>
                 </el-tab-pane>
-                <el-tab-pane label="轴承关盖" name="bearingCap" v-if="wheelInfoForTable.bearingCap" >
-                    <bearingCapTable ref="bearingCapTable" v-if="wheelInfoForTable.bearingCap" :showinfo="wheelInfoForTable.bearingCap"></bearingCapTable>
+                <el-tab-pane label="超声波探伤" name="fourth" v-if="wheelInfoForTable.axleInspection">
+                    <axleInspectionTable ref="axleInspection" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></axleInspectionTable>
                 </el-tab-pane>
-                <el-tab-pane label="磨合试验" name="rollTest" v-if="wheelInfoForTable.bearingTest">
-                    <bearingTestTable ref="bearingTestTable" v-if="wheelInfoForTable.bearingTest" :showinfo="wheelInfoForTable.bearingTest"></bearingTestTable>
+                <el-tab-pane label="人工复探" name="seventeen" v-if="wheelInfoForTable.axleInspection">
+                    <reinspectionTable ref="reinspection" v-if="wheelInfoForTable.axleInspection" :showinfo="wheelInfoForTable.axleInspection"></reinspectionTable>
                 </el-tab-pane>
-                <el-tab-pane label="轮对支出" name="wheelDispatch" v-if="wheelInfoForTable.wheelDispatch">
-                    <wheelDispatchTable ref="wheelinfotable" v-if="wheelInfoForTable.wheelDispatch" :showinfo="wheelInfoForTable.wheelDispatch"></wheelDispatchTable>
+                <el-tab-pane label="车轮旋面" name="fifth" v-if="wheelInfoForTable.wheelRound">
+                    <wheelRoundTable ref="wheelRound" v-if="wheelInfoForTable.wheelRound" :showinfo="wheelInfoForTable.wheelRound"></wheelRoundTable>
+                </el-tab-pane>
+                <el-tab-pane label="轴颈测量" name="fifteen" v-if="wheelInfoForTable.bearingLoad">
+                    <bearingNeckTable ref="bearingNeck" v-if="wheelInfoForTable.bearingLoad" :showinfo="wheelInfoForTable.bearingLoad"></bearingNeckTable>
+                </el-tab-pane>
+                <el-tab-pane label="轴承压装" name="sixth" v-if="wheelInfoForTable.bearingLoad">
+                    <bearingLoadTable ref="bearingLoad" v-if="wheelInfoForTable.bearingLoad" :showinfo="wheelInfoForTable.bearingLoad"></bearingLoadTable>
+                </el-tab-pane>
+                <el-tab-pane label="轴承关盖" name="seventh" v-if="wheelInfoForTable.bearingCap" >
+                    <bearingCapTable ref="bearingCap" v-if="wheelInfoForTable.bearingCap" :showinfo="wheelInfoForTable.bearingCap"></bearingCapTable>
+                </el-tab-pane>
+                <el-tab-pane label="磨合试验" name="eighth" v-if="wheelInfoForTable.bearingTest">
+                    <bearingTestTable ref="rollTest" v-if="wheelInfoForTable.bearingTest" :showinfo="wheelInfoForTable.bearingTest"></bearingTestTable>
+                </el-tab-pane>
+                <el-tab-pane label="轮对复测" name="nineth" v-if="wheelInfoForTable.wheelDispatch">
+                    <wheelDispatchTable ref="wheelDispatch" v-if="wheelInfoForTable.wheelDispatch" :showinfo="wheelInfoForTable.wheelDispatch"></wheelDispatchTable>
                 </el-tab-pane>
             </el-tabs>
             <span slot="footer" class="dialog-footer">
@@ -258,6 +273,25 @@
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="closeprogressTable" size="small">关闭</el-button>
             </span>
+            <el-steps :space="200" :active="currentStep" finish-status="success">
+                <el-step title="轮对收入" v-if="currentWheelInfo.infoTakeFinish=='1'"></el-step>
+                <el-step title="轮对测量" v-if="currentWheelInfo.isMeasureFinish=='1'"></el-step>
+                <el-step title="轴承检查" v-if="currentWheelInfo.isbearingRepairFinish=='1'"></el-step>
+                <el-step title="轴承开盖" v-if="currentWheelInfo.isbearingUnCapFinish=='1'"></el-step>
+                <el-step title="轴承退卸" v-if="currentWheelInfo.isbearingUnloadFinish=='1'"></el-step>
+                <el-step title="磁粉探伤" v-if="currentWheelInfo.ismagnetInspectionFinish=='1'"></el-step>
+                <el-step title="超声波探伤" v-if="currentWheelInfo.isaxleInspectionFinish=='1'"></el-step>
+                <el-step title="人工复探" v-if="currentWheelInfo.isreInspectionFinish=='1'"></el-step>
+                <el-step title="车轮旋面" v-if="currentWheelInfo.isWheelRoundingFinish=='1'"></el-step>
+                <el-step title="轴颈测量" v-if="currentWheelInfo.isbearingNeckFinish=='1'"></el-step>
+                <el-step title="轴承压装" v-if="currentWheelInfo.isbearingLoadFinish=='1'"></el-step>
+                <el-step title="轴承关盖" v-if="currentWheelInfo.isbearingCapFinish=='1'"></el-step>
+                <el-step title="轴承磨合" ></el-step>
+                <el-step title="支出复测" ></el-step>
+                <el-step title="质量检查" ></el-step>
+                <el-step title="轮对支出" ></el-step>
+                <el-step title="轮对待送厂" v-if="currentWheelInfo.state=='3'"></el-step>
+            </el-steps>
         </el-dialog>
         <el-dialog
                 title="问题记录"
@@ -274,13 +308,17 @@
                         <el-option label="信息采集" value="0"></el-option>
                         <el-option label="轮对测量" value="1"></el-option>
                         <el-option label="轴承检查" value="2"></el-option>
-                        <el-option label="磁粉探伤" value="3"></el-option>
-                        <el-option label="超声探伤" value="4"></el-option>
-                        <el-option label="车轮旋面" value="5"></el-option>
-                        <el-option label="轴承压装" value="6"></el-option>
-                        <el-option label="轴承关盖" value="7"></el-option>
-                        <el-option label="磨合测试" value="8"></el-option>
-                        <el-option label="轮对复测" value="9"></el-option>
+                        <el-option label="轴承开盖" value="3"></el-option>
+                        <el-option label="轴承退卸" value="4"></el-option>
+                        <el-option label="磁粉探伤" value="5"></el-option>
+                        <el-option label="超声探伤" value="6"></el-option>
+                        <el-option label="人工复探" value="7"></el-option>
+                        <el-option label="车轮旋面" value="8"></el-option>
+                        <el-option label="轴颈测量" value="9"></el-option>
+                        <el-option label="轴承压装" value="10"></el-option>
+                        <el-option label="轴承关盖" value="11"></el-option>
+                        <el-option label="磨合测试" value="12"></el-option>
+                        <el-option label="支出复测" value="13"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="发现时间">
@@ -456,6 +494,11 @@
     import bearingRepairTable from "../manage/bearingRepairTable";
     import bearingTestTable from "../manage/bearingTestTable";
     import axleInspectionTable from "../manage/axleInspectionTable";
+    import magneticInspectionTable from "../manage/magneticInspectionTable";
+    import reinspectionTable from "../manage/reinspectionTable";
+    import bearingUncapTable from "../manage/bearingUncapTable";
+    import bearingUnloadTable from "../manage/bearingUnloadTable";
+    import bearingNeckTable from "../manage/bearingNeckTable";
     export default {
         name: "information",
         components:{
@@ -467,7 +510,12 @@
             bearingRepairTable:bearingRepairTable,
             bearingLoadTable:bearingLoadTable,
             bearingCapTable:bearingCapTable,
-            axleInspectionTable:axleInspectionTable
+            axleInspectionTable:axleInspectionTable,
+            magneticInspectionTable:magneticInspectionTable,
+            reinspectionTable:reinspectionTable,
+            bearingUncapTable:bearingUncapTable,
+            bearingUnloadTable:bearingUnloadTable,
+            bearingNeckTable:bearingNeckTable
         },
         data(){
             return {
@@ -483,6 +531,9 @@
                 activeName:'wheelinfo',
                 currentInfo:{},
                 dataBaseName:'',
+                bearingUnload:[],
+                currentWheelInfo:{},
+                currentStep:0,
                 //显示用户条数
                 total:100,
                 finishInspect:'',
@@ -588,11 +639,11 @@
                     alert("添加失败");
                     return ;
                 }
-                this.detailtableVisible = true;
                 this.wheelInfoForTable = result.data.object;
+                this.bearingUnload = this.wheelInfoForTable.bearingUnLoad;
                 //给当前信息赋第一个工序wheelInfo值
                 this.currentInfo = this.wheelInfoForTable.wheelInfo;
-                console.log(this.currentInfo);
+                this.detailtableVisible = true;
             },
             //查看进度
              async handleForProgress(index,data){
@@ -605,6 +656,8 @@
                 }
                 this.progresstableVisible = true;
                 this.wheelInfoForTable = result.data.object;
+                this.currentWheelInfo = this.wheelInfoForTable.wheelInfo;
+                this.setCurrentStep(this.currentWheelInfo);
             },
             //关闭
             handleClose(done) {
@@ -756,6 +809,25 @@
                 this.finishInspectionDialogVisible = false;
                 this.searchWheelInfo('searchForm');
                 alert("已通过！");
+            },
+            setCurrentStep(currentWheelInfo){
+                this.currentStep = 0;
+                if (currentWheelInfo.infoTakeFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isMeasureFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingRepairFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingUnCapFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingUnloadFinish=='1') this.currentStep++;
+                if (currentWheelInfo.ismagnetInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isaxleInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isreInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isWheelRoundingFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingNeckFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingLoadFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingCapFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isbearingrollTestFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isreMeasureFinish=='1') this.currentStep++;
+                if (currentWheelInfo.isqualityInspectionFinish=='1') this.currentStep++;
+                if (currentWheelInfo.iswheelDispatchFinish=='1') this.currentStep++;
             },
             //日期格式化
             dateFormate(data,patt){

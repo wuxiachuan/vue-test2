@@ -5,28 +5,6 @@
                 <el-card>
                     <el-form :model="ruleForm"  ref="ruleForm" label-width="100px">
                         <el-row>
-                            <el-col :span="16">
-                                <el-form-item label="轴身" prop="magAxleBody" label-width="120px">
-                                    <el-input v-model="ruleForm.magAxleBody" placeholder=""  :disabled="enableLeft"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="16">
-                                <el-form-item label="轴颈左" prop="magtAxleNeckLeft" label-width="120px">
-                                    <el-input v-model="ruleForm.magtAxleNeckLeft" placeholder=""  :disabled="enableLeft"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="16">
-                                <el-form-item label="轴颈右" prop="magAxleNeckRight" label-width="120px">
-                                    <el-input v-model="ruleForm.magAxleNeckRight" placeholder=""  :disabled="enableLeft"></el-input>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-
-                        <el-row>
                             <el-col :span="12">
                                 <el-form-item label="穿透初探左" prop="ultAxleLeft" label-width="120px">
                                     <el-input v-model="ruleForm.ultAxleLeft" placeholder="" :disabled="enableLeft"></el-input>
@@ -133,7 +111,7 @@
             }
         },
         mounted() {
-            this.ruleForm = this.showinfo;
+            this.ruleForm = this.showinfo?this.showinfo:{};
         }
     }
 </script>

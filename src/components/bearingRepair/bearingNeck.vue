@@ -1,7 +1,7 @@
 <template>
-    <processtemp v-bind:requestURL="requestURL" v-bind:index="'13'"
-                 v-bind:finishFlag="'isreInspectionFinish'" v-bind:title="'人工复探'"
-                 v-bind:navhead1="'轮对探伤'" v-bind:navhead2="'人工复探'"></processtemp>
+    <processtemp v-bind:requestURL="requestURL" v-bind:index="'12'"
+                 v-bind:finishFlag="'isbearingNeckFinish'" v-bind:title="'轴颈测量'"
+                 v-bind:navhead1="'轴承检修'" v-bind:navhead2="'轴颈测量'"></processtemp>
 </template>
 
 <script>
@@ -13,7 +13,7 @@
         },
         data(){
             return {
-                requestURL:'/reInspection',
+                requestURL:'/neckMeasure',
             };
         },
     }

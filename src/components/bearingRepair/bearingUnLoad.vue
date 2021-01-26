@@ -1,7 +1,7 @@
 <template>
-    <processtemp v-bind:requestURL="requestURL" v-bind:index="'13'"
-                 v-bind:finishFlag="'isreInspectionFinish'" v-bind:title="'人工复探'"
-                 v-bind:navhead1="'轮对探伤'" v-bind:navhead2="'人工复探'"></processtemp>
+    <processtemp v-bind:requestURL="requestURL" v-bind:index="'11'"
+                 v-bind:finishFlag="'isbearingUnloadFinish'" v-bind:title="'轴承退卸'"
+                 v-bind:navhead1="'轴承检修'" v-bind:navhead2="'轴承退卸'"></processtemp>
 </template>
 
 <script>
@@ -13,7 +13,7 @@
         },
         data(){
             return {
-                requestURL:'/reInspection',
+                requestURL:'/bearingUnLoad',
             };
         },
     }

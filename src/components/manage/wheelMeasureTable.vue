@@ -123,36 +123,11 @@
             return{
              //   enableLeft:false,
             //    enableRight:true,
-                ruleForm: {
-                    id:'',
-                    wheelId:'',
-                    axleDiameter:'',
-                    wheelDiameterLeft:'',
-                    wheelDiameterRight:'',
-                    treadWearLeft:'',
-                    treadWearRight:'',
-                    rimThickLeft:'',
-                    rimThickRight:'',
-                    rimWideLeft:'',
-                    rimWideRight:'',
-                    flangeThickLeft:'',
-                    flangeThickRight:'',
-                    internalDistance1:'',
-                    internalDistance2:'',
-                    internalDistance3:'',
-                    problem:'',
-                    repairProcess:'',
-                    wheelExaminers:'',
-                    isFinish:'0',
-                    finishTime:'',
-                    other:'',
-                    saveNumer:0
-                }
+                ruleForm: {}
             }
         },
         mounted() {
-            this.ruleForm = this.showinfo;
-            console.log(this.showinfo);
+            this.ruleForm = this.showinfo?this.showinfo:{};
         }
     }
 </script>

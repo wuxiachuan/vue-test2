@@ -31,6 +31,12 @@ import monitor from "../components/manage/monitor";
 import sheet from "../components/manage/sheet";
 import dispatchCheck from "../components/quality/dispatchCheck";
 import qualityProblems from "../components/quality/qualityProblems";
+import planmaking from "../components/plan/planmaking";
+import matching2 from "../components/wheelDispatch/matching2";
+import bearingUnCap from "../components/bearingRepair/bearingUnCap";
+import bearingUnLoad from "../components/bearingRepair/bearingUnLoad";
+import bearingNeck from "../components/bearingRepair/bearingNeck";
+import reinspection from "../components/ultrasonicInspection/reinspection";
 Vue.use(VueRouter)
 
   const routes = [
@@ -129,9 +135,24 @@ Vue.use(VueRouter)
         component: appearanceInspection
       },
       {
+        path:'/uncap',
+        name: "bearingUncap",
+        component: bearingUnCap
+      },
+      {
+        path: '/unload',
+        name: "bearingUnload",
+        component: bearingUnLoad
+      },
+      {
         path: '/load',
         name:"load",
         component: bearingLoad
+      },
+      {
+        path: '/neckDiameter',
+        name: "bearingNeck",
+        component: bearingNeck
       },
       {
         path: '/capping',
@@ -155,6 +176,11 @@ Vue.use(VueRouter)
         name:'magneticInspection',
         component: magneticInspection
       },
+      {
+        path: '/reinspection',
+        name: "reinspection",
+        component: reinspection
+      },
         //轮对支出
       {
         path: '/ultrasonicInspection',
@@ -169,7 +195,7 @@ Vue.use(VueRouter)
       {
         path: '/matching',
         name: 'matching',
-        component: matching
+        component: matching2
       },
         //综合管理
       {
@@ -202,6 +228,11 @@ Vue.use(VueRouter)
         path: '/qualityFeedback',
         name: 'qualityProblems',
         component: qualityProblems
+      },
+      {
+        path: '/planMaking',
+        name: 'planmaking',
+        component: planmaking
       }
     ]
   }
@@ -209,6 +240,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
 //  mode: 'history',
+  base:'/wheel/',
   routes:routes
 })
 //登录验证

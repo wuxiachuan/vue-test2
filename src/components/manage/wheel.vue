@@ -124,6 +124,9 @@
                 <el-form-item label="完成日期">
                     <span>{{ data.takeInDate }}</span>
                 </el-form-item>
+                <el-form-item label="送厂原因" v-if="data.discardReason">
+                    <span>{{ data.discardReason }}</span>
+                </el-form-item>
             </el-form>
         </el-dialog>
     </div>
@@ -142,8 +145,7 @@
         methods:{
                 async getWheelList(){
                     var result = await axios.post(
-                        "/wheelManage/getWheels",
-                        this.search);
+                        "/wheelManage/getWheels");
                     if (result.data.code != 100){
                         alert("添加失败");
                         return ;
@@ -151,10 +153,14 @@
                     this.wheellist = result.data.object;
                 },
                 async showDetail(item){
+                    if (item == 'null'){
+                        alert("该位置空闲");
+                        return ;
+                    }
                     var result = await axios.get(
                         "/wheelManage/getWheelsDetails?id="+item);
                     if (result.data.code != 100){
-                        alert("添加失败");
+                        alert("查询失败");
                         return ;
                     }
                     this.data = result.data.object;

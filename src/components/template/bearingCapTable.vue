@@ -10,7 +10,7 @@
                     <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                 </el-col>
             </el-row>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :disabled="disableForm">
+            <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
                 <el-row style="margin-bottom: 10px"><el-col :span="6"><span>轴端螺栓力矩</span></el-col></el-row>
                 <div class="container">
                     <el-row>
@@ -289,24 +289,14 @@
                             <el-input v-model="ruleForm.caperRight" placeholder="右" :disabled="enableLeft"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="7">
-                        <el-form-item label="磨合作业" prop="loaderLeft" label-width="120px">
-                            <el-input v-model="ruleForm.loaderLeft" placeholder="左" :disabled="enableLeft"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="loaderRight" label-width="0">
-                            <el-input v-model="ruleForm.loaderRight" placeholder="右" :disabled="enableLeft"></el-input>
-                        </el-form-item>
-                    </el-col>
                 </el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">创建</el-button>
-                    <el-button @click="resetForm" size="small">重置</el-button>
-                    <el-button @click="saveForm" v-show="savebtnstatus" size="small">保存</el-button>
-                    <el-button @click="modifyForm" v-show="modbtnstatus" size="small">修改</el-button>
-                    <el-button @click="cancelmodForm" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">提交</el-button>
+                    <el-button @click="resetForm" v-show="addbtnstatus" size="small">重置</el-button>
+                    <el-button @click="saveForm" v-show="false&&savebtnstatus" size="small">保存</el-button>
+                    <el-button @click="modifyForm" v-show="false&&modbtnstatus" size="small">修改</el-button>
+                    <el-button @click="cancelmodForm" v-show="false&&cancelbtnstatus" size="small">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -516,12 +506,7 @@
             }
         },
         mounted() {
-            this.ruleForm = this.showinfo;
-        },
-        watch:{
-            showinfo:function (val) {
-                this.ruleForm = val;
-            }
+            this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }
 </script>

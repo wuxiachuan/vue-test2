@@ -13,7 +13,7 @@
         },
         data(){
             return {
-                requestURL:'/wheelDispatch',
+                requestURL:'/wheelReMeasure',
             };
         },
     }

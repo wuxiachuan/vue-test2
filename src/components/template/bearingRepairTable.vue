@@ -10,7 +10,7 @@
                     <span>轴位: {{wheelInfo.axlePosition}} 位</span>
                 </el-col>
             </el-row>
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" :disabled="disableForm">
+            <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" :disabled="disableForm">
                 <el-row>
                     <el-col :span="10">
                         <el-form-item label="轴承型号左" prop="bearingTypeLeft">
@@ -273,81 +273,6 @@
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="开盖原因" prop="uncapReasonLeft">
-                            <el-select v-model="ruleForm.uncapReasonLeft" placeholder="左">
-                                <el-option label="超探" value="超探"></el-option>
-                                <el-option label="旋面" value="旋面"></el-option>
-                                <el-option label="压装" value="压装"></el-option>
-                                <el-option label="其它" value="其它"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="uncapReasonRight" label-width="0">
-                            <el-select v-model="ruleForm.uncapReasonRight" placeholder="右">
-                                <el-option label="超探" value="超探"></el-option>
-                                <el-option label="旋面" value="旋面"></el-option>
-                                <el-option label="压装" value="压装"></el-option>
-                                <el-option label="其它" value="其它"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="退卸原因" prop="unloadReasonLeft">
-                            <el-select v-model="ruleForm.unloadReasonLeft" placeholder="左">
-                                <el-option label="压装到期" value="1"></el-option>
-                                <el-option label="状态不良" value="0"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="unloadReasonRight" label-width="0">
-                            <el-select v-model="ruleForm.unloadReasonRight" placeholder="右">
-                                <el-option label="压装到期" value="1"></el-option>
-                                <el-option label="状态不良" value="0"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-form-item label="推卸日期" prop="unloadDateLeft">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="左"
-                                    v-model="ruleForm.unloadDateLeft"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="unloadDateRight" label-width="0">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="右"
-                                    v-model="ruleForm.unloadDateRight"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-
-
-                <el-row>
-                    <el-col :span="6">
-                        <el-form-item label="开盖者" prop="unloaderLeft">
-                            <el-input v-model="ruleForm.unloaderLeft" placeholder="左"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="unloaderRight" label-width="0">
-                            <el-input v-model="ruleForm.unloaderRight" placeholder="右"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="6">
                         <el-form-item label="轴承修程" prop="repairProgressLeft">
                             <el-select v-model="ruleForm.repairProgressLeft" placeholder="左">
                                 <el-option label="报废" value="3"></el-option>
@@ -369,11 +294,11 @@
                     </el-col>
                 </el-row>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">创建</el-button>
-                    <el-button @click="resetForm" size="small">重置</el-button>
-                    <el-button @click="saveForm" v-show="savebtnstatus" size="small">保存</el-button>
-                    <el-button @click="modifyForm" v-show="modbtnstatus" size="small">修改</el-button>
-                    <el-button @click="cancelmodForm" v-show="cancelbtnstatus" size="small">取消</el-button>
+                    <el-button type="primary" @click="submitForm"  v-show="addbtnstatus" size="small">提交</el-button>
+                    <el-button @click="resetForm" v-show="addbtnstatus" size="small">重置</el-button>
+                    <el-button @click="saveForm" v-show="false&&savebtnstatus" size="small">保存</el-button>
+                    <el-button @click="modifyForm" v-show="false&&modbtnstatus" size="small">修改</el-button>
+                    <el-button @click="cancelmodForm" v-show="false&&cancelbtnstatus" size="small">取消</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -592,12 +517,7 @@
             },
         },
         mounted() {
-            this.ruleForm = this.showinfo;
-        },
-        watch:{
-            showinfo:function (val) {
-                this.ruleForm = val;
-            }
+            this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }
 </script>
