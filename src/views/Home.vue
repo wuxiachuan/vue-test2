@@ -2,6 +2,7 @@
   <el-container>
     <el-header>
       <span>轮轴管理系统</span>
+      <el-button type="info" size="small" round @click="chat">聊天</el-button>
       <div class="loginUser">
           <div class="infoNum" v-if="problemNum != 0"><span v-text="problemNum"></span></div>
           <el-button type="primary"  size="mini" round @click="showTable">{{currentUser}}</el-button>
@@ -73,13 +74,41 @@
         </el-table-column>
       </el-table>
     </el-dialog>
+    <el-dialog
+            title="聊天界面"
+            :visible.sync="chatTableVisible"
+            width="50%"
+            :before-close="closeChat"
+    >
+      <div id="chatapp">
+        <div class="sidebar">
+          <card></card>
+          <list></list>
+        </div>
+        <div class="main">
+          <message></message>
+          <usertext></usertext>
+        </div>
+      </div>
+    </el-dialog>
   </el-container>
 </template>
 
 <script>
+  import card from '../components/chat/card'
+  import list from '../components/chat/list.vue';
+  import message from '../components/chat/message.vue';
+  import usertext from '../components/chat/usertext.vue';
+  import SockJS from 'sockjs-client';
+  import Stomp from 'stompjs';
+  import store from '@/store';
 export default {
   name: 'Home',
   components: {
+    card,
+    list,
+    message,
+    usertext
   },
   data(){
     return{
@@ -88,8 +117,13 @@ export default {
       activeItem:'',
       currentUser:'',
       problemListVisible:false,
+      chatTableVisible:false,
+      msg:'',
       problemList:[],
-      problemNum:0
+      problemNum:0,
+      webSocket:{},
+      commWebSocket: {},
+      message:{}
     }
   },
   created() {
@@ -100,6 +134,54 @@ export default {
       this.flushProblems();
   },
   methods:{
+    connect(){
+      this.webSocket = new WebSocket("ws://localhost:8081/websocket/"+sessionStorage.getItem("name"));
+      this.webSocket.onopen = ()=> {
+          console.log("connect");
+          store.commit("initWebsocket",this.webSocket);
+          store.commit("initCurrentUser",this.currentUser);
+      };
+      this.webSocket.onmessage = (evt)=> {
+        var received_msg = evt.data;
+        let msgObj = {};
+        var obj = JSON.parse(received_msg);
+        var flag = obj.messageType;
+        //1代表上线 2代表下线 3代表在线名单 4代表普通消息
+        if(flag==='1'){
+          //把名称放入到selection当中供选择
+          this.$store.commit("adduser",obj.username);
+        }else if(flag==='3'){
+          //设置在线名单
+          this.$store.commit("initUsers",obj.onlineUsers);
+        }else if(flag==='2'){
+          //下线
+          this.$store.commit("removeUser",obj.username);
+        }else if(flag==='4'){
+          msgObj.to = obj.fromusername;
+          msgObj.message = obj.textMessage;
+          msgObj.notSelf = true;
+          this.$store.commit("addChatMessage",msgObj);
+        }else {
+          console.log("error");
+        }
+      }
+
+      this.webSocket.onclose = ()=> {
+          console.log("disconnect");
+      }
+    },
+    setMessageHTML(msg){
+      console.log(msg);
+    },
+    closeWebSocket(){
+      this.webSocket.close();
+    },
+    sendMessage(){
+      this.message.from = "rose";
+      this.message.to = "jack";
+      this.message.message = "hello";
+      this.webSocket.send(JSON.stringify(this.message));
+    },
     async logout(){
       var result =await this.$http.get("/userManage/logout");
       if (result.data.code == 100){
@@ -158,6 +240,23 @@ export default {
     //每个一分钟刷新一次问题列表
     flushProblems() {
       //setInterval(this.getProblem, 1000*60*1);
+    },
+    chat(){
+      this.connect();
+      this.chatTableVisible = true;
+    },
+    closeChat(){
+      this.closeWebSocket();
+      this.chatTableVisible = false;
+    },
+    submit(){
+      let msgObj = new Object();
+      msgObj.to = "admin";
+      msgObj.from = "all";
+      msgObj.content = this.msg;
+      this.$store.state.stomp.send('/brocast/all', {}, JSON.stringify(msgObj));
+      this.$store.commit('addMessage', msgObj);
+      this.msg = '';
     },
     //日期格式化
     dateFormate(data,patt){
@@ -226,6 +325,28 @@ export default {
         color: white;
         font-weight: bold;
       }
+    }
+  }
+  #chatapp {
+    margin: 20px auto;
+    width: 800px;
+    height: 600px;
+    overflow: hidden;
+    .sidebar, .main {
+      height: 100%;
+    }
+    .sidebar {
+      float: left;
+      color: #f4f4f4;
+      background-color: #2e3238;
+      width: 200px;
+    }
+    .main {
+      float: left;
+      width: 598px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid  #DDD;
     }
   }
 </style>

@@ -128,6 +128,7 @@
             },
         },
         mounted() {
+            this.ruleForm = this.showinfo;
             this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }

@@ -106,8 +106,9 @@
                     <el-col :span="8">
                         <el-form-item label="施修范围" prop="repairWay">
                             <el-radio-group v-model="ruleForm.repairProcess">
-                                <el-radio label="1">送厂</el-radio>
-                                <el-radio label="2">旋面</el-radio>
+                                <el-radio label="0">送厂</el-radio>
+                                <el-radio label="1">旋面</el-radio>
+                                <el-radio label="2">不旋面</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>

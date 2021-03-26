@@ -104,16 +104,18 @@
                     <el-col :span="10">
                         <el-form-item label="修程(左)" label-width="150px" prop="repairProgressLeft">
                             <el-select v-model="BearingLeft.repairProgress" >
-                                <el-option label="压装到期" value="1"></el-option>
-                                <el-option label="状态不良" value="0"></el-option>
+                                <el-option label="报废" value="0"></el-option>
+                                <el-option label="大修" value="1"></el-option>
+                                <el-option label="一般检修" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="10">
                         <el-form-item label="修程(右)" label-width="150px" prop="repairProgressRight">
                             <el-select v-model="BearingRight.repairProgress" >
-                                <el-option label="压装到期" value="1"></el-option>
-                                <el-option label="状态不良" value="0"></el-option>
+                                <el-option label="报废" value="0"></el-option>
+                                <el-option label="大修" value="1"></el-option>
+                                <el-option label="一般检修" value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

@@ -17,32 +17,27 @@
                         <el-col :span="1" class="innertext"><span>左A:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftA1" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftA1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterLeftA1" placeholder="0度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftA2" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftA2" placeholder="120度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterLeftA2" placeholder="90度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
+
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterLeftA3" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftA3" placeholder="240度位置" :disabled="true">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftAvgA" placeholder="" :disabled="true">
+                            <el-form-item  prop="axleNeckDiameterLeftAvgA" label-width='0'>
+                                <el-input v-model="origindata.axleNeckDiameterLeftAvgA" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">平均:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckRoundnessLeftA" label-width='0'>
-                                <el-input v-model="origindata.axleNeckRoundnessLeftA" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.axleNeckRoundnessLeftA" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -53,69 +48,58 @@
                         <el-col :span="1" class="innertext"><span>左B:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftB1" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftB1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterLeftB1" placeholder="0度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftB2" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftB2" placeholder="120度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterLeftB2" placeholder="90度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
+
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterLeftB3" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftB3" placeholder="240度位置" :disabled="true">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftAvgB" placeholder="" :disabled="true">
+                            <el-form-item  prop="axleNeckDiameterLeftAvgB" label-width='0'>
+                                <el-input v-model="origindata.axleNeckDiameterLeftAvgB" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">平均:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckRoundnessLeftB" label-width='0'>
-                                <el-input v-model="origindata.axleNeckRoundnessLeftB" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.axleNeckRoundnessLeftB" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
-
                     </el-row>
 
                     <el-row>
                         <el-col :span="1" class="innertext"><span>右A:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightA1" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightA1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterRightA1" placeholder="0度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightA2" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightA2" placeholder="120度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterRightA2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
+
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterRightA3" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightA3" placeholder="240度位置" :disabled="true">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightAvgA" placeholder="" :disabled="true">
+                            <el-form-item  prop="axleNeckDiameterRightAvgA" label-width='0'>
+                                <el-input v-model="origindata.axleNeckDiameterRightAvgA" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">平均:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckRoundnessRightA" label-width='0'>
-                                <el-input v-model="origindata.axleNeckRoundnessRightA" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.axleNeckRoundnessRightA" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -126,32 +110,27 @@
                         <el-col :span="1" class="innertext"><span>右B:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightB1" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightB1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterRightB1" placeholder="0度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightB2" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightB2" placeholder="120度位置" :disabled="true">
+                                <el-input v-model="origindata.axleNeckDiameterRightB2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
+
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterRightB3" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightB3" placeholder="240度位置" :disabled="true">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightAvgB" placeholder="" :disabled="true">
+                            <el-form-item  prop="axleNeckDiameterRightAvgB" label-width='0'>
+                                <el-input v-model="origindata.axleNeckDiameterRightAvgB" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">平均:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckRoundnessRightB" label-width='0'>
-                                <el-input v-model="origindata.axleNeckRoundnessRightB" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.axleNeckRoundnessRightB" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -161,13 +140,27 @@
                         <el-col :span="3" class="innertext"><span>左轴颈平均值:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterLeftAvg" placeholder="" :disabled="true"></el-input>
+                                <el-input v-model="origindata.axleNeckDiameterLeftAvg" placeholder="" :disabled="enableLeft"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="3" class="innertext"><span>右轴颈平均值:</span></el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="origindata.axleNeckDiameterRightAvg" placeholder="" :disabled="true"></el-input>
+                            <el-form-item  prop="axleNeckDiameterRightAvg" label-width='0'>
+                                <el-input v-model="origindata.axleNeckDiameterRightAvg" placeholder="" :disabled="enableRight"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="3" class="innertext"><span>左轴颈圆度:</span></el-col>
+                        <el-col :span="4">
+                            <el-form-item  prop="axleNeckRoundnessLeft" label-width='0'>
+                                <el-input v-model="origindata.axleNeckRoundnessLeft" placeholder="" :disabled="enableLeft"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="3" class="innertext"><span>右轴颈圆度:</span></el-col>
+                        <el-col :span="4">
+                            <el-form-item  prop="axleNeckRoundnessRight" label-width='0'>
+                                <el-input v-model="origindata.axleNeckRoundnessRight" placeholder="" :disabled="enableRight"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -179,26 +172,26 @@
                         <el-col :span="1" class="innertext"><span>左:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootDiameterLeft1" label-width='0'>
-                                <el-input v-model="origindata.neckFootDiameterLeft1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.neckFootDiameterLeft1" placeholder="0度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootDiameterLeft2" label-width='0'>
-                                <el-input v-model="origindata.neckFootDiameterLeft2" placeholder="90度位置" :disabled="true">
+                                <el-input v-model="origindata.neckFootDiameterLeft2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="neckFootDiameterLeftAvg" placeholder="" :disabled="true">
+                            <el-form-item  prop="neckFootDiameterLeftAvg" label-width='0'>
+                                <el-input v-model="origindata.neckFootDiameterLeftAvg" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">直径平均值:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootRoundnessLeft" label-width='0'>
-                                <el-input v-model="origindata.neckFootRoundnessLeft" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.neckFootRoundnessLeft" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -208,26 +201,26 @@
                         <el-col :span="1" class="innertext"><span>右:</span></el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootDiameterRight1" label-width='0' >
-                                <el-input v-model="origindata.neckFootDiameterRight1" placeholder="0度位置" :disabled="true">
+                                <el-input v-model="origindata.neckFootDiameterRight1" placeholder="0度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootDiameterRight2" label-width='0' >
-                                <el-input v-model="origindata.neckFootDiameterRight2" placeholder="90度位置" :disabled="true">
+                                <el-input v-model="origindata.neckFootDiameterRight2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="6">
-                            <el-form-item  prop="" label-width='0'>
-                                <el-input v-model="neckFootDiameterRightAvg" placeholder="" :disabled="true">
+                            <el-form-item  prop="neckFootDiameterRightAvg" label-width='0'>
+                                <el-input v-model="origindata.neckFootDiameterRightAvg" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">直径平均值:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="neckFootRoundnessRight" label-width='0'>
-                                <el-input v-model="origindata.neckFootRoundnessRight" placeholder="" :disabled="true">
+                                <el-input v-model="origindata.neckFootRoundnessRight" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -661,33 +654,8 @@
 
             },
         },
-        computed: {
-            axleNeckDiameterLeftAvgA:function () {
-                return this.ruleForm.axleNeckDiameterLeftAvgA = Math.round(this.ruleForm.axleNeckDiameterLeftA1/3+this.ruleForm.axleNeckDiameterLeftA2/3+this.ruleForm.axleNeckDiameterLeftA3/3)
-            },
-            axleNeckDiameterLeftAvgB:function () {
-                return this.ruleForm.axleNeckDiameterLeftAvgB = Math.round (this.ruleForm.axleNeckDiameterLeftB1/3+this.ruleForm.axleNeckDiameterLeftB2/3+this.ruleForm.axleNeckDiameterLeftB3/3)
-            },
-            axleNeckDiameterRightAvgA:function () {
-                return this.ruleForm.axleNeckDiameterRightAvgA = Math.round (this.ruleForm.axleNeckDiameterRightA1/3+this.ruleForm.axleNeckDiameterRightA2/3+this.ruleForm.axleNeckDiameterRightA3/3)
-            },
-            axleNeckDiameterRightAvgB:function () {
-                return this.ruleForm.axleNeckDiameterRightAvgB = Math.round (this.ruleForm.axleNeckDiameterRightB1/3+this.ruleForm.axleNeckDiameterRightB2/3+this.ruleForm.axleNeckDiameterRightB3/3)
-            },
-            axleNeckDiameterLeftAvg:function () {
-                return this.ruleForm.axleNeckDiameterLeftAvg = Math.round (this.axleNeckDiameterLeftAvgA/2+this.axleNeckDiameterLeftAvgB/2)
-            },
-            axleNeckDiameterRightAvg:function () {
-                return this.ruleForm.axleNeckDiameterRightAvg = Math.round (this.axleNeckDiameterRightAvgA/2+this.axleNeckDiameterRightAvgB/2)
-            },
-            neckFootDiameterLeftAvg(){
-                return this.ruleForm.neckFootDiameterLeftAvg = Math.round (this.ruleForm.neckFootDiameterLeft1/2+this.ruleForm.neckFootDiameterLeft2/2)
-            },
-            neckFootDiameterRightAvg(){
-                return this.ruleForm.neckFootDiameterRightAvg = Math.round (this.ruleForm.neckFootDiameterRight1/2+this.ruleForm.neckFootDiameterRight2/2)
-            }
-        },
         mounted() {
+            this.ruleForm = this.showinfo;
             this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }

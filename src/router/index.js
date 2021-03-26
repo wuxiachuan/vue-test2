@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import Home from '../views/Home.vue'
 import About from '../views/About'
 import one from '../components/onePage'
@@ -37,6 +38,7 @@ import bearingUnCap from "../components/bearingRepair/bearingUnCap";
 import bearingUnLoad from "../components/bearingRepair/bearingUnLoad";
 import bearingNeck from "../components/bearingRepair/bearingNeck";
 import reinspection from "../components/ultrasonicInspection/reinspection";
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -243,19 +245,50 @@ const router = new VueRouter({
   base:'/wheel/',
   routes:routes
 })
+
+
+// async function getRights(){
+//   var result = await this.$http.post("/userManage/getRights");
+//   if (result.data.code != 100){
+//     alert("权限分配失败");
+//     return ;
+//   }
+//   store.commit("initRights",result.data.object);
+// }
+
 //登录验证
-var baseright = ['/home','/welcome','/noright'];
+//权限url列表
 var rightMap;
-router.beforeEach((to,from,next)=>{
-    if (to.path == '/login') return next();
+//路由
+router.beforeEach(async (to,from,next)=>{
+    //访问登录页面则放行
+    if (to.path == '/login'||to.path == '/welcome') return next();
+    //从sessionStorage里获取logintoken，如果值为空跳转至login页面
     var token = sessionStorage.getItem("logintoken");
     if (!token) return next('/login');
-    if (rightMap == null){
-      rightMap = JSON.parse(sessionStorage.getItem("subrights"));
-      var tmp = JSON.parse(sessionStorage.getItem("rights"));
-      rightMap = rightMap.concat(tmp,baseright);
+    //如果rightMap为空则从sessionStorage里获取
+    // if (rightMap == null){
+    //   //获取二级权限
+    //   rightMap = JSON.parse(sessionStorage.getItem("subrights"));
+    //   //获取一级权限
+    //   var tmp = JSON.parse(sessionStorage.getItem("rights"));
+    //   //合并
+    //   rightMap = rightMap.concat(tmp);
+    // }
+    if (store.state.allRights.length>0){
+
+    }else {
+      var result = await axios.post("/userManage/getRights");
+      if (result.data.code!=100){
+        alert("权限获取失败");
+        return ;
+      }
+      store.commit("initRights",result.data.object);
+      //store.dispatch('connect');
     }
-    if (!rightMap.includes(to.path)) return next('/noright');
+    var userRights = store.state.allRights;
+    //如果有权限则放行，否则跳转至无权限页面
+    if (!userRights.includes(to.path)) return next('/noright');
     next();
 })
 

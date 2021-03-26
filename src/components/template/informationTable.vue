@@ -34,8 +34,10 @@
                     <el-col :span="6">
                         <el-form-item label="收入原因" prop="takeInReason">
                             <el-select v-model="ruleForm.takeInReason" placeholder="请选择">
-                                <el-option label="段修" value="duanxiu"></el-option>
-                                <el-option label="站修调入" value="zhanxiu"></el-option>
+                                <el-option label="厂、段修" value="0"></el-option>
+                                <el-option label="临修" value="1"></el-option>
+                                <el-option label="报废车" value="2"></el-option>
+                                <el-option label="轮厂调入" value="3"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>

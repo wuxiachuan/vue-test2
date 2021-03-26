@@ -16,7 +16,7 @@ axios.interceptors.request.use(config =>{
     return config;
 })
 //配置根路径
-axios.defaults.baseURL = 'http://localhost:8081/spt2'
+axios.defaults.baseURL = 'http://localhost:8081'
 //axios.defaults.baseURL = 'http://192.168.96.131:8081/spt2'
 Vue.prototype.$http = axios
 Vue.prototype.$GLOBAL = globalvariable

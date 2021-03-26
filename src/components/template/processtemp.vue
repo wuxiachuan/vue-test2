@@ -8,132 +8,25 @@
         </el-breadcrumb>
         <el-card>
             <el-row :gutter="5">
-                <el-form :model="search" :rules="searchrules" ref="searchForm" >
-                    <el-col :span="4">
-                        <el-form-item prop="wheelId">
-                            <el-input v-model="search.wheelId" placeholder="请输入单号" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="axleNumber">
-                            <el-input v-model="search.axleNumber" placeholder="请输入轴号" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="vehicleNumber">
-                            <el-input v-model="search.vehicleNumber" placeholder="请输入收入车号" clearable></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="takeInDateFrom">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="请选择收入起始日期"
-                                    v-model="search.takeInDateFrom"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="takeInDateTo">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="请选择收入终止日期"
-                                    v-model="search.takeInDateTo"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="infoTakeFinishTimeFrom">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="请选择完工起始日期"
-                                    v-model="search.infoTakeFinishTimeFrom"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-form-item prop="infoTakeFinishTimeTo">
-                            <el-date-picker
-                                    type="date"
-                                    placeholder="请选择完工终止日期"
-                                    v-model="search.infoTakeFinishTimeTo"
-                                    format="yyyy 年 MM 月 dd 日"
-                                    value-format="yyyy-MM-dd"
-                                    style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-button  @click="searchWheelInfo('searchForm')" >查询</el-button>
-                        <el-button  @click="creatNewWheelInfo" v-if="index=='0'">新建</el-button>
-                        <el-button  @click="searchSavedInfo" v-if="false&&index!='0'">已保存</el-button>
-                        <el-button  @click="searchUnFinish" v-if="index!='0'">获取</el-button>
-                    </el-col>
-                </el-form>
+                <QueryCondition
+                    v-bind:index="index"
+                    v-bind:search="search"
+                    v-on:searchWheel="searchWheelInfo"
+                    v-on:creatNew="creatNewWheelInfo"
+                    v-on:getUnFinish="searchUnFinish"
+                ></QueryCondition>
             </el-row>
             <el-row>
                 <el-col>
-                    <el-card>
-                        <el-table :data="wheelList" style="width: 100%" :default-sort = "{prop: 'id', order: 'ascending'}" border stripe>
-                            <el-table-column type="index" label="序号" width="50"></el-table-column>
-                            <el-table-column prop="wheelId" label="单号" width="80" sortable></el-table-column>
-                            <el-table-column prop="axleType" label="轴型"  sortable></el-table-column>
-                            <el-table-column prop="axleNumber" label="轴号" width="150" sortable></el-table-column>
-                            <el-table-column prop="axleMadeIn" label="厂代号"  sortable></el-table-column>
-                            <el-table-column prop="takeInReason" label="收入来源" ></el-table-column>
-                            <el-table-column prop="takeInDate" label="收入日期" ></el-table-column>
-                            <el-table-column prop="vehicleType" label="收入车型" ></el-table-column>
-                            <el-table-column prop="vehicleNumber" label="收入车号" ></el-table-column>
-                            <el-table-column prop="axlePosition" label="收入轴位" ></el-table-column>
-                            <el-table-column prop="" label="完工状态" >
-                                <template slot-scope="scope">
-                                    <span v-if="scope.row[finishFlag] =='0'" >未完工</span>
-                                    <span v-if="scope.row[finishFlag] =='1'" >完工</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" fixed="right" :width="index=='0'?200:100">
-                                <template slot-scope="scope">
-                                    <el-button
-                                            icon="el-icon-edit"
-                                            size="mini"
-                                            v-if="issaved=='0'"
-                                            @click="captureitem(scope.$index, scope.row)">加工</el-button>
-                                    <el-button
-                                            icon="el-icon-edit"
-                                            size="mini"
-                                            v-if="issaved=='1'"
-                                            @click="operateitem(scope.$index, scope.row)">操作</el-button>
-                                    <el-button
-                                            icon="el-icon-edit"
-                                            size="mini"
-                                            v-if="issaved=='2'"
-                                            @click="showitem(scope.$index, scope.row)">查看</el-button>
-                                    <el-button
-                                            icon="el-icon-edit"
-                                            size="mini"
-                                            @click="creatQrcode(scope.$index, scope.row)" v-if="index=='0'">二维码</el-button>
-                                    <el-button
-                                            icon="el-icon-delete"
-                                            size="mini"
-                                            type="danger"
-                                            :disabled="scope.row[finishFlag] =='0'"
-                                            v-if="false&&(issaved=='2'||issaved=='0')"
-                                            @click="deleteForm(scope.$index, scope.row)">删除</el-button>
-                                    <el-button
-                                            icon="el-icon-delete"
-                                            size="mini"
-                                            type="danger"
-                                            v-if="false&&issaved=='1'"
-                                            @click="turnBack(scope.$index, scope.row)">退回</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </el-card>
+                    <InfoTable
+                            v-bind:index="index"
+                            v-bind:wheelList="wheelList"
+                            v-bind:issaved="issaved"
+                            v-bind:finishFlag="finishFlag"
+                            v-on:capture="captureitem"
+                            v-on:show="showitem"
+                            v-on:qrcode="creatQrcode"
+                    ></InfoTable>
                 </el-col>
             </el-row>
         </el-card>
@@ -310,9 +203,13 @@
     import bearingUncapTable from "./bearingUncapTable";
     import bearingUnloadTable from "./bearingUnloadTable";
     import reinspectionTable from "./reinspectionTable";
+    import QueryCondition from "./QueryCondition";
+    import InfoTable from "./InfoTable";
     export default {
         name: "information",
         components: {
+            InfoTable,
+            QueryCondition,
             informationTable,
             measureTable,
             bearingTestTable,
@@ -560,7 +457,7 @@
                 alert("取消修改");
             },
             //多条件查找wheel
-            searchWheelInfo(searchForm){
+            async searchWheelInfo(searchForm){
                 this.issaved = '2';
                 //保证至少一个查找条件
                 if(this.search.wheelId==''&&this.search.takeInDateFrom==null&&this.search.takeInDateTo==null&&this.search.axleNumber==''&&
@@ -568,28 +465,21 @@
                     this.wheelList = [];
                     return;
                 }
-                this.$refs[searchForm].validate(async (valid) => {
-                    if (valid) {
-                        var result = await this.$http.post(
-                            this.URL+"/searchBycondition",
-                            this.search);
-                        if (result.data.code != 100){
-                            alert("添加失败");
-                            return ;
-                        }
-                        this.wheelList = result.data.object;
-                        this.flushRuleForm();
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
+                var result = await this.$http.post(
+                    this.URL+"/searchBycondition",
+                    this.search);
+                if (result.data.code != 100){
+                    alert("添加失败");
+                    return ;
+                }
+                this.wheelList = result.data.object;
+                this.flushRuleForm();
             },
-            async captureitem(index,item){
+            async captureitem(e){
+                var index = e.index;
+                var item = e.item;
                 //重置保存按钮
                 this.hassaved = false;
-                //显示操作面板
-                this.operateTableVisible = true;
                 //如果已提交屏蔽 创建 按钮，提供修改和取消按钮
                 this.flushRuleForm();
                 //显示基本信息
@@ -619,6 +509,8 @@
                 }
                 //开放表单
                 this.disableForm = false;
+                //显示操作面板
+                this.operateTableVisible = true;
             },
             async operateitem(index,item){
                 //重置保存按钮
@@ -632,6 +524,8 @@
                 const id = item.wheelId;
                 //如果旋面获取原始值
                 if(this.index=='5') this.getoriginwheelround(id);
+                //如果压装获取轴颈测量
+                if(this.index=='6') this.getoriginBearingNeckMeasure(id);
                 //检查保存里是否有数据
                 for (var i=0;i<this.savedInfo.length;i++){
                     if (this.savedInfo[i].wheelId == id){
@@ -643,11 +537,11 @@
                 }
             },
             //显示wheel信息
-            async showitem(index,item){
+            async showitem(e){
+                var index = e.index;
+                var item = e.item;
                 //重置保存按钮
                 this.hassaved = true;
-                //显示操作面板
-                this.operateTableVisible = true;
                 //禁止表单
                 this.disableForm = true;
                 //如果已提交,屏蔽"创建"按钮，提供"修改"和"取消"按钮
@@ -657,6 +551,8 @@
                 const id = item.wheelId;
                 //如果旋面获取原始值
                 if(this.index=='5') this.getoriginwheelround(id);
+                //如果压装获取轴颈测量
+                if(this.index=='6') this.getoriginBearingNeckMeasure(id);
                 //是否完成
                 this.addbtnstatus = false;
                 this.savebtnstatus = false;
@@ -673,6 +569,8 @@
                 this.ruleForm = result.data.object;
                 //开放表单
                 this.disableForm = false;
+                //显示操作面板
+                this.operateTableVisible = true;
             },
             async turnBack(id){
                 var result = await this.$http.get(
@@ -779,7 +677,9 @@
                 this.disableForm = false;
             },
             //创建二维码
-            creatQrcode(index,item){
+            creatQrcode(e){
+                var index = e.index;
+                var item = e.item;
                 this.QRcodeVisible = true;
                 const wheelId = item.wheelId;
                 this.getQRcode(wheelId);

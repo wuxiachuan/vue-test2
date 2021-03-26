@@ -43,22 +43,31 @@
         },
         methods: {
             submitForm(formName) {
+                //验证输入合法性
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
-                       var result = await this.$http.post("/userManage/login",this.ruleForm);
-                       console.log(result.data);
-                       if (result.data.code == 100){
-                           var token = result.data.object.token;
-                           var rights = JSON.stringify(result.data.object.rights);
-                           var subrights = JSON.stringify(result.data.object.subrights);
-                           sessionStorage.setItem("logintoken",token);
-                           sessionStorage.setItem("rights",rights);
-                           sessionStorage.setItem("subrights",subrights);
-                           sessionStorage.setItem("name",this.ruleForm.name);
-                           this.$router.push("/home");
-                       }else{
-                           alert(result.data.message)
-                       }
+                        //访问服务器登录
+                       //var result1 = await this.$http.post("/login?name="+this.ruleForm.name+"&password="+this.ruleForm.password);
+                        if (true){
+                            var result = await this.$http.post("/userManage/login",this.ruleForm);
+                            //如果登录成功，将token、一级权限、二级权限、用户名储存到sessionStorage，否则提示错误原因
+                            if (result.data.code === 100){
+                                var token = result.data.object.token;
+                                var rights = result.data.object.rights;
+                                var subrights = result.data.object.subrights;
+                                //store里储存权限
+                                this.$store.commit("initRights",result.data.object.rights.concat(subrights));
+                                //this.$store.dispatch('connect');
+                                sessionStorage.setItem("logintoken",token);
+                                // sessionStorage.setItem("rights",JSON.stringify(rights));
+                                // sessionStorage.setItem("subrights",JSON.stringify(subrights));
+                                sessionStorage.setItem("name",this.ruleForm.name);
+                                this.$router.push("/home");
+                            }else{
+                                alert(result.data.message);
+                                console.log("登录失败");
+                            }
+                        }
                     } else {
                         console.log('error submit!!');
                         return false;

@@ -23,16 +23,11 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftA2" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterLeftA2" placeholder="120度位置" :disabled="enableLeft">
+                                <el-input v-model="ruleForm.axleNeckDiameterLeftA2" placeholder="90度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterLeftA3" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterLeftA3" placeholder="240度位置" :disabled="enableLeft">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
+
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
                                 <el-input v-model="axleNeckDiameterLeftAvgA" placeholder="" :disabled="enableLeft">
@@ -41,8 +36,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckRoundnessLeftA" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckRoundnessLeftA" placeholder="" :disabled="enableLeft">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessLeftA" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -59,16 +54,11 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterLeftB2" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterLeftB2" placeholder="120度位置" :disabled="enableLeft">
+                                <el-input v-model="ruleForm.axleNeckDiameterLeftB2" placeholder="90度位置" :disabled="enableLeft">
                                 </el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterLeftB3" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterLeftB3" placeholder="240度位置" :disabled="enableLeft">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
+
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
                                 <el-input v-model="axleNeckDiameterLeftAvgB" placeholder="" :disabled="enableLeft">
@@ -77,13 +67,12 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckRoundnessLeftB" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckRoundnessLeftB" placeholder="" :disabled="enableLeft">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessLeftB" placeholder="" :disabled="enableLeft">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
                         </el-col>
-
                     </el-row>
 
                     <el-row>
@@ -96,16 +85,11 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightA2" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterRightA2" placeholder="120度位置" :disabled="enableRight">
+                                <el-input v-model="ruleForm.axleNeckDiameterRightA2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterRightA3" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterRightA3" placeholder="240度位置" :disabled="enableRight">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
+
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
                                 <el-input v-model="axleNeckDiameterRightAvgA" placeholder="" :disabled="enableRight">
@@ -114,8 +98,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckRoundnessRightA" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckRoundnessRightA" placeholder="" :disabled="enableRight">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessRightA" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -132,16 +116,11 @@
                         </el-col>
                         <el-col :span="4">
                             <el-form-item  prop="axleNeckDiameterRightB2" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterRightB2" placeholder="120度位置" :disabled="enableRight">
+                                <el-input v-model="ruleForm.axleNeckDiameterRightB2" placeholder="90度位置" :disabled="enableRight">
                                 </el-input>
                             </el-form-item>
                         </el-col>
-                        <el-col :span="4">
-                            <el-form-item  prop="axleNeckDiameterRightB3" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckDiameterRightB3" placeholder="240度位置" :disabled="enableRight">
-                                </el-input>
-                            </el-form-item>
-                        </el-col>
+
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
                                 <el-input v-model="axleNeckDiameterRightAvgB" placeholder="" :disabled="enableRight">
@@ -150,8 +129,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="axleNeckRoundnessRightB" label-width='0'>
-                                <el-input v-model="ruleForm.axleNeckRoundnessRightB" placeholder="" :disabled="enableRight">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessRightB" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -168,6 +147,20 @@
                         <el-col :span="4">
                             <el-form-item  prop="" label-width='0'>
                                 <el-input v-model="axleNeckDiameterRightAvg" placeholder="" :disabled="enableRight"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="3" class="innertext"><span>左轴颈圆度:</span></el-col>
+                        <el-col :span="4">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessLeft" placeholder="" :disabled="enableLeft"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="3" class="innertext"><span>右轴颈圆度:</span></el-col>
+                        <el-col :span="4">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="axleNeckRoundnessRight" placeholder="" :disabled="enableRight"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -197,8 +190,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="neckFootRoundnessLeft" label-width='0'>
-                                <el-input v-model="ruleForm.neckFootRoundnessLeft" placeholder="" :disabled="enableLeft">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="neckFootRoundnessLeft" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -226,8 +219,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4">
-                            <el-form-item  prop="neckFootRoundnessRight" label-width='0'>
-                                <el-input v-model="ruleForm.neckFootRoundnessRight" placeholder="" :disabled="enableRight">
+                            <el-form-item  prop="" label-width='0'>
+                                <el-input v-model="neckFootRoundnessRight" placeholder="" :disabled="enableRight">
                                     <template slot="prepend">圆度:</template>
                                 </el-input>
                             </el-form-item>
@@ -528,31 +521,97 @@
         },
         computed: {
             axleNeckDiameterLeftAvgA:function () {
-                return this.ruleForm.axleNeckDiameterLeftAvgA = Math.round(this.ruleForm.axleNeckDiameterLeftA1/3+this.ruleForm.axleNeckDiameterLeftA2/3+this.ruleForm.axleNeckDiameterLeftA3/3)
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterLeftA1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterLeftA2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.axleNeckDiameterLeftAvgA = Math.round(r1);
+            },
+            axleNeckRoundnessLeftA:function () {
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterLeftA1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterLeftA2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.axleNeckRoundnessLeftA = Math.round(r1/2);
             },
             axleNeckDiameterLeftAvgB:function () {
-                return this.ruleForm.axleNeckDiameterLeftAvgB = Math.round (this.ruleForm.axleNeckDiameterLeftB1/3+this.ruleForm.axleNeckDiameterLeftB2/3+this.ruleForm.axleNeckDiameterLeftB3/3)
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterLeftB1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterLeftB2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.axleNeckDiameterLeftAvgB = Math.round (r1);
+            },
+            axleNeckRoundnessLeftB:function () {
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterLeftB1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterLeftB2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.axleNeckRoundnessLeftB = Math.round(r1/2);
             },
             axleNeckDiameterRightAvgA:function () {
-                return this.ruleForm.axleNeckDiameterRightAvgA = Math.round (this.ruleForm.axleNeckDiameterRightA1/3+this.ruleForm.axleNeckDiameterRightA2/3+this.ruleForm.axleNeckDiameterRightA3/3)
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterRightA1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterRightA2);
+                r1 = Math.abs(r1-r2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.axleNeckDiameterRightAvgA = Math.round (r1);
+            },
+            axleNeckRoundnessRightA:function () {
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterRightA1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterRightA2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.axleNeckRoundnessRightA = Math.round(r1/2);
             },
             axleNeckDiameterRightAvgB:function () {
-                return this.ruleForm.axleNeckDiameterRightAvgB = Math.round (this.ruleForm.axleNeckDiameterRightB1/3+this.ruleForm.axleNeckDiameterRightB2/3+this.ruleForm.axleNeckDiameterRightB3/3)
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterRightB1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterRightB2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.axleNeckDiameterRightAvgB = Math.round (r1);
             },
+            axleNeckRoundnessRightB:function () {
+                var r1 = parseInt(this.ruleForm.axleNeckDiameterRightB1);
+                var r2 = parseInt(this.ruleForm.axleNeckDiameterRightB2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.axleNeckRoundnessRightB = Math.round(r1/2);
+            },
+
             axleNeckDiameterLeftAvg:function () {
                 return this.ruleForm.axleNeckDiameterLeftAvg = Math.round (this.axleNeckDiameterLeftAvgA/2+this.axleNeckDiameterLeftAvgB/2)
             },
             axleNeckDiameterRightAvg:function () {
                 return this.ruleForm.axleNeckDiameterRightAvg = Math.round (this.axleNeckDiameterRightAvgA/2+this.axleNeckDiameterRightAvgB/2)
             },
-            neckFootDiameterLeftAvg(){
-                return this.ruleForm.neckFootDiameterLeftAvg = Math.round (this.ruleForm.neckFootDiameterLeft1/2+this.ruleForm.neckFootDiameterLeft2/2)
+            axleNeckRoundnessLeft(){
+                return this.ruleForm.axleNeckRoundnessLeft = Math.round (this.axleNeckRoundnessLeftA/2+this.axleNeckRoundnessLeftB/2)
             },
+            axleNeckRoundnessRight(){
+                return this.ruleForm.axleNeckRoundnessRight = Math.round (this.axleNeckRoundnessRightA/2+this.axleNeckRoundnessRightB/2)
+            },
+
+
+            neckFootDiameterLeftAvg:function () {
+                var r1 = parseInt(this.ruleForm.neckFootDiameterLeft1);
+                var r2 = parseInt(this.ruleForm.neckFootDiameterLeft2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.neckFootDiameterLeftAvg = Math.round (r1);
+            },
+            neckFootRoundnessLeft:function () {
+                var r1 = parseInt(this.ruleForm.neckFootDiameterLeft1);
+                var r2 = parseInt(this.ruleForm.neckFootDiameterLeft2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.neckFootRoundnessLeft = Math.round(r1/2);
+            },
+
             neckFootDiameterRightAvg(){
-                return this.ruleForm.neckFootDiameterRightAvg = Math.round (this.ruleForm.neckFootDiameterRight1/2+this.ruleForm.neckFootDiameterRight2/2)
-            }
+                var r1 = parseInt(this.ruleForm.neckFootDiameterRight1);
+                var r2 = parseInt(this.ruleForm.neckFootDiameterRight2);
+                r1 = (r1+r2)/2;
+                return this.ruleForm.neckFootDiameterRightAvg = Math.round (r1);
+            },
+            neckFootRoundnessRight:function () {
+                var r1 = parseInt(this.ruleForm.neckFootDiameterRight1);
+                var r2 = parseInt(this.ruleForm.neckFootDiameterRight2);
+                r1 = Math.abs(r1-r2);
+                return this.ruleForm.neckFootRoundnessRight = Math.round(r1/2);
+            },
         },
         mounted() {
+            this.ruleForm = this.showinfo;
             this.ruleForm.wheelId = this.wheelInfo.wheelId;
         }
     }
